@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ProximityLightApp</string>
+    <string name="app_name">PROXIMITY HOME</string>
+    <string name="lightButton">LIGHT</string>
 </resources>
