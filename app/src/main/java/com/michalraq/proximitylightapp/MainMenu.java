@@ -1,5 +1,6 @@
 package com.michalraq.proximitylightapp;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -8,17 +9,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class MainMenu extends AppCompatActivity {
 
     BluetoothAdapter mBtAdapter;
     Boolean isBTActive;
-
+     final Boolean enableWiFi = true;
+    WifiManager wifiManager;
 
     @Override
     protected void onStart(){
         enableBT();
+        enableWiFi();
         super.onStart();
     }
 
@@ -32,7 +36,7 @@ public class MainMenu extends AppCompatActivity {
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 
         /*WIFI*/
-
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
     }
 
@@ -54,7 +58,13 @@ public class MainMenu extends AppCompatActivity {
         }
 
         if (! mBtAdapter.isEnabled()) {
-              mBtAdapter.enable();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mBtAdapter.enable();
+                }
+            }).start();
 
             isBTActive=true;
             Toast.makeText(this, "Aktywowano Bluetooth !", Toast.LENGTH_SHORT).show();
@@ -66,9 +76,23 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void enableWiFi(){
+        if(wifiManager == null){
+            Toast.makeText(this, "Twoje urządzenie nie umożliwia korzystania z WiFi", Toast.LENGTH_SHORT).show();
+        }
+
+        if (!wifiManager.isWifiEnabled()) {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                        wifiManager.setWifiEnabled(enableWiFi);
+                }
+            }).start();
+
+            Toast.makeText(this, "Aktywowano WiFi !", Toast.LENGTH_SHORT).show();
+        }
 
     }
-
 
     @Override
     protected void onDestroy(){
