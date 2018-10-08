@@ -17,11 +17,10 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void onButtonLightClick(View v){
-        Toast myToast = Toast.makeText(getApplicationContext(),"Zarządzaj światłem !",Toast.LENGTH_LONG);
-
-        startActivity(new Intent(this,Places.class));
+        Toast myToast = Toast.makeText(getApplicationContext(),"Zarządzaj światłem !",Toast.LENGTH_SHORT);
 
         myToast.show();
+        startActivity(new Intent(this,Places.class));
 
     }
 }
