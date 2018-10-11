@@ -1,15 +1,17 @@
 package com.michalraq.proximitylightapp;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Application;
 import android.os.Bundle;
 
-public class Places extends AppCompatActivity {
+import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
+
+public class Places extends Application {
+
+    public EstimoteCloudCredentials cloudCredentials =
+            new EstimoteCloudCredentials("proximity-light-4nu", "d25c41d6bc5b7cb0fe1f394be8ccf46d");
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_places);
-
-    }
 }
+
+
+
