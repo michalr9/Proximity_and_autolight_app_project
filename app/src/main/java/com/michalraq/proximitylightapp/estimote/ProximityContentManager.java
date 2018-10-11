@@ -2,6 +2,7 @@ package com.michalraq.proximitylightapp.estimote;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
 import com.estimote.proximity_sdk.api.ProximityObserver;
@@ -47,6 +48,25 @@ public class ProximityContentManager {
                 .withBalancedPowerMode()
                 .build();
 
+
+        ProximityZone places = new ProximityZoneBuilder().forTag("proximity-light-4nu").inCustomRange(3.5)
+                .onEnter(new Function1<ProximityZoneContext, Unit>() {
+            @Override
+            public Unit invoke(ProximityZoneContext context) {
+                String place = context.getAttachments().get("place");
+                Log.d("app", "Welcome to" + place );
+                return null;
+            }
+        }) .onExit(new Function1<ProximityZoneContext, Unit>() {
+            @Override
+            public Unit invoke(ProximityZoneContext context) {
+                Log.d("app", "Bye bye, come again!");
+                return null;
+            }
+        }).build();
+
+
+
         ProximityZone zone = new ProximityZoneBuilder()
                 .forTag("proximity-light-4nu")
                 .inCustomRange(3.0)
@@ -71,10 +91,9 @@ public class ProximityContentManager {
 
                         return null;
                     }
-                })
-                .build();
+                }).build();
 
-        proximityObserverHandler = proximityObserver.startObserving(zone);
+        proximityObserverHandler = proximityObserver.startObserving(places);
     }
 
     public void stop() {
