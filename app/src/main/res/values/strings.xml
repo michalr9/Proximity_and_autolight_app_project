@@ -2,4 +2,5 @@
     <string name="app_name">PROXIMITY HOME</string>
     <string name="second_activity">LIGHT CONTROL</string>
     <string name="lightButton">LIGHT</string>
+    <string name="beacon_image_desc">image of beacon</string>
 </resources>
