@@ -98,7 +98,7 @@ public class MainMenu extends AppCompatActivity {
         Toast myToast = Toast.makeText(getApplicationContext(),"Zarządzaj światłem !",Toast.LENGTH_SHORT);
 
         myToast.show();
-        startActivity(new Intent(this,Places.class));
+       startActivity(new Intent(this,Places.class));
 
     }
 

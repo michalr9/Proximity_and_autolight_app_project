@@ -84,6 +84,8 @@ public class ProximityContentManager {
                             String subtitle = Utils.getShortIdentifier(proximityContext.getDeviceId());
 
                             nearbyContent.add(new ProximityContent(title, subtitle));
+                            Log.d("app", "Welcome to " + title +" "+ subtitle );
+
                         }
 
                         proximityContentAdapter.setNearbyContent(nearbyContent);
@@ -93,7 +95,7 @@ public class ProximityContentManager {
                     }
                 }).build();
 
-        proximityObserverHandler = proximityObserver.startObserving(places);
+        proximityObserverHandler = proximityObserver.startObserving(zone);
     }
 
     public void stop() {
