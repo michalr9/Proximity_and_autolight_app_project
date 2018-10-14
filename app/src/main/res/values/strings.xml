@@ -4,4 +4,6 @@
     <string name="lightButton">LIGHT</string>
     <string name="beacon_image_desc">image of beacon</string>
     <string name="where_is_light">Aktualnie światło zapalone dla</string>
+    <string name="beacons_title">Beacons</string>
+    <string name="beacon_managment">Manage your beacons</string>
 </resources>
