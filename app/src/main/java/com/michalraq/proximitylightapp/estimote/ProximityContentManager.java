@@ -50,19 +50,21 @@ public class ProximityContentManager {
                 .build();
 
 
-        ProximityZone places = new ProximityZoneBuilder().forTag("place").inCustomRange(3.5)
+        ProximityZone places = new ProximityZoneBuilder()
+                .forTag("place")
+                .inCustomRange(3.5)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
             @Override
-            public Unit invoke(ProximityZoneContext context) {
-                String place = context.getAttachments().get("place");
-                Log.d("app", "Welcome to" + place );
+            public Unit invoke(ProximityZoneContext zoneContext) {
+                String place = zoneContext.getAttachments().get("place");
+                Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
                 return null;
             }
         }) .onExit(new Function1<ProximityZoneContext, Unit>() {
             @Override
-            public Unit invoke(ProximityZoneContext context) {
-                Log.d("app", "Bye bye, come again!");
-                ProximityContent nearbyContent = new ProximityContent(context.getAttachments().get("proximity-light-4nu/title"),Utils.getShortIdentifier(context.getDeviceId()));
+            public Unit invoke(ProximityZoneContext zoneContext) {
+                String place = zoneContext.getAttachments().get("place");
+                Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
 
 
                 proximityContentAdapter.notifyDataSetChanged();
@@ -78,19 +80,19 @@ public class ProximityContentManager {
                 .inCustomRange(3.5)
                 .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
                     @Override
-                    public Unit invoke(Set<? extends ProximityZoneContext> contexts) {
+                    public Unit invoke(Set<? extends ProximityZoneContext> zoneContext) {
 
-                        List<ProximityContent> nearbyContent = new ArrayList<>(contexts.size());
+                        List<ProximityContent> nearbyContent = new ArrayList<>(zoneContext.size());
 
-                        for (ProximityZoneContext proximityContext : contexts) {
+                        for (ProximityZoneContext proximityContext : zoneContext) {
                             String title = proximityContext.getAttachments().get("proximity-light-4nu/title");
                             if (title == null) {
                                 title = "unknown";
                             }
-                            Map subtitles = proximityContext.getAttachments();//Utils.getShortIdentifier(proximityContext.getDeviceId());
-                            String place = (String) subtitles.get("place");
+                            String place = proximityContext.getAttachments().get("place");
                             nearbyContent.add(new ProximityContent(title, place));
                             Log.d("app", "Welcome to " + title +" "+ place );
+                 //           Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -101,7 +103,7 @@ public class ProximityContentManager {
                     }
                 }).build();
 
-        proximityObserverHandler = proximityObserver.startObserving(zone);
+        proximityObserverHandler = proximityObserver.startObserving(places);
     }
 
     public void stop() {
