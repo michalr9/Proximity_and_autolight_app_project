@@ -3,4 +3,5 @@
     <string name="second_activity">LIGHT CONTROL</string>
     <string name="lightButton">LIGHT</string>
     <string name="beacon_image_desc">image of beacon</string>
+    <string name="where_is_light">Aktualnie światło zapalone dla</string>
 </resources>

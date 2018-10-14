@@ -13,6 +13,7 @@ import com.estimote.proximity_sdk.api.ProximityZoneContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import kotlin.Unit;
@@ -36,7 +37,7 @@ public class ProximityContentManager {
     }
 
     public void start() {
-
+//TODO JAK ZROBIC AKCJE WEJSCIA WYJSCIA
         ProximityObserver proximityObserver = new ProximityObserverBuilder(context, cloudCredentials)
                 .onError(new Function1<Throwable, Unit>() {
                     @Override
@@ -49,7 +50,7 @@ public class ProximityContentManager {
                 .build();
 
 
-        ProximityZone places = new ProximityZoneBuilder().forTag("proximity-light-4nu").inCustomRange(3.5)
+        ProximityZone places = new ProximityZoneBuilder().forTag("place").inCustomRange(3.5)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
             @Override
             public Unit invoke(ProximityZoneContext context) {
@@ -61,6 +62,11 @@ public class ProximityContentManager {
             @Override
             public Unit invoke(ProximityZoneContext context) {
                 Log.d("app", "Bye bye, come again!");
+                ProximityContent nearbyContent = new ProximityContent(context.getAttachments().get("proximity-light-4nu/title"),Utils.getShortIdentifier(context.getDeviceId()));
+
+
+                proximityContentAdapter.notifyDataSetChanged();
+
                 return null;
             }
         }).build();
@@ -69,7 +75,7 @@ public class ProximityContentManager {
 
         ProximityZone zone = new ProximityZoneBuilder()
                 .forTag("proximity-light-4nu")
-                .inCustomRange(3.0)
+                .inCustomRange(3.5)
                 .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
                     @Override
                     public Unit invoke(Set<? extends ProximityZoneContext> contexts) {
@@ -81,10 +87,10 @@ public class ProximityContentManager {
                             if (title == null) {
                                 title = "unknown";
                             }
-                            String subtitle = Utils.getShortIdentifier(proximityContext.getDeviceId());
-
-                            nearbyContent.add(new ProximityContent(title, subtitle));
-                            Log.d("app", "Welcome to " + title +" "+ subtitle );
+                            Map subtitles = proximityContext.getAttachments();//Utils.getShortIdentifier(proximityContext.getDeviceId());
+                            String place = (String) subtitles.get("place");
+                            nearbyContent.add(new ProximityContent(title, place));
+                            Log.d("app", "Welcome to " + title +" "+ place );
 
                         }
 

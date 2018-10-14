@@ -1,8 +1,5 @@
 package com.michalraq.proximitylightapp.estimote;
 
-//
-// Running into any issues? Drop us an email to: contact@estimote.com
-//
 
 public class ProximityContent {
 

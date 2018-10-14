@@ -12,9 +12,6 @@ import  com.michalraq.proximitylightapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-//
-// Running into any issues? Drop us an email to: contact@estimote.com
-//
 
 public class ProximityContentAdapter extends BaseAdapter {
 
@@ -60,7 +57,7 @@ public class ProximityContentAdapter extends BaseAdapter {
         TextView title = convertView.findViewById(R.id.title);
         TextView subtitle = convertView.findViewById(R.id.subtitle);
 
-        title.setText(content.getTitle());
+        title.setText(content.getTitle()+ position);
         subtitle.setText(content.getSubtitle());
 
         convertView.setBackgroundColor(Utils.getEstimoteColor(content.getTitle()));
