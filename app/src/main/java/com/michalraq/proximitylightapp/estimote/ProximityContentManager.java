@@ -49,7 +49,6 @@ public class ProximityContentManager {
                 .withBalancedPowerMode()
                 .build();
 
-
         ProximityZone places = new ProximityZoneBuilder()
                 .forTag("place")
                 .inCustomRange(3.5)

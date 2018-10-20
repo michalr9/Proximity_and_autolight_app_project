@@ -4,18 +4,22 @@ package com.michalraq.proximitylightapp.estimote;
 public class ProximityContent {
 
     private String title;
-    private String subtitle;
+    private String attachment;
 
-    ProximityContent(String title, String subtitle) {
+   public ProximityContent(String title, String attachment) {
         this.title = title;
-        this.subtitle = subtitle;
+        this.attachment = attachment;
     }
 
-    String getTitle() {
+   public String getTitle() {
         return title;
     }
 
-    String getSubtitle() {
-        return subtitle;
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
     }
 }
