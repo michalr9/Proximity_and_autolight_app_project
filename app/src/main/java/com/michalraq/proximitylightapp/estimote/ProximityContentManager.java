@@ -56,6 +56,9 @@ public class ProximityContentManager {
             @Override
             public Unit invoke(ProximityZoneContext zoneContext) {
                 String place = zoneContext.getAttachments().get("place");
+                if (place == null) {
+                    place = "unknown";
+                }
                 Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
                 return null;
             }
@@ -63,6 +66,9 @@ public class ProximityContentManager {
             @Override
             public Unit invoke(ProximityZoneContext zoneContext) {
                 String place = zoneContext.getAttachments().get("place");
+                if (place == null) {
+                    place = "unknown";
+                }
                 Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
 
 
