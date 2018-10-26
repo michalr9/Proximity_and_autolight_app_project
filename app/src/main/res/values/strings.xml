@@ -11,4 +11,5 @@
     <string name="editTextPortHint">8080</string>
     <string name="tvServerIP">Server IP</string>
     <string name="tvPort">Port Number</string>
+    <string name="action_settings_name">Server Settings</string>
 </resources>
