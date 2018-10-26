@@ -28,6 +28,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".ServerManager"
+            android:label="@string/serverActivity"
+            ></activity>
     </application>
 
 </manifest>
