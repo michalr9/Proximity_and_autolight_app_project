@@ -55,7 +55,17 @@ public class MainMenu extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+
+        switch(item.getItemId()) {
+            case R.id.acction_settings:
+                Intent editServer = new Intent(this, ServerManager.class);
+                startActivity(editServer);
+            return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     @Override
