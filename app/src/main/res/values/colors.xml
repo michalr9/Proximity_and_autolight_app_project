@@ -3,10 +3,10 @@
     <color name="colorPrimary">#69140E</color>
     <color name="colorPrimaryDark">#023e36</color>
     <color name="colorAccent">#FFFB46</color>
-    <color name="colorError">#f72d3a</color>
+    <color name="colorError">#d73b45</color>
     <color name="colorTiger">#D58936</color>
     <color name="colorNotClickable">#D2FDFF</color>
-    <color name="colorAccepted">#4eea3a</color>
+    <color name="colorAccepted">#C2EABD</color>
     <color name="defaultContentBackground">#7ed5f2</color>
 
 </resources>

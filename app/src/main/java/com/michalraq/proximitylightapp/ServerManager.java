@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 
 public class ServerManager extends AppCompatActivity {
-//TODO TWORZENIE KLASY SERWERA
     private static final String PREFERENCES = "myPreferences";
     private static final String SERVER_IP = "ipServer";
     private static final String PORT_NUMBER = "portNumber";
@@ -96,11 +94,9 @@ public class ServerManager extends AppCompatActivity {
                 buttonSave.setEnabled(true);
                 buttonSave.setBackgroundColor(getResources().getColor(R.color.colorAccepted));
             }else{
-                buttonSave.setBackgroundColor(getResources().getColor(R.color.colorNotClickable));
-
+                buttonSave.setBackgroundColor(getResources().getColor(R.color.colorError));
+                buttonSave.setEnabled(false);
             }
-
-
         }
 
         @Override
