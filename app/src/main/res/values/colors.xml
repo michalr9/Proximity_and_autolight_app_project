@@ -5,6 +5,7 @@
     <color name="colorAccent">#FFFB46</color>
     <color name="colorError">#f72d3a</color>
     <color name="colorTiger">#D58936</color>
+    <color name="notClickable">#D2FDFF</color>
     <color name="defaultContentBackground">#7ed5f2</color>
 
 </resources>

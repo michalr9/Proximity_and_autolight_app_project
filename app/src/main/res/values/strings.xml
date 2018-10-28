@@ -1,17 +1,15 @@
 <resources>
     <string name="app_name">PROXIMITY HOME</string>
     <string name="serverActivity">Server Settings</string>
-    <string name="lightButton">LIGHT</string>
     <string name="beacon_image_desc">image of beacon</string>
     <string name="where_is_light">Aktualnie światło zapalone dla</string>
     <string name="beacons_title">Beacons</string>
-    <string name="beacon_managment">Manage your beacons</string>
     <string name="editTextInfoServers">Poniżej wprowadź ustawienia serwera dla poprawnego działania aplikacji. Podaj adres IP oraz port, na którym uruchomiona jest usługa.</string>
     <string name="editTextServerHint">127.0.0.1</string>
     <string name="editTextPortHint">8080</string>
-    <string name="tvServerIP">Server IP</string>
-    <string name="tvPort">Port Number</string>
-    <string name="action_settings_name">Server Settings</string>
+    <string name="tvServerIP">IP Serwera</string>
+    <string name="tvPort">Numer Portu</string>
+    <string name="action_settings_name">Ustawienia serwera</string>
     <string name="digitsForServer">1234567890.</string>
     <string name="saveButton">ZAPISZ</string>
 </resources>
