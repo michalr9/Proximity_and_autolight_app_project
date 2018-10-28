@@ -5,11 +5,6 @@ public class ServerContent {
     private  String serverIP;
     private int portNumber;
 
-    public ServerContent( String ip , int port){
-        serverIP = ip;
-        portNumber =port;
-    }
-
     public String getServerIP() {
         return serverIP;
     }

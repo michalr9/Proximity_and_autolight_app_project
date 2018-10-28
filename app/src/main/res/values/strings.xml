@@ -7,7 +7,7 @@
     <string name="editTextInfoServers">Poniżej wprowadź ustawienia serwera dla poprawnego działania aplikacji. Podaj adres IP oraz port, na którym uruchomiona jest usługa.</string>
     <string name="editTextServerHint">127.0.0.1</string>
     <string name="editTextPortHint">8080</string>
-    <string name="tvServerIP">IP Serwera</string>
+    <string name="tvServerIP">Serwer IP</string>
     <string name="tvPort">Numer Portu</string>
     <string name="action_settings_name">Ustawienia serwera</string>
     <string name="digitsForServer">1234567890.</string>

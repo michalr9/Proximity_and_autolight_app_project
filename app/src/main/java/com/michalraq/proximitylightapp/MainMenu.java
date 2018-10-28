@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.GridView;
 import android.widget.Toast;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
@@ -35,7 +34,7 @@ public class MainMenu extends AppCompatActivity {
 
     BluetoothAdapter mBtAdapter;
     Boolean isBTActive;
-     final Boolean enableWiFi = true;
+    final Boolean enableWiFi = true;
     WifiManager wifiManager;
 
     @Override
