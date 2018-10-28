@@ -12,4 +12,6 @@
     <string name="tvServerIP">Server IP</string>
     <string name="tvPort">Port Number</string>
     <string name="action_settings_name">Server Settings</string>
+    <string name="digitsForServer">1234567890.</string>
+    <string name="saveButton">ZAPISZ</string>
 </resources>
