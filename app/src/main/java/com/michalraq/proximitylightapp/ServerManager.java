@@ -16,11 +16,13 @@ public class ServerManager extends AppCompatActivity {
     private static final String PREFERENCES = "myPreferences";
     private static final String SERVER_IP = "ipServer";
     private static final String PORT_NUMBER = "portNumber";
-    private Button buttonSave ;
+    private static final String IS_SERVICE_STARTED = "isServiceStarted";
+    private static final String IS_DATA_CHANGED = "isDataChanged";
+    private Button buttonSave,buttonStart,buttonStop ;
     private EditText etIPServer;
     private  EditText etPortNumber;
     private SharedPreferences preferences;
-    private static boolean isServiceStarted;
+    public static boolean isServiceStarted,isDataChanged;
     public ServerContent server;
 
 
@@ -33,10 +35,14 @@ public class ServerManager extends AppCompatActivity {
          buttonSave = findViewById(R.id.buttonSave);
          etIPServer = findViewById(R.id.editTextServerIP);
          etPortNumber = findViewById(R.id.editTextPortAddress);
+         buttonStart = findViewById(R.id.buttonStartService);
+         buttonStop = findViewById(R.id.buttonStopService);
 
          restoreData();
 
          initButtonListener();
+         initButtonStartListener();
+         initButtonStopListener();
          server = new ServerContent();
 
          etIPServer.addTextChangedListener(settingsTextWatcher);
@@ -52,31 +58,93 @@ public class ServerManager extends AppCompatActivity {
                 Toast.makeText(ServerManager.this, "Dane zapisano!", Toast.LENGTH_SHORT).show();
             }
         });
+    }  private void initButtonStartListener(){
+        buttonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isServiceStarted = true;
+
+                Toast.makeText(ServerManager.this, "Usługa włączona!", Toast.LENGTH_SHORT).show();
+
+                buttonStart.setEnabled(false);
+                buttonStop.setEnabled(true);
+                etIPServer.setEnabled(false);
+                etPortNumber.setEnabled(false);
+
+                saveServiceStatus();
+            }
+        });
+    }  private void initButtonStopListener(){
+        buttonStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isServiceStarted = false;
+
+                if(!isDataChanged){
+                    buttonStart.setEnabled(true);
+                    isDataChanged=false;
+                }
+
+                Toast.makeText(ServerManager.this, "Serwis zatrzymany!", Toast.LENGTH_SHORT).show();
+                buttonStop.setEnabled(false);
+                etIPServer.setEnabled(true);
+                etPortNumber.setEnabled(true);
+                saveServiceStatus();
+            }
+        });
     }
 
    private void saveData(){
-    SharedPreferences.Editor preferencesEditor = preferences.edit();
+       isDataChanged = false;
+
+       SharedPreferences.Editor preferencesEditor = preferences.edit();
     String ipServerToSave = etIPServer.getText().toString().trim();
     String portServerToSave = etPortNumber.getText().toString().trim();
 
     preferencesEditor.putString(SERVER_IP,ipServerToSave);
     preferencesEditor.putString(PORT_NUMBER,portServerToSave);
+    preferencesEditor.putBoolean(IS_DATA_CHANGED,isDataChanged);
+
     server.setServerIP(ipServerToSave);
     server.setPortNumber(Integer.parseInt(portServerToSave));
     preferencesEditor.commit();
 
-  //  this.finish();
-   }
+
+    buttonSave.setEnabled(false);
+    buttonStart.setEnabled(true);
+    }
+
+    private void saveServiceStatus(){
+        SharedPreferences.Editor preferencesEditor = preferences.edit();
+        preferencesEditor.putBoolean(IS_SERVICE_STARTED,isServiceStarted);
+        preferencesEditor.putBoolean(IS_DATA_CHANGED,isDataChanged);
+        preferencesEditor.commit();
+    }
 
    private void restoreData(){
             String ipServerSaved = preferences.getString(SERVER_IP, "");
             String portServerSaved = preferences.getString(PORT_NUMBER, "");
+            isServiceStarted = preferences.getBoolean(IS_SERVICE_STARTED,false);
+            isDataChanged = preferences.getBoolean(IS_DATA_CHANGED,false);
 
             etIPServer.setText(ipServerSaved);
             etPortNumber.setText(portServerSaved);
 
             if(!ipServerSaved.isEmpty() && !portServerSaved.isEmpty()){
                 buttonSave.setBackgroundColor(getResources().getColor(R.color.colorAccepted));
+            }
+
+            if(isServiceStarted) {
+                etIPServer.setEnabled(false);
+                etPortNumber.setEnabled(false);
+                buttonStop.setEnabled(true);
+            }else{
+                buttonStop.setEnabled(false);
+            }
+
+            if(!isDataChanged && !isServiceStarted){
+                buttonStart.setEnabled(true);
             }
    }
 
@@ -103,6 +171,8 @@ public class ServerManager extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
+            buttonStart.setEnabled(false);
+            isDataChanged=true;
         }
     };
 }
