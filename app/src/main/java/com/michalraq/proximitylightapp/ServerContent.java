@@ -2,22 +2,16 @@ package com.michalraq.proximitylightapp;
 
 public class ServerContent {
 
-    private  String serverIP;
-    private int portNumber;
+    public static String SERVER_IP;
+    public static int PORT_NUMBER;
 
-    public String getServerIP() {
-        return serverIP;
-    }
 
     public void setServerIP(String serverIP) {
-        this.serverIP = serverIP;
+        this.SERVER_IP = serverIP;
     }
 
-    public int getPortNumber() {
-        return portNumber;
-    }
 
     public void setPortNumber(int portNumber) {
-        this.portNumber = portNumber;
+        this.PORT_NUMBER = portNumber;
     }
 }

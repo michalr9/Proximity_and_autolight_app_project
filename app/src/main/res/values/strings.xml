@@ -12,4 +12,7 @@
     <string name="action_settings_name">Ustawienia serwera</string>
     <string name="digitsForServer">1234567890.</string>
     <string name="saveButton">ZAPISZ</string>
+    <string name="startService">Start</string>
+    <string name="stopService">Stop</string>
+    <string name="startStopDesc">Poniżej znajdują się przyciski do aktywacji oraz zatrzymania usługi komunikacji z serwerem.</string>
 </resources>

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
@@ -36,6 +37,7 @@ public class MainMenu extends AppCompatActivity {
     Boolean isBTActive;
     final Boolean enableWiFi = true;
     WifiManager wifiManager;
+    Button buttonClient;
 
     @Override
     protected void onStart(){
@@ -86,35 +88,11 @@ public class MainMenu extends AppCompatActivity {
         GridView gridView = findViewById(R.id.gridView);
         gridView.setAdapter(proximityContentAdapter);
 
-
-        RequirementsWizardFactory
-                .createEstimoteRequirementsWizard()
-                .fulfillRequirements(this,
-                        new Function0<Unit>() {
-                            @Override
-                            public Unit invoke() {
-                                Log.d("app", "requirements fulfilled");
-                                startProximityContentManager();
-                                return null;
-                            }
-                        },
-                        new Function1<List<? extends Requirement>, Unit>() {
-                            @Override
-                            public Unit invoke(List<? extends Requirement> requirements) {
-                                Log.e("app", "requirements missing: " + requirements);
-                                return null;
-                            }
-                        },
-                        new Function1<Throwable, Unit>() {
-                            @Override
-                            public Unit invoke(Throwable throwable) {
-                                Log.e("app", "requirements error: " + throwable);
-                                return null;
-                            }
-                        });
+        checkRequirements();
 
 
     }
+
 
     private void startProximityContentManager() {
         proximityContentManager = new ProximityContentManager(this, proximityContentAdapter, cloudCredentials);
@@ -165,6 +143,34 @@ public class MainMenu extends AppCompatActivity {
             Toast.makeText(this, "Aktywowano WiFi !", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void checkRequirements(){
+        RequirementsWizardFactory
+                .createEstimoteRequirementsWizard()
+                .fulfillRequirements(this,
+                        new Function0<Unit>() {
+                            @Override
+                            public Unit invoke() {
+                                Log.d("app", "requirements fulfilled");
+                                startProximityContentManager();
+                                return null;
+                            }
+                        },
+                        new Function1<List<? extends Requirement>, Unit>() {
+                            @Override
+                            public Unit invoke(List<? extends Requirement> requirements) {
+                                Log.e("app", "requirements missing: " + requirements);
+                                return null;
+                            }
+                        },
+                        new Function1<Throwable, Unit>() {
+                            @Override
+                            public Unit invoke(Throwable throwable) {
+                                Log.e("app", "requirements error: " + throwable);
+                                return null;
+                            }
+                        });
     }
 
     @Override

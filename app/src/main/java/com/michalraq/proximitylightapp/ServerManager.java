@@ -20,7 +20,9 @@ public class ServerManager extends AppCompatActivity {
     private EditText etIPServer;
     private  EditText etPortNumber;
     private SharedPreferences preferences;
+    private static boolean isServiceStarted;
     public ServerContent server;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class ServerManager extends AppCompatActivity {
     server.setPortNumber(Integer.parseInt(portServerToSave));
     preferencesEditor.commit();
 
-    this.finish();
+  //  this.finish();
    }
 
    private void restoreData(){
