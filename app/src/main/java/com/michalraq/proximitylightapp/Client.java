@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.DataInputStream;
@@ -20,8 +21,6 @@ public class Client extends Service {
     DataOutputStream out;
     InetAddress serverAddr;
 
-
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -30,51 +29,68 @@ public class Client extends Service {
 
     @Override
     public void onCreate() {
-        //nawiazanie polaczenia
-        try {
-            serverAddr = InetAddress.getByName(ServerContent.SERVER_IP);
-            socket = new Socket(serverAddr,ServerContent.PORT_NUMBER);
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Polaczono");
 
         super.onCreate();
     }
 
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
 
         try{
+            //nawiazanie polaczenia
+            Log.d("Client",ServerContent.SERVER_IP +" - "+ ServerContent.PORT_NUMBER);
 
-            //obsluga
-            if (!socket.isClosed()){
+            serverAddr = InetAddress.getByName(ServerContent.SERVER_IP);
+            socket = new Socket(serverAddr, ServerContent.PORT_NUMBER);
 
+        //    Toast.makeText(getApplicationContext(), "Połączono!", Toast.LENGTH_LONG);
+            Log.d("Client","Połączono");
+        }  catch (UnknownHostException e) {
+         //   Toast.makeText(getApplicationContext(), "Podano zły adres hosta!", Toast.LENGTH_LONG);
+            Log.d("Client","zly host");
 
-               // String wiadomoscodebrana = etContent.getText().toString();
-             //   byte[] wiadomosc = wiadomoscodebrana.getBytes();
+        }catch (IOException e) {
+           // Toast.makeText(getApplicationContext(), "Wystąpił błąd podczas próby nawiazania połączenia!", Toast.LENGTH_LONG);
+            Log.d("Client","blad podczas polaczenia");
 
-                    out = new DataOutputStream(socket.getOutputStream());
-                    out.flush();
+        }
 
-                //    out.write(wiadomosc);
+                String wiadomoscodebrana = "wysylam wiadomosc";
+                byte[] wiadomosc = wiadomoscodebrana.getBytes();
+        try {
+                do {
+                    if(socket!=null) {
+                        //obsluga
 
+                        out = new DataOutputStream(socket.getOutputStream());
+                        out.flush();
 
-                }
-                else{
-                Toast.makeText(getApplicationContext(),"Połączenie zamknięte.",Toast.LENGTH_LONG);
+                        out.write(wiadomosc);
+                    }
+                }while(ServerManager.isServiceStarted);
+
+                    out.close();
+                    socket.close();
+                  //  Toast.makeText(getApplicationContext(), "Połączenie zamknięte.", Toast.LENGTH_LONG);
+            Log.d("Client","Połączonie zamkniete");
+
+            }  catch (IOException e) {
+           // Toast.makeText(getApplicationContext(), "Wystąpił błąd podczas działania usługi!", Toast.LENGTH_LONG);
+            Log.d("Client","Blad podczas dzialania uslugi");
+
+        }
+
             }
+        });
 
-        }
-         catch (IOException e) {
-            e.printStackTrace();
-        }
+        thread.start();
 
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
 
     }
 
@@ -82,12 +98,14 @@ public class Client extends Service {
     public void onDestroy() {
 
         try {
-            out.close();
-            socket.close();
+            if(!socket.isClosed()) {
+                out.close();
+                socket.close();
+            }
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        System.out.println("Wszystko zamkniete");
+        Log.d("Client","wszystko zamkniete");
         super.onDestroy();
     }
 

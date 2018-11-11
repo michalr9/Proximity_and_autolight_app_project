@@ -1,6 +1,7 @@
 package com.michalraq.proximitylightapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,22 +65,27 @@ public class ServerManager extends AppCompatActivity {
             public void onClick(View v) {
 
                 isServiceStarted = true;
-
                 Toast.makeText(ServerManager.this, "Usługa włączona!", Toast.LENGTH_SHORT).show();
+
 
                 buttonStart.setEnabled(false);
                 buttonStop.setEnabled(true);
                 etIPServer.setEnabled(false);
                 etPortNumber.setEnabled(false);
-
                 saveServiceStatus();
+
+                startService(new Intent(getApplicationContext(),Client.class));
+
             }
         });
-    }  private void initButtonStopListener(){
+    }
+    private void initButtonStopListener(){
         buttonStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isServiceStarted = false;
+
+
 
                 if(!isDataChanged){
                     buttonStart.setEnabled(true);
@@ -91,6 +97,9 @@ public class ServerManager extends AppCompatActivity {
                 etIPServer.setEnabled(true);
                 etPortNumber.setEnabled(true);
                 saveServiceStatus();
+
+                stopService(new Intent(getApplicationContext(),Client.class));
+
             }
         });
     }
@@ -108,8 +117,10 @@ public class ServerManager extends AppCompatActivity {
 
     server.setServerIP(ipServerToSave);
     server.setPortNumber(Integer.parseInt(portServerToSave));
-    preferencesEditor.commit();
+    preferencesEditor.apply();
 
+    ServerContent.SERVER_IP = ipServerToSave;
+    ServerContent.PORT_NUMBER = Integer.parseInt(portServerToSave);
 
     buttonSave.setEnabled(false);
     buttonStart.setEnabled(true);
@@ -119,7 +130,7 @@ public class ServerManager extends AppCompatActivity {
         SharedPreferences.Editor preferencesEditor = preferences.edit();
         preferencesEditor.putBoolean(IS_SERVICE_STARTED,isServiceStarted);
         preferencesEditor.putBoolean(IS_DATA_CHANGED,isDataChanged);
-        preferencesEditor.commit();
+        preferencesEditor.apply();
     }
 
    private void restoreData(){
@@ -130,6 +141,9 @@ public class ServerManager extends AppCompatActivity {
 
             etIPServer.setText(ipServerSaved);
             etPortNumber.setText(portServerSaved);
+
+       ServerContent.SERVER_IP = ipServerSaved;
+       ServerContent.PORT_NUMBER = Integer.parseInt(portServerSaved);
 
             if(!ipServerSaved.isEmpty() && !portServerSaved.isEmpty()){
                 buttonSave.setBackgroundColor(getResources().getColor(R.color.colorAccepted));
