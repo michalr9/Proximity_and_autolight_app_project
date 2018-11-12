@@ -66,7 +66,7 @@ public class ServerManager extends AppCompatActivity {
             public void onClick(View v) {
 
                 isServiceStarted = true;
-                Toast.makeText(ServerManager.this, "Uruchamianie usługi...", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(ServerManager.this, "Uruchamianie usługi...", Toast.LENGTH_SHORT).show();
 
                 manageButtonsStatus("start");
                 startService(new Intent(getApplicationContext(),Client.class));

@@ -1,8 +1,11 @@
 package com.michalraq.proximitylightapp;
 
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -48,10 +51,10 @@ public class Client extends Service {
                     socket = new Socket(serverAddr, ServerContent.PORT_NUMBER);
 
                         receiveMessage();
+                        showToastInIntentService(connectedWithServerInfo);
+
                         startWorking();
 
-
-                    showToastInIntentService(connectedWithServerInfo);
                 } catch (UnknownHostException e) {
                     showToastInIntentService("Podano zły adres hosta!");
                     closeSocket();
@@ -61,9 +64,7 @@ public class Client extends Service {
                     closeSocket();
                     stopSelf();
                 }
-
             }
-
         });
 
         thread.start();
@@ -75,15 +76,15 @@ public class Client extends Service {
     private void startWorking(){
 
         if (socket.isConnected()) {
-            String wiadomoscodebrana = "wysylam wiadomosc";
-            byte[] wiadomosc = wiadomoscodebrana.getBytes();
+         //   String wiadomoscodebrana = "wysylam wiadomosc";
+         //   byte[] wiadomosc = wiadomoscodebrana.getBytes();
             try {
                 do {
                     if (socket != null) {
 
                         out = new DataOutputStream(socket.getOutputStream());
                         out.flush();
-                        out.write(wiadomosc);
+               //         out.write(wiadomosc);
                     }
                 } while (ServerManager.isServiceStarted);
 
@@ -100,6 +101,10 @@ public class Client extends Service {
             showToastInIntentService("Spróbuj połączyć się ponownie.");
         }
     }
+
+
+
+
 
     public void showToastInIntentService(final String text) {
         final Context MyContext = this;
@@ -118,7 +123,6 @@ public class Client extends Service {
         try {
         in = new DataInputStream(socket.getInputStream());
         data = new byte[ 256 ];
-
             in.read(data);
         } catch (IOException e) {
             Log.e("Client","Error data null");
@@ -136,20 +140,22 @@ public class Client extends Service {
     public void onDestroy() {
 
     closeSocket();
-        Log.d("Client","wszystko zamkniete");
+    showToastInIntentService("Usługa zatrzymana.");
+
         super.onDestroy();
     }
 
     private void closeSocket(){
         try {
-            if (socket != null )
-            socket.close();
-            if(out != null)
-            out.close();
+            if (socket != null ) socket.close();
+            if(out != null) out.close();
+            if(in != null) in.close();
+
+
+
         } catch (IOException ioException) {
         Log.e("Client","Error zamkniecie socket'a");
         }
     }
 
 }
-//TODO DOROBIC OBSLUGE ODBIERANIA WIADOMOSCI OD SERWERA JEZELI UDALO SIE NAWIAZAC POLACZENIE I WYSWIETLAC STATUS
