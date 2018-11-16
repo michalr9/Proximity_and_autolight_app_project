@@ -10,6 +10,8 @@ import com.estimote.proximity_sdk.api.ProximityObserverBuilder;
 import com.estimote.proximity_sdk.api.ProximityZone;
 import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
+import com.michalraq.proximitylightapp.Client;
+import com.michalraq.proximitylightapp.ServerManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,6 @@ import java.util.Set;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
-
-//
-// Running into any issues? Drop us an email to: contact@estimote.com
-//
 
 public class ProximityContentManager {
 
@@ -37,7 +35,7 @@ public class ProximityContentManager {
     }
 
     public void start() {
-//TODO JAK ZROBIC AKCJE WEJSCIA WYJSCIA
+
         ProximityObserver proximityObserver = new ProximityObserverBuilder(context, cloudCredentials)
                 .onError(new Function1<Throwable, Unit>() {
                     @Override
@@ -51,7 +49,7 @@ public class ProximityContentManager {
 
         ProximityZone places = new ProximityZoneBuilder()
                 .forTag("place")
-                .inCustomRange(3.5)
+                .inCustomRange(3.0)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
             @Override
             public Unit invoke(ProximityZoneContext zoneContext) {
@@ -59,7 +57,19 @@ public class ProximityContentManager {
                 if (place == null) {
                     place = "unknown";
                 }
+                //wlaczanie swiatla
+                StringBuilder stringBuilder = new StringBuilder("1");
+                stringBuilder.append(place);
+                place = stringBuilder.toString();
+
                 Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
+                Log.d("ProximityContentManager","Przed wysylka wejscia");
+                if(ServerManager.isServiceStarted)
+                Client.sendMessage(place);
+                Log.d("ProximityContentManager","Po wysylce wejscia");
+
+                proximityContentAdapter.notifyDataSetChanged();
+
                 return null;
             }
         }) .onExit(new Function1<ProximityZoneContext, Unit>() {
@@ -69,8 +79,16 @@ public class ProximityContentManager {
                 if (place == null) {
                     place = "unknown";
                 }
-                Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
+                StringBuilder stringBuilder = new StringBuilder("0");
+                stringBuilder.append(place);
+                place = stringBuilder.toString();
 
+                Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
+                Log.d("ProximityContentManager","Przed wysylka wejscia");
+                if(ServerManager.isServiceStarted)
+                Client.sendMessage(place);
+
+                Log.d("ProximityContentManager","Po wysylce wejscia");
 
                 proximityContentAdapter.notifyDataSetChanged();
 
