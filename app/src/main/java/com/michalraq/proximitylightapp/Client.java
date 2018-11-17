@@ -47,6 +47,7 @@ public class Client extends Service {
                     serverAddr = InetAddress.getByName(ServerContent.SERVER_IP);
                     socket = new Socket(serverAddr, ServerContent.PORT_NUMBER);
 
+                    ServerManager.isServiceStarted = true;
 
                     printWriter = new PrintWriter(socket.getOutputStream());
                     bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -115,9 +116,9 @@ public class Client extends Service {
     @Override
     public void onDestroy() {
 
+    ServerManager.isServiceStarted = false;
     closeSocket();
     showToastInIntentService("Usługa zatrzymana.");
-
         super.onDestroy();
     }
 

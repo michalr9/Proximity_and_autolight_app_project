@@ -63,10 +63,9 @@ public class ProximityContentManager {
                 place = stringBuilder.toString();
 
                 Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
-                Log.d("ProximityContentManager","Przed wysylka wejscia");
+
                 if(ServerManager.isServiceStarted)
                 Client.sendMessage(place);
-                Log.d("ProximityContentManager","Po wysylce wejscia");
 
                 proximityContentAdapter.notifyDataSetChanged();
 
@@ -84,11 +83,9 @@ public class ProximityContentManager {
                 place = stringBuilder.toString();
 
                 Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
-                Log.d("ProximityContentManager","Przed wysylka wejscia");
+
                 if(ServerManager.isServiceStarted)
                 Client.sendMessage(place);
-
-                Log.d("ProximityContentManager","Po wysylce wejscia");
 
                 proximityContentAdapter.notifyDataSetChanged();
 

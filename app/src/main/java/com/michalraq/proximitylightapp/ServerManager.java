@@ -65,9 +65,6 @@ public class ServerManager extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                isServiceStarted = true;
-               // Toast.makeText(ServerManager.this, "Uruchamianie usługi...", Toast.LENGTH_SHORT).show();
-
                 manageButtonsStatus("start");
                 startService(new Intent(getApplicationContext(),Client.class));
 
@@ -78,17 +75,15 @@ public class ServerManager extends AppCompatActivity {
         buttonStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isServiceStarted = false;
 
                 if(!isDataChanged){
                     buttonStart.setEnabled(true);
                     isDataChanged=false;
                 }
 
-                Toast.makeText(ServerManager.this, "Serwis zatrzymany!", Toast.LENGTH_SHORT).show();
+                stopService(new Intent(getApplicationContext(),Client.class));
 
                 manageButtonsStatus("stop");
-                stopService(new Intent(getApplicationContext(),Client.class));
 
             }
         });
