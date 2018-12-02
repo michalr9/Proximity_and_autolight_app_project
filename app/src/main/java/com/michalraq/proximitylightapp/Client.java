@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -53,7 +54,8 @@ public class Client extends Service {
                     bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                     connectedWithServerInfo=receiveMessage();
-                        showToastInIntentService(connectedWithServerInfo);
+                    showToastInIntentService(connectedWithServerInfo);
+
 
                 } catch (UnknownHostException e) {
                     showToastInIntentService("Podano zły adres hosta!");
@@ -61,6 +63,7 @@ public class Client extends Service {
 
                 } catch (IOException e) {
                     showToastInIntentService("Wystąpił błąd podczas próby nawiazania połączenia!");
+                    sendBroadcast(true,"fail");
                     closeSocket();
                     stopSelf();
                 }
@@ -100,6 +103,17 @@ public class Client extends Service {
         return  message;
     }
 
+    private void sendBroadcast (Boolean status,String name){
+        switch (name) {
+            case "fail":
+                Intent intent = new Intent ("message");
+                intent.putExtra(name, status);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                break;
+        }
+
+    }
+
     public void showToastInIntentService(final String text) {
         final Context MyContext = this;
 
@@ -116,9 +130,9 @@ public class Client extends Service {
     @Override
     public void onDestroy() {
 
-    ServerManager.isServiceStarted = false;
-    closeSocket();
-    showToastInIntentService("Usługa zatrzymana.");
+        ServerManager.isServiceStarted = false;
+        closeSocket();
+        showToastInIntentService("Usługa zatrzymana.");
         super.onDestroy();
     }
 

@@ -8,5 +8,6 @@
     <color name="colorNotClickable">#D2FDFF</color>
     <color name="colorAccepted">#C2EABD</color>
     <color name="defaultContentBackground">#7ed5f2</color>
+    <color name="colorGreen">#19ed32</color>
 
 </resources>

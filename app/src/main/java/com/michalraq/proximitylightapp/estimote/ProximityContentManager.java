@@ -57,7 +57,7 @@ public class ProximityContentManager {
                 if (place == null) {
                     place = "unknown";
                 }
-                //wlaczanie swiatla
+                //sygnal 1- wlaczanie swiatla
                 StringBuilder stringBuilder = new StringBuilder("1");
                 stringBuilder.append(place);
                 place = stringBuilder.toString();

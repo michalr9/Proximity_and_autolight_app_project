@@ -4,7 +4,7 @@
     <string name="beacon_image_desc">image of beacon</string>
     <string name="where_is_light">Aktualnie światło zapalone dla</string>
     <string name="beacons_title">Beacons</string>
-    <string name="editTextInfoServers">Poniżej wprowadź ustawienia serwera dla poprawnego działania aplikacji. Podaj adres IP oraz port, na którym uruchomiona jest usługa.</string>
+    <string name="editTextInfoServers">Poniżej wprowadź ustawienia serwera. Podaj adres IP oraz port, na którym uruchomiona jest usługa.</string>
     <string name="editTextServerHint">127.0.0.1</string>
     <string name="editTextPortHint">8080</string>
     <string name="tvServerIP">Serwer IP</string>
@@ -14,5 +14,7 @@
     <string name="saveButton">ZAPISZ</string>
     <string name="startService">Start</string>
     <string name="stopService">Stop</string>
-    <string name="startStopDesc">Poniżej znajdują się przyciski do aktywacji oraz zatrzymania usługi komunikacji z serwerem.</string>
+    <string name="startStopDesc">Jeżeli połączenie zostanie nawiązane, wyświetli się powiadomienie.</string>
+    <string name="tvConnectionStatusPositive"><font fgcolor='#19ed32'>Połączono</font></string>
+    <string name="tvConnectionStatusNegative"><font fgcolor='#d73b45'>Nie połączono</font></string>
 </resources>

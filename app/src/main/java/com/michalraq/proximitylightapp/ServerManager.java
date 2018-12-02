@@ -1,8 +1,12 @@
 package com.michalraq.proximitylightapp;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,14 +29,24 @@ public class ServerManager extends AppCompatActivity {
     private  EditText etPortNumber;
     private SharedPreferences preferences;
     public static boolean isServiceStarted,isDataChanged;
-    public ServerContent server;
 
+    private BroadcastReceiver bReceiver = new BroadcastReceiver(){
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+          Boolean fail = intent.getBooleanExtra("fail",false);
+          if(fail){
+              buttonStart.setEnabled(true);
+              buttonStop.setEnabled(false);
+          }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server_manager);
-        preferences = getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE); //nazwa pliku do przechowywania ustawien i tryb
+        preferences = getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
 
          buttonSave = findViewById(R.id.buttonSave);
          etIPServer = findViewById(R.id.editTextServerIP);
@@ -40,23 +54,38 @@ public class ServerManager extends AppCompatActivity {
          buttonStart = findViewById(R.id.buttonStartService);
          buttonStop = findViewById(R.id.buttonStopService);
 
-         restoreData();
+      //  restoreData();
 
-         initButtonListener();
+         initButtonSaveListener();
          initButtonStartListener();
          initButtonStopListener();
-         server = new ServerContent();
 
          etIPServer.addTextChangedListener(settingsTextWatcher);
          etPortNumber.addTextChangedListener(settingsTextWatcher);
 
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveData();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
+    }
 
-    private void initButtonListener(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        restoreData();
+        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("message"));
+
+    }
+
+    private void initButtonSaveListener(){
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
+                isDataChanged = false;
+                setServerContent();
+                manageButtonsStatus("save");
                 Toast.makeText(ServerManager.this, "Dane zapisano!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -64,7 +93,6 @@ public class ServerManager extends AppCompatActivity {
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 manageButtonsStatus("start");
                 startService(new Intent(getApplicationContext(),Client.class));
 
@@ -76,51 +104,37 @@ public class ServerManager extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!isDataChanged){
-                    buttonStart.setEnabled(true);
-                    isDataChanged=false;
-                }
-
                 stopService(new Intent(getApplicationContext(),Client.class));
-
                 manageButtonsStatus("stop");
-
             }
         });
     }
 
    private void saveData(){
-       isDataChanged = false;
 
-       SharedPreferences.Editor preferencesEditor = preferences.edit();
-    String ipServerToSave = etIPServer.getText().toString().trim();
-    String portServerToSave = etPortNumber.getText().toString().trim();
-
-    preferencesEditor.putString(SERVER_IP,ipServerToSave);
-    preferencesEditor.putString(PORT_NUMBER,portServerToSave);
-    preferencesEditor.putBoolean(IS_DATA_CHANGED,isDataChanged);
-
-    server.setServerIP(ipServerToSave);
-    server.setPortNumber(Integer.parseInt(portServerToSave));
-    preferencesEditor.apply();
-
-    ServerContent.SERVER_IP = ipServerToSave;
-    ServerContent.PORT_NUMBER = Integer.parseInt(portServerToSave);
-
-    buttonSave.setEnabled(false);
-    buttonStart.setEnabled(true);
-    }
-
-    private void saveServiceStatus(){
         SharedPreferences.Editor preferencesEditor = preferences.edit();
+        String ipServerToSave = etIPServer.getText().toString().trim();
+        String portServerToSave = etPortNumber.getText().toString().trim();
+
+        preferencesEditor.putString(SERVER_IP,ipServerToSave);
+        preferencesEditor.putString(PORT_NUMBER,portServerToSave);
+
         preferencesEditor.putBoolean(IS_SERVICE_STARTED,isServiceStarted);
         preferencesEditor.putBoolean(IS_DATA_CHANGED,isDataChanged);
         preferencesEditor.apply();
     }
 
+    private void setServerContent(){
+        String ipServerToSave = etIPServer.getText().toString().trim();
+        String portServerToSave = etPortNumber.getText().toString().trim();
+        ServerContent.SERVER_IP = ipServerToSave;
+        ServerContent.PORT_NUMBER = Integer.parseInt(portServerToSave);
+    }
+
    private void restoreData(){
             String ipServerSaved = preferences.getString(SERVER_IP, "");
             String portServerSaved = preferences.getString(PORT_NUMBER, "");
+
             isServiceStarted = preferences.getBoolean(IS_SERVICE_STARTED,false);
             isDataChanged = preferences.getBoolean(IS_DATA_CHANGED,false);
 
@@ -132,19 +146,18 @@ public class ServerManager extends AppCompatActivity {
 
             if(!ipServerSaved.isEmpty() && !portServerSaved.isEmpty()){
                 buttonSave.setBackgroundColor(getResources().getColor(R.color.colorAccepted));
+            }else
+            {
+                buttonSave.setBackgroundColor(getResources().getColor(R.color.colorError));
             }
 
             if(isServiceStarted) {
-                etIPServer.setEnabled(false);
-                etPortNumber.setEnabled(false);
-                buttonStop.setEnabled(true);
+              manageButtonsStatus("start");
             }else{
-                buttonStop.setEnabled(false);
+              manageButtonsStatus("stop");
             }
 
-            if(!isDataChanged && !isServiceStarted){
-                buttonStart.setEnabled(true);
-            }
+
    }
 
     private TextWatcher settingsTextWatcher = new TextWatcher() {
@@ -180,24 +193,24 @@ public class ServerManager extends AppCompatActivity {
             case "start":
                 buttonStart.setEnabled(false);
                 buttonStop.setEnabled(true);
+                buttonSave.setEnabled(false);
                 etIPServer.setEnabled(false);
                 etPortNumber.setEnabled(false);
-                saveServiceStatus();
                 break;
             case "stop":
+                buttonStart.setEnabled(true);
                 buttonStop.setEnabled(false);
+                buttonSave.setEnabled(false);
+
                 etIPServer.setEnabled(true);
                 etPortNumber.setEnabled(true);
-                saveServiceStatus();
+                break;
+            case "save":
+                buttonSave.setEnabled(false);
+                buttonStart.setEnabled(true);
+                buttonStop.setEnabled(false);
                 break;
         }
-    }
-
-    @Override
-    protected void onPause() {
-        saveData();
-        saveServiceStatus();
-        super.onPause();
     }
 
     public Button getButtonStart() {
