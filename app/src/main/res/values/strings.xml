@@ -17,4 +17,5 @@
     <string name="startStopDesc">Jeżeli połączenie zostanie nawiązane, wyświetli się powiadomienie.</string>
     <string name="tvConnectionStatusPositive"><font fgcolor='#19ed32'>Połączono</font></string>
     <string name="tvConnectionStatusNegative"><font fgcolor='#d73b45'>Nie połączono</font></string>
+    <string name="action_renew">Refresh</string>
 </resources>

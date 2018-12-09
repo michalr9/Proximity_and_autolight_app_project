@@ -37,7 +37,6 @@ public class MainMenu extends AppCompatActivity {
     Boolean isBTActive;
     final Boolean enableWiFi = true;
     WifiManager wifiManager;
-    Button buttonClient;
 
     @Override
     protected void onStart(){
@@ -61,6 +60,9 @@ public class MainMenu extends AppCompatActivity {
             case R.id.acction_settings:
                 Intent editServer = new Intent(this, ServerManager.class);
                 startActivity(editServer);
+            return true;
+            case R.id.acction_refresh:
+                //TODO operacja pobierania danych z bazy uzycie adaptera
             return true;
 
             default:
