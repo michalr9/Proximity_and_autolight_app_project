@@ -69,6 +69,10 @@ public class MainMenu extends AppCompatActivity {
             case R.id.acction_refresh:
                 new DatabaseHandler(this,this).execute("widok1");
                 return true;
+            case R.id.acction_details:
+                Intent details = new Intent(this, DetailsView.class);
+                startActivity(details);
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);

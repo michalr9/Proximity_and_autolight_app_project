@@ -7,6 +7,10 @@
         android:icon="@drawable/ic_autorenew"
         android:title="@string/action_renew"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/acction_details"
+        android:title="@string/action_details"
+        app:showAsAction="never"/>
 
 <item android:id="@+id/acction_settings"
     android:title="@string/action_settings_name"

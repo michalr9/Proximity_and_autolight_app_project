@@ -26,4 +26,9 @@
     <string name="tvKitchenStatus">Kuchnia</string>
     <string name="statusOn">ŚWIATŁO WŁĄCZONE</string>
     <string name="statusOff">ŚWIATŁO WYŁĄCZONE</string>
+    <string name="tvInfoAboutButtonsSMH">Zmień jednostkę wyświetlania czasu.</string>
+    <string name="buttonSeconds">SEKUNDY</string>
+    <string name="buttonMinutes">MINUTY</string>
+    <string name="buttonHours">GODZINY</string>
+    <string name="action_details">Czas pracy</string>
 </resources>

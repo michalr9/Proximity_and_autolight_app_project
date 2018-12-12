@@ -1,13 +1,16 @@
 package com.michalraq.proximitylightapp.database;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 
 import com.michalraq.proximitylightapp.R;
+import com.michalraq.proximitylightapp.StateOfLight;
 import com.michalraq.proximitylightapp.Util.*;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+
 public class DatabaseManager {
 
      private String url ;
@@ -78,6 +81,34 @@ public class DatabaseManager {
             Log.e("DataBaseManager","Connection is NULL");
         }
         return status;
+    }
+
+    public void checkTimeWork(){
+        StateOfLight.summaryOfTimeLightOn = new HashMap<>();
+        String SQL1 = "select CMT_PLACES.SUM_TIME_OF_LIGHT_ON from CMT_PLACES\n" +
+                "where PLACE = 'biuro'";
+        String SQL2 = "select CMT_PLACES.SUM_TIME_OF_LIGHT_ON from CMT_PLACES\n" +
+                "where PLACE = 'salon'";
+        String SQL3 = "select CMT_PLACES.SUM_TIME_OF_LIGHT_ON from CMT_PLACES\n" +
+                "where PLACE = 'kuchnia'";
+        if (connection != null) {
+            try (Statement stm = connection.createStatement()) {
+                ResultSet rs = stm.executeQuery(SQL1);
+                rs.next();
+                StateOfLight.summaryOfTimeLightOn.put("biuro", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                 rs = stm.executeQuery(SQL2);
+                rs.next();
+                StateOfLight.summaryOfTimeLightOn.put("salon", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                 rs = stm.executeQuery(SQL3);
+                rs.next();
+                StateOfLight.summaryOfTimeLightOn.put("kuchnia", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+            } catch (SQLException e) {
+                System.err.println("Blad podczas sprawdzenia czy istnieje rekord");
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("DataBaseManager","checkTimeWork has failed");
+        }
     }
 
 
