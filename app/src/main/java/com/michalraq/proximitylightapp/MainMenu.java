@@ -73,7 +73,6 @@ public class MainMenu extends AppCompatActivity {
             return true;
             case R.id.acction_refresh:
                 new DatabaseHandler(this).execute("widok1");
-                refreshTextfields();
             return true;
 
             default:
@@ -100,9 +99,9 @@ public class MainMenu extends AppCompatActivity {
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         /*Beacons*/
-        proximityContentAdapter = new ProximityContentAdapter(this);
-        GridView gridView = findViewById(R.id.gridView);
-        gridView.setAdapter(proximityContentAdapter);
+//        proximityContentAdapter = new ProximityContentAdapter(this);
+//        GridView gridView = findViewById(R.id.gridView);
+//        gridView.setAdapter(proximityContentAdapter);
 
         checkRequirements();
 
@@ -161,12 +160,7 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-    private void refreshTextfields() {
 
-        Boolean biuro=sharedPreferences.getBoolean(OFFICE,false), kuchnia=sharedPreferences.getBoolean(KITCHEN,false), salon=sharedPreferences.getBoolean(SALOON,false);
-
-        Log.d("MainMenu","Wartosci biuro = "+biuro+" kuchnia = "+kuchnia+"salon = "+salon);
-    }
 
     public void checkRequirements(){
         RequirementsWizardFactory

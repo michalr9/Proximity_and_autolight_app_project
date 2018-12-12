@@ -32,9 +32,6 @@ public class DatabaseManager {
                     dbName,
                     user,
                     password);
-
-//url = "jdbc:jtds:sqlserver://proximityserver.database.windows.net:1433/Proximity;user=Michal;password=Qaz12345;";
-
     }
 //TODO zmienic przechowywanie hasla i danych do bazy pobrac odpowiedni driver
     public Boolean connectDatabase(){

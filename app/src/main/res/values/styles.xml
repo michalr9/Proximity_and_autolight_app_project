@@ -5,12 +5,17 @@
         <!-- Customize your theme here. -->
     <style name="CustomToolbar" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:background">@color/colorTiger</item>
-
     </style>
     <style name="CustomPopup" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@color/colorAccent</item>
         <item name="overlapAnchor">false</item>
         <item name="android:dropDownVerticalOffset">-5dp</item>
     </style>
-
+    <style name="MyToggle" parent="@android:style/Widget.Material.Light.Button.Toggle">
+        <item name="android:textColorPrimary">@color/colorTiger</item>
+        <item name="colorAccent">#2aa626</item>
+        <item name="android:colorControlNormal">#f24b18</item>
+        <item name="android:colorControlHighlight">#d2080e</item>
+        <item name="android:colorButtonNormal">#e4fce4</item>
+    </style>
 </resources>

@@ -21,4 +21,7 @@
     <string name="server">proximityserver.database.windows.net</string>
     <string name="user">Michal</string>
     <string name="pass">Qaz12345</string>
+    <string name="tvOfficeStatus">Biuro</string>
+    <string name="tvSaloonStatus">Salon</string>
+    <string name="tvKitchenStatus">Kuchnia</string>
 </resources>

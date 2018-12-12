@@ -12,8 +12,8 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
     private static final String KITCHEN = "kuchnia";
     private static final String SALOON = "salon";
 
-    Context context;
-    DatabaseManager databaseManager;
+    private Context context;
+    private DatabaseManager databaseManager;
     private ProgressDialog dialog;
     private SharedPreferences preferences;
     private Boolean office, kitchen, saloon;
@@ -25,10 +25,9 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
     @Override
     protected void onPreExecute() {
         preferences = context.getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
-//        dialog = new ProgressDialog(context);
-//        dialog.setMessage("Czekaj...");
-//        dialog.show();
-
+        dialog = new ProgressDialog(context);
+        dialog.setMessage("Czekaj...");
+        dialog.show();
         }
 
     @Override
@@ -67,5 +66,7 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
 
         if(databaseManager.getConnection()!=null)
         databaseManager.disconnectDatabase();
+        dialog.dismiss();
+
     }
 }
