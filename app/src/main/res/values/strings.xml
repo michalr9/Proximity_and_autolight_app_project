@@ -24,4 +24,6 @@
     <string name="tvOfficeStatus">Biuro</string>
     <string name="tvSaloonStatus">Salon</string>
     <string name="tvKitchenStatus">Kuchnia</string>
+    <string name="statusOn">ŚWIATŁO WŁĄCZONE</string>
+    <string name="statusOff">ŚWIATŁO WYŁĄCZONE</string>
 </resources>

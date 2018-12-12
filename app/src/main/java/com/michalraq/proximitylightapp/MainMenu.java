@@ -13,14 +13,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
 import com.michalraq.proximitylightapp.database.DatabaseHandler;
-import com.michalraq.proximitylightapp.database.DatabaseManager;
 import com.michalraq.proximitylightapp.estimote.ProximityContentAdapter;
 import com.michalraq.proximitylightapp.estimote.ProximityContentManager;
 
@@ -38,22 +38,17 @@ public class MainMenu extends AppCompatActivity {
 
     private ProximityContentManager proximityContentManager;
     private ProximityContentAdapter proximityContentAdapter;
-    public EstimoteCloudCredentials cloudCredentials =
-            new EstimoteCloudCredentials("proximity-light-4nu", "d25c41d6bc5b7cb0fe1f394be8ccf46d");
+    public EstimoteCloudCredentials cloudCredentials = new EstimoteCloudCredentials("proximity-light-4nu", "d25c41d6bc5b7cb0fe1f394be8ccf46d");
 
     BluetoothAdapter mBtAdapter;
     Boolean isBTActive;
     final Boolean enableWiFi = true;
     WifiManager wifiManager;
 
+    private Boolean office,kitchen,saloon;
+    private ToggleButton buttonOffice,buttonKitchen,buttonSaloon;
     private SharedPreferences sharedPreferences;
 
-    @Override
-    protected void onStart(){
-    //    enableBT();
-        enableWiFi();
-        super.onStart();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,8 +67,8 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(editServer);
             return true;
             case R.id.acction_refresh:
-                new DatabaseHandler(this).execute("widok1");
-            return true;
+                new DatabaseHandler(this,this).execute("widok1");
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -98,6 +93,11 @@ public class MainMenu extends AppCompatActivity {
         /*WIFI*/
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
+        /*Buttons*/
+        buttonOffice = findViewById(R.id.button_status_office);
+        buttonKitchen = findViewById(R.id.button_status_kitchen);
+        buttonSaloon = findViewById(R.id.button_status_saloon);
+        setButtonsStatus();
         /*Beacons*/
 //        proximityContentAdapter = new ProximityContentAdapter(this);
 //        GridView gridView = findViewById(R.id.gridView);
@@ -108,6 +108,38 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
+    private void setButtonsStatus() {
+        office = sharedPreferences.getBoolean(OFFICE,false);
+        kitchen = sharedPreferences.getBoolean(KITCHEN,false);
+        saloon = sharedPreferences.getBoolean(SALOON,false);
+
+        if(office){
+            buttonOffice.setChecked(true);
+        }else{
+            buttonOffice.setChecked(false);
+
+        }
+        if(kitchen){
+            buttonKitchen.setChecked(true);
+
+        }else{
+            buttonKitchen.setChecked(false);
+
+        }
+        if(saloon){
+            buttonSaloon.setChecked(true);
+
+        }else{
+            buttonSaloon.setChecked(false);
+
+        }
+    }
+
+    @Override
+    protected void onStart(){
+        enableWiFi();
+        super.onStart();
+    }
 
     private void startProximityContentManager() {
         proximityContentManager = new ProximityContentManager(this, proximityContentAdapter, cloudCredentials);
