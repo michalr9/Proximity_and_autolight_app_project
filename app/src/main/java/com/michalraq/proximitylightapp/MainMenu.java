@@ -1,8 +1,10 @@
 package com.michalraq.proximitylightapp;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
+import com.michalraq.proximitylightapp.database.DatabaseHandler;
+import com.michalraq.proximitylightapp.database.DatabaseManager;
 import com.michalraq.proximitylightapp.estimote.ProximityContentAdapter;
 import com.michalraq.proximitylightapp.estimote.ProximityContentManager;
 
@@ -27,6 +31,10 @@ import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
 
 public class MainMenu extends AppCompatActivity {
+    private static final String PREFERENCES = "myPreferences";
+    private static final String OFFICE = "biuro";
+    private static final String KITCHEN = "kuchnia";
+    private static final String SALOON = "salon";
 
     private ProximityContentManager proximityContentManager;
     private ProximityContentAdapter proximityContentAdapter;
@@ -37,6 +45,8 @@ public class MainMenu extends AppCompatActivity {
     Boolean isBTActive;
     final Boolean enableWiFi = true;
     WifiManager wifiManager;
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onStart(){
@@ -62,7 +72,8 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(editServer);
             return true;
             case R.id.acction_refresh:
-                //TODO operacja pobierania danych z bazy uzycie adaptera
+                new DatabaseHandler(this).execute("widok1");
+                refreshTextfields();
             return true;
 
             default:
@@ -77,6 +88,9 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
+        /*PREFERENCES*/
+        sharedPreferences = getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
 
         /*BLUETOOTH*/
         isBTActive = false;
@@ -145,6 +159,13 @@ public class MainMenu extends AppCompatActivity {
             Toast.makeText(this, "Aktywowano WiFi !", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void refreshTextfields() {
+
+        Boolean biuro=sharedPreferences.getBoolean(OFFICE,false), kuchnia=sharedPreferences.getBoolean(KITCHEN,false), salon=sharedPreferences.getBoolean(SALOON,false);
+
+        Log.d("MainMenu","Wartosci biuro = "+biuro+" kuchnia = "+kuchnia+"salon = "+salon);
     }
 
     public void checkRequirements(){

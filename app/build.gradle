@@ -30,9 +30,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation 'com.estimote:proximity-sdk:1.0.3'
     implementation 'com.estimote:mustard:0.2.1'
-
-
+    implementation files('libs/mssql-jdbc-6.4.0.jre8.jar')
+    implementation group: 'net.sourceforge.jtds', name: 'jtds', version: '1.2'
 }

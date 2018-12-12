@@ -18,4 +18,7 @@
     <string name="tvConnectionStatusPositive"><font fgcolor='#19ed32'>Połączono</font></string>
     <string name="tvConnectionStatusNegative"><font fgcolor='#d73b45'>Nie połączono</font></string>
     <string name="action_renew">Refresh</string>
+    <string name="server">proximityserver.database.windows.net</string>
+    <string name="user">Michal</string>
+    <string name="pass">Qaz12345</string>
 </resources>
