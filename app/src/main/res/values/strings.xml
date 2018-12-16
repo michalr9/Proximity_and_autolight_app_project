@@ -27,8 +27,9 @@
     <string name="statusOn">ŚWIATŁO WŁĄCZONE</string>
     <string name="statusOff">ŚWIATŁO WYŁĄCZONE</string>
     <string name="tvInfoAboutButtonsSMH">Zmień jednostkę wyświetlania czasu.</string>
-    <string name="buttonSeconds">SEKUNDY</string>
+    <string name="buttonDays">DNI</string>
     <string name="buttonMinutes">MINUTY</string>
     <string name="buttonHours">GODZINY</string>
     <string name="action_details">Czas pracy</string>
+    <string name="tvDetailsDescribe">Naciśnij dowolny przycisk, aby zobaczyć zaktualizowane wyniki w wybranej jednostce.</string>
 </resources>

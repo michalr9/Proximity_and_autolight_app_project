@@ -5,20 +5,20 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.StateOfLight;
 
-import java.util.Map;
-
 public class DatabaseHandler extends AsyncTask<String,Void,Void> {
     private static final String PREFERENCES = "myPreferences";
     private static final String OFFICE = "biuro";
     private static final String KITCHEN = "kuchnia";
     private static final String SALOON = "salon";
+    private static final String OFFICEDETAILS = "officeDetails";
+    private static final String KITCHENDETAILS = "kitchenDetails";
+    private static final String SALOONDETAILS = "saloonDetails";
 
     private Context context;
     private Activity activity;
@@ -37,15 +37,15 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
         view1=false;view2=false;view3=false;
         preferences = context.getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
         dialog = new ProgressDialog(context);
-        dialog.setMessage("Czekaj...");
+        dialog.setMessage("Czekaj...\nPobieram aktualne dane.");
         dialog.show();
         }
 
     @Override
     protected Void doInBackground(String... fetch) {
         if(!databaseManager.connectDatabase()){
+            Toast.makeText(context, "Wystąpił błąd połączenia z bazą, spróbuj ponownie później.", Toast.LENGTH_SHORT).show();
             this.cancel(true);
-            Toast.makeText(context, "Wystąpił błąd, spróbuj ponownie później.", Toast.LENGTH_SHORT).show();
         }else {
             switch (fetch[0]) {
                 case "widok1":
@@ -87,17 +87,17 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
             saloonBut.setChecked(this.saloon);
         }
         if(view2){
-            TextView tvKitchen,tvOffice,tvSaloon;
-            tvKitchen = activity.findViewById(R.id.tvKitchenDetailsNumber);
-            tvOffice = activity.findViewById(R.id.tvOfficeDetailsNumber);
-            tvSaloon = activity.findViewById(R.id.tvSaloonDetailsNumber);
 
-            Long office = StateOfLight.getValueInMin("biuro");
-            Long kitchen = StateOfLight.getValueInMin("kuchnia");
-            Long saloon = StateOfLight.getValueInMin("salon");
-            tvOffice.setText(office.toString());
-            tvKitchen.setText(kitchen.toString());
-            tvSaloon.setText(saloon.toString());
+            Long officeDet = StateOfLight.getValueInSec("biuro");
+            Long kitchenDet = StateOfLight.getValueInSec("kuchnia");
+            Long saloonDet = StateOfLight.getValueInSec("salon");
+
+            SharedPreferences.Editor preferencesEditor = preferences.edit();
+            preferencesEditor.putLong(OFFICEDETAILS, officeDet);
+            preferencesEditor.putLong(KITCHENDETAILS, kitchenDet);
+            preferencesEditor.putLong(SALOONDETAILS, saloonDet);
+            preferencesEditor.apply();
+
         }
 
 

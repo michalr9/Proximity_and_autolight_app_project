@@ -22,4 +22,7 @@ public class StateOfLight {
         return (long)0;
 
     }
+    public static Long getValueInMilliseconds(Object key){
+        return (summaryOfTimeLightOn.get(key)*1000);
+    }
 }

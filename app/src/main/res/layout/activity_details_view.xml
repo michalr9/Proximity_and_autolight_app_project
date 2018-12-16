@@ -44,15 +44,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSaloonDetails" />
 
     <Button
-        android:id="@+id/buttonInSeconds"
+        android:id="@+id/buttonInDays"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/buttonSeconds"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonInMinutes"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginEnd="8dp"
+        android:text="@string/buttonDays"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonInHours"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/buttonInMinutes"
@@ -60,23 +59,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/buttonMinutes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonInHours"
-        app:layout_constraintStart_toEndOf="@+id/buttonInSeconds" />
+        app:layout_constraintBottom_toBottomOf="@+id/buttonInHours"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonInHours"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/buttonHours"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonInMinutes"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonInDays"
+        app:layout_constraintStart_toEndOf="@+id/buttonInMinutes" />
 
     <TextView
         android:id="@+id/tvOfficeDetailsNumber"
@@ -84,11 +82,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="monospace"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvSaloonDetailsNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvOfficeDetails"
-        app:layout_constraintTop_toTopOf="@+id/tvOfficeDetails" />
+        app:layout_constraintTop_toTopOf="@+id/tvOfficeDetails"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvSaloonDetailsNumber"
@@ -96,11 +97,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="monospace"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvKitchenDetailsNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvSaloonDetails"
-        app:layout_constraintTop_toTopOf="@+id/tvSaloonDetails" />
+        app:layout_constraintTop_toTopOf="@+id/tvSaloonDetails"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvKitchenDetailsNumber"
@@ -111,6 +115,7 @@
         android:fontFamily="monospace"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toEndOf="@+id/tvKitchenDetails"
         app:layout_constraintTop_toTopOf="@+id/tvKitchenDetails" />
 
@@ -126,8 +131,22 @@
         android:text="@string/tvInfoAboutButtonsSMH"
         android:textAlignment="center"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonInMinutes"
+        app:layout_constraintBottom_toTopOf="@+id/buttonInHours"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvKitchenDetailsNumber" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/tvDetailsDescribe"
+        app:layout_constraintBottom_toTopOf="@+id/tvOfficeDetails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
