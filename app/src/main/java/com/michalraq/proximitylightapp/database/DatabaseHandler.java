@@ -11,6 +11,8 @@ import android.widget.ToggleButton;
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.StateOfLight;
 
+import java.util.concurrent.TimeUnit;
+
 public class DatabaseHandler extends AsyncTask<String,Void,Void> {
     private static final String PREFERENCES = "myPreferences";
     private static final String OFFICE = "biuro";
@@ -37,15 +39,27 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
         view1=false;view2=false;view3=false;
         preferences = context.getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
         dialog = new ProgressDialog(context);
-        dialog.setMessage("Czekaj...\nPobieram aktualne dane.");
+        dialog.setMessage(context.getString(R.string.dialogMessageWait));
         dialog.show();
         }
 
     @Override
     protected Void doInBackground(String... fetch) {
         if(!databaseManager.connectDatabase()){
-            Toast.makeText(context, "Wystąpił błąd połączenia z bazą, spróbuj ponownie później.", Toast.LENGTH_SHORT).show();
-            this.cancel(true);
+            try {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.setMessage(context.getString(R.string.dialogMessageConnectWithDatabaseFailure));
+                }
+            });
+                TimeUnit.SECONDS.sleep(4);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }finally {
+                dialog.dismiss();
+                this.cancel(true);
+            }
         }else {
             switch (fetch[0]) {
                 case "widok1":

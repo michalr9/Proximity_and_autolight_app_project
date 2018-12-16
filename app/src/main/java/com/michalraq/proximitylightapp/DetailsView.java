@@ -96,28 +96,26 @@ public class DetailsView extends AppCompatActivity {
         Long officeLong = preferences.getLong(OFFICEDETAILS, 0L);
 
     if(saloonLong!= 0L && kitchenLong !=0L && officeLong !=0L) {
-        Double minutes, seconds;
+        Long minutes, seconds;
 
         /*Obliczenia dla salonu*/
-        minutes =  (saloonLong.doubleValue() / 60);
-        //seconds = saloonLong.doubleValue() / 60;
+        minutes = saloonLong / 60;
+        seconds = saloonLong % 60;
 
-        tvSaloon.setText(String.format("%.2f min", minutes));
+        tvSaloon.setText(String.format("%d:%d min", minutes, seconds));
         /*Obliczenia dla kuchni*/
 
-        minutes = kitchenLong.doubleValue() / 60;
-      //  seconds = kitchenLong % 60;
+        minutes = kitchenLong / 60;
+        seconds = kitchenLong % 60;
 
-        tvKitchen.setText(String.format("%.2f min", minutes ));
+        tvKitchen.setText(String.format("%d:%d min", minutes, seconds));
         /*Obliczenia dla biura*/
 
-        minutes = officeLong.doubleValue() / 60;
-       // seconds = officeLong % 60;
+        minutes = officeLong / 60;
+        seconds = officeLong % 60;
 
-
-        tvOffice.setText(String.format("%.2f min", minutes ));
-    }
-
+            tvOffice.setText(String.format("%d:%d min", minutes, seconds));
+        }
     }
     private void onButtonHoursClick() {
         Long saloonLong = preferences.getLong(SALOONDETAILS, 0L);
@@ -129,22 +127,19 @@ public class DetailsView extends AppCompatActivity {
 
             /*Obliczenia dla salonu*/
             hours = saloonLong / 3600;
-            minutes = saloonLong / 60 % 100;
 
-            tvSaloon.setText(String.format("%d.%d h", hours, minutes));
+            tvSaloon.setText(String.format("%d h", hours));
             /*Obliczenia dla kuchni*/
 
             hours = kitchenLong / 3600;
-            minutes = kitchenLong % 60;
 
-            tvKitchen.setText(String.format("%d.%d h", hours, minutes));
+            tvKitchen.setText(String.format("%d h", hours));
             /*Obliczenia dla biura*/
 
             hours = officeLong / 3600;
-            minutes = officeLong % 60;
 
 
-            tvOffice.setText(String.format("%d.%d h", hours, minutes));
+            tvOffice.setText(String.format("%d h", hours));
         }
     }
     private void onButtonDaysClick(){
@@ -209,6 +204,5 @@ public class DetailsView extends AppCompatActivity {
         tvOffice.setText(preferences.getString(OFFICEDETAILSSTRING,""));
         tvKitchen.setText(preferences.getString(KITCHENDETAILSSTRING,""));
     }
-//TODO przechowywanie wartosci okien ze statusem w pamieci
-    //TODO obsluga pozostalych buttonow
+
 }

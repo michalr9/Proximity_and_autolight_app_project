@@ -31,5 +31,6 @@
     <string name="buttonMinutes">MINUTY</string>
     <string name="buttonHours">GODZINY</string>
     <string name="action_details">Czas pracy</string>
-    <string name="tvDetailsDescribe">Naciśnij dowolny przycisk, aby zobaczyć zaktualizowane wyniki w wybranej jednostce.</string>
+    <string name="dialogMessageConnectWithDatabaseFailure">Wystąpił błąd połączenia z bazą, spróbuj ponownie później.</string>
+    <string name="dialogMessageWait">Czekaj... Pobieram aktualne dane.</string>
 </resources>
