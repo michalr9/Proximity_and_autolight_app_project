@@ -146,7 +146,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     private void startProximityContentManager() {
-        proximityContentManager = new ProximityContentManager(this, proximityContentAdapter, cloudCredentials);
+        proximityContentManager = new ProximityContentManager(this, cloudCredentials);
         proximityContentManager.start();
     }
 

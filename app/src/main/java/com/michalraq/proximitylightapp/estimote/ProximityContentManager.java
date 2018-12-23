@@ -24,13 +24,11 @@ import kotlin.jvm.functions.Function1;
 public class ProximityContentManager {
 
     private Context context;
-    private ProximityContentAdapter proximityContentAdapter;
     private EstimoteCloudCredentials cloudCredentials;
     private ProximityObserver.Handler proximityObserverHandler;
 
-    public ProximityContentManager(Context context, ProximityContentAdapter proximityContentAdapter, EstimoteCloudCredentials cloudCredentials) {
+    public ProximityContentManager(Context context, EstimoteCloudCredentials cloudCredentials) {
         this.context = context;
-        this.proximityContentAdapter = proximityContentAdapter;
         this.cloudCredentials = cloudCredentials;
     }
 
@@ -49,7 +47,7 @@ public class ProximityContentManager {
 
         ProximityZone places = new ProximityZoneBuilder()
                 .forTag("place")
-                .inCustomRange(3.0)
+                .inCustomRange(3.5)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
             @Override
             public Unit invoke(ProximityZoneContext zoneContext) {
@@ -66,8 +64,6 @@ public class ProximityContentManager {
 
                 if(ServerManager.isServiceStarted)
                 Client.sendMessage(place);
-
-                proximityContentAdapter.notifyDataSetChanged();
 
                 return null;
             }
@@ -87,7 +83,6 @@ public class ProximityContentManager {
                 if(ServerManager.isServiceStarted)
                 Client.sendMessage(place);
 
-                proximityContentAdapter.notifyDataSetChanged();
 
                 return null;
             }
@@ -97,7 +92,7 @@ public class ProximityContentManager {
 
         ProximityZone zone = new ProximityZoneBuilder()
                 .forTag("proximity-light-4nu")
-                .inCustomRange(3.5)
+                .inCustomRange(4.0)
                 .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
                     @Override
                     public Unit invoke(Set<? extends ProximityZoneContext> zoneContext) {
@@ -116,8 +111,8 @@ public class ProximityContentManager {
 
                         }
 
-                        proximityContentAdapter.setNearbyContent(nearbyContent);
-                        proximityContentAdapter.notifyDataSetChanged();
+//                        proximityContentAdapter.setNearbyContent(nearbyContent);
+//                        proximityContentAdapter.notifyDataSetChanged();
 
                         return null;
                     }
