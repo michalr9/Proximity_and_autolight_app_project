@@ -25,7 +25,6 @@ public class Client extends Service {
     private static BufferedReader bufferedReader;
     private static PrintWriter printWriter;
     InetAddress serverAddr;
-    String connectedWithServerInfo;
 
     @Nullable
     @Override
@@ -52,9 +51,10 @@ public class Client extends Service {
 
                     printWriter = new PrintWriter(socket.getOutputStream());
                     bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                    connectedWithServerInfo=receiveMessage();
-                    showToastInIntentService(connectedWithServerInfo);
+                    String message;
+                    while((message = bufferedReader.readLine())!=null) { //receive message
+                        showToastInIntentService(message);
+                    }
 
 
                 } catch (UnknownHostException e) {
@@ -91,16 +91,6 @@ public class Client extends Service {
             });
             thread.start();
         }
-    }
-
-    private String receiveMessage(){
-        String message="";
-        try {
-            message=bufferedReader.readLine();
-        } catch (IOException e) {
-            Log.e("Client","Error data null");
-        }
-        return  message;
     }
 
     private void sendBroadcast (Boolean status,String name){

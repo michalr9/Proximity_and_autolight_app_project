@@ -95,62 +95,82 @@ public class DetailsView extends AppCompatActivity {
         Long kitchenLong = preferences.getLong(KITCHENDETAILS, 0L);
         Long officeLong = preferences.getLong(OFFICEDETAILS, 0L);
 
-    if(saloonLong!= 0L && kitchenLong !=0L && officeLong !=0L) {
-        Long minutes, seconds;
+        Long minutes=0L, seconds=0L;
 
-        /*Obliczenia dla salonu*/
-        minutes = saloonLong / 60;
-        seconds = saloonLong % 60;
-
-        tvSaloon.setText(String.format("%d:%d min", minutes, seconds));
-        /*Obliczenia dla kuchni*/
-
-        minutes = kitchenLong / 60;
-        seconds = kitchenLong % 60;
-
-        tvKitchen.setText(String.format("%d:%d min", minutes, seconds));
-        /*Obliczenia dla biura*/
-
-        minutes = officeLong / 60;
-        seconds = officeLong % 60;
-
-            tvOffice.setText(String.format("%d:%d min", minutes, seconds));
+        if(saloonLong!=0L) {
+            /*Obliczenia dla salonu*/
+            minutes = saloonLong / 60;
+            seconds = saloonLong % 60;
         }
+        tvSaloon.setText(String.format("%d:%d min", minutes, seconds));
+        minutes=0L;
+        seconds=0L;
+        /*Obliczenia dla kuchni*/
+        if(kitchenLong!=0L) {
+            minutes = kitchenLong / 60;
+            seconds = kitchenLong % 60;
+        }
+        tvKitchen.setText(String.format("%d:%d min", minutes, seconds));
+        minutes=0L;
+        seconds=0L;
+        /*Obliczenia dla biura*/
+        if(officeLong!=0L) {
+            minutes = officeLong / 60;
+            seconds = officeLong % 60;
+        }
+            tvOffice.setText(String.format("%d:%d min", minutes, seconds));
+
     }
     private void onButtonHoursClick() {
         Long saloonLong = preferences.getLong(SALOONDETAILS, 0L);
         Long kitchenLong = preferences.getLong(KITCHENDETAILS, 0L);
         Long officeLong = preferences.getLong(OFFICEDETAILS, 0L);
 
-        if (saloonLong != 0L && kitchenLong != 0L && officeLong != 0L) {
-            Long hours, minutes;
+            Long hours=0L;
 
             /*Obliczenia dla salonu*/
+        if(saloonLong!=0L) {
             hours = saloonLong / 3600;
-
+        }
             tvSaloon.setText(String.format("%d h", hours));
             /*Obliczenia dla kuchni*/
-
-            hours = kitchenLong / 3600;
-
+        hours=0L;
+            if(kitchenLong!=0L) {
+                hours = kitchenLong / 3600;
+            }
             tvKitchen.setText(String.format("%d h", hours));
             /*Obliczenia dla biura*/
-
-            hours = officeLong / 3600;
-
-
+        hours=0L;
+                if(officeLong!=0L) {
+                    hours = officeLong / 3600;
+                }
             tvOffice.setText(String.format("%d h", hours));
-        }
+
     }
     private void onButtonDaysClick(){
         Long saloonLong = preferences.getLong(SALOONDETAILS, 0L);
         Long kitchenLong = preferences.getLong(KITCHENDETAILS, 0L);
         Long officeLong = preferences.getLong(OFFICEDETAILS, 0L);
-        if (saloonLong != 0L && kitchenLong != 0L && officeLong != 0L) {
 
-            Long daysSaloon = (saloonLong / ( 60 * 60 * 24));
-            Long daysKitchen = (kitchenLong / ( 60 * 60 * 24));
-            Long daysOffice = (officeLong / ( 60 * 60 * 24));
+        Long daysSaloon,daysKitchen,daysOffice;
+        if(saloonLong!=0L) {
+             daysSaloon = (saloonLong / (60 * 60 * 24));
+        }else{
+            daysSaloon=0L;
+        }
+
+            if(kitchenLong!=0L) {
+                 daysKitchen = (kitchenLong / (60 * 60 * 24));
+            }else{
+                daysKitchen=0L;
+            }
+
+            if(officeLong!=0L) {
+                 daysOffice = (officeLong / (60 * 60 * 24));
+            }else
+            {
+                daysOffice=0L;
+            }
 
             if(daysSaloon==1L){
                 tvSaloon.setText(String.format("%d dzień", daysSaloon));
@@ -168,7 +188,7 @@ public class DetailsView extends AppCompatActivity {
                 tvOffice.setText(String.format("%d dni", daysOffice));
             }
 
-        }
+
     }
 
     private void startDatabaseOperation() {
