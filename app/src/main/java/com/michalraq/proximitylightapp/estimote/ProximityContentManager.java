@@ -47,7 +47,7 @@ public class ProximityContentManager {
 
         ProximityZone places = new ProximityZoneBuilder()
                 .forTag("place")
-                .inCustomRange(3.5)
+                .inCustomRange(4.0)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
             @Override
             public Unit invoke(ProximityZoneContext zoneContext) {
