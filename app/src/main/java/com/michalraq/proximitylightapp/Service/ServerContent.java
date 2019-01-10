@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp;
+package com.michalraq.proximitylightapp.Service;
 
 public class ServerContent {
 

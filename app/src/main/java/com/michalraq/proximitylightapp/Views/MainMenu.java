@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp;
+package com.michalraq.proximitylightapp.Views;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -13,13 +13,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.GridView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
+import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.database.DatabaseHandler;
 import com.michalraq.proximitylightapp.estimote.ProximityContentAdapter;
 import com.michalraq.proximitylightapp.estimote.ProximityContentManager;

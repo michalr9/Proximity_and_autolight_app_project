@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp;
+package com.michalraq.proximitylightapp.Views;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.michalraq.proximitylightapp.R;
+import com.michalraq.proximitylightapp.Service.Client;
+import com.michalraq.proximitylightapp.Service.ServerContent;
 
 
 public class ServerManager extends AppCompatActivity {

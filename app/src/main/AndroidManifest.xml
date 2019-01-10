@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".MainMenu"
+            android:name=".Views.MainMenu"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,17 +28,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ServerManager"
+            android:name=".Views.ServerManager"
             android:label="@string/serverActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name=".Client" />
+        <service android:name=".Service.Client" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".DetailsView"></activity>
+        <activity android:name=".Views.DetailsView"></activity>
     </application>
 
 </manifest>

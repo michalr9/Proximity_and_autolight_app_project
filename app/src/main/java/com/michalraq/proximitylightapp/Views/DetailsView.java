@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp;
+package com.michalraq.proximitylightapp.Views;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.database.DatabaseHandler;
 
 public class DetailsView extends AppCompatActivity {
