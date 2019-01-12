@@ -6,7 +6,7 @@
     <string name="beacons_title">Beacons</string>
     <string name="editTextInfoServers">Poniżej wprowadź ustawienia serwera. Podaj adres IP oraz port, na którym uruchomiona jest usługa.</string>
     <string name="editTextServerHint">127.0.0.1</string>
-    <string name="editTextPortHint">8080</string>
+    <string name="editTextPortHint">12345</string>
     <string name="tvServerIP">Serwer IP</string>
     <string name="tvPort">Numer Portu</string>
     <string name="action_settings_name">Ustawienia serwera</string>

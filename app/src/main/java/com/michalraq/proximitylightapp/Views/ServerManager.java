@@ -144,9 +144,12 @@ public class ServerManager extends AppCompatActivity {
 
             etIPServer.setText(ipServerSaved);
             etPortNumber.setText(portServerSaved);
-
             ServerContent.SERVER_IP = ipServerSaved;
-            ServerContent.PORT_NUMBER = Integer.parseInt(portServerSaved);
+       if(!portServerSaved.equals("")) {
+           ServerContent.PORT_NUMBER = Integer.parseInt(portServerSaved);
+       }else{
+           ServerContent.PORT_NUMBER = (-1);
+       }
 
             if(!ipServerSaved.isEmpty() && !portServerSaved.isEmpty()){
                 buttonSave.setBackgroundColor(getResources().getColor(R.color.colorAccepted));
@@ -202,7 +205,9 @@ public class ServerManager extends AppCompatActivity {
                 etPortNumber.setEnabled(false);
                 break;
             case "stop":
-                buttonStart.setEnabled(true);
+                if(!ServerContent.SERVER_IP.equals("") && ServerContent.PORT_NUMBER !=(-1)) {
+                    buttonStart.setEnabled(true);
+                }
                 buttonStop.setEnabled(false);
                 buttonSave.setEnabled(false);
 

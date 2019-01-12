@@ -30,7 +30,6 @@
         android:digits="@string/digitsForServer"
         android:ems="10"
         android:hint="@string/editTextServerHint"
-        android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewInfo"
         tools:targetApi="o" />
@@ -44,7 +43,6 @@
         android:autofillHints="portnumber"
         android:ems="10"
         android:hint="@string/editTextPortHint"
-        android:digits="@string/digitsForServer"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextServerIP"
