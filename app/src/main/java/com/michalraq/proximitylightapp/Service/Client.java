@@ -64,7 +64,7 @@ public class Client extends Service {
                     closeSocket();
 
                 } catch (IOException e) {
-                    showToastInIntentService("Wystąpił błąd podczas próby nawiazania połączenia!");
+                    showToastInIntentService("Wystąpił błąd podczas połączenia!");
                     sendBroadcast(true,"fail");
                     closeSocket();
                     stopSelf();

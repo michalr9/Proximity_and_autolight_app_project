@@ -38,7 +38,8 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".Views.DetailsView"></activity>
+        <activity android:name=".Views.DetailsView"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
