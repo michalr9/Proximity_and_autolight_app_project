@@ -26,11 +26,13 @@
     <string name="tvKitchenStatus">Kuchnia</string>
     <string name="statusOn">ŚWIATŁO WŁĄCZONE</string>
     <string name="statusOff">ŚWIATŁO WYŁĄCZONE</string>
-    <string name="tvInfoAboutButtonsSMH">Zmień jednostkę wyświetlania czasu.</string>
+    <string name="tvInfoAboutButtonsSMH">Wybierz okres rozliczenia.</string>
     <string name="buttonDays">DNI</string>
     <string name="buttonMinutes">MINUTY</string>
     <string name="buttonHours">GODZINY</string>
     <string name="action_details">Czas pracy</string>
     <string name="dialogMessageConnectWithDatabaseFailure">Wystąpił błąd połączenia z bazą, spróbuj ponownie później.</string>
     <string name="dialogMessageWait">Czekaj... Pobieram aktualne dane.</string>
+    <string name="startDate">Data początkowa</string>
+    <string name="endDetailsDate">Data końcowa</string>
 </resources>

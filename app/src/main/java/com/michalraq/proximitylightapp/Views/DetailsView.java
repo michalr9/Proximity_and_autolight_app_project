@@ -1,16 +1,22 @@
 package com.michalraq.proximitylightapp.Views;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.database.DatabaseHandler;
+
+import java.util.Calendar;
 
 public class DetailsView extends AppCompatActivity {
     private static final String PREFERENCES = "myPreferences";
@@ -20,11 +26,13 @@ public class DetailsView extends AppCompatActivity {
     private static final String OFFICEDETAILSSTRING = "officeDetailsStr";
     private static final String KITCHENDETAILSSTRING = "kitchenDetailsStr";
     private static final String SALOONDETAILSSTRING = "saloonDetailsStr";
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
     private SharedPreferences preferences;
     private String saloonStr,kitchenStr,officeStr;
     private TextView tvOffice;
     private TextView tvSaloon;
     private TextView tvKitchen;
+    private TextView tvStartDate, tvEndDate;
 
     private Button buttonDays, buttonMinutes, buttonHours;
 
@@ -49,6 +57,9 @@ public class DetailsView extends AppCompatActivity {
         tvKitchen = findViewById(R.id.tvKitchenDetailsNumber);
         tvOffice = findViewById(R.id.tvOfficeDetailsNumber);
         tvSaloon = findViewById(R.id.tvSaloonDetailsNumber);
+        tvStartDate = findViewById(R.id.tvStartDate);
+        tvEndDate = findViewById(R.id.tvEndDate);
+
 
         buttonHours = findViewById(R.id.buttonInHours);
         buttonMinutes = findViewById(R.id.buttonInMinutes);
@@ -57,8 +68,35 @@ public class DetailsView extends AppCompatActivity {
         initButtonMinuteListener();
         initButtonHoursListener();
         initButtonDaysListener();
+        initDateListener();
 
     }
+
+    private void initDateListener() {
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(getApplicationContext(),android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String data = year + "/" + month + "/" + day;
+                tvDate.setText(data);
+            }
+        };
+    }
+
 
     private void initButtonMinuteListener() {
         buttonMinutes.setOnClickListener(new View.OnClickListener() {
