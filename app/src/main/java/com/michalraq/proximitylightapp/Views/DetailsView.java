@@ -26,7 +26,8 @@ public class DetailsView extends AppCompatActivity {
     private static final String OFFICEDETAILSSTRING = "officeDetailsStr";
     private static final String KITCHENDETAILSSTRING = "kitchenDetailsStr";
     private static final String SALOONDETAILSSTRING = "saloonDetailsStr";
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private DatePickerDialog.OnDateSetListener mStartDateSetListener;
+    private DatePickerDialog.OnDateSetListener mEndDateSetListener;
     private SharedPreferences preferences;
     private String saloonStr,kitchenStr,officeStr;
     private TextView tvOffice;
@@ -68,31 +69,57 @@ public class DetailsView extends AppCompatActivity {
         initButtonMinuteListener();
         initButtonHoursListener();
         initButtonDaysListener();
-        initDateListener();
+        initStartDateListener();
+        initEndDateListener();
 
     }
 
-    private void initDateListener() {
-        tvDate.setOnClickListener(new View.OnClickListener() {
+    private void initEndDateListener() {
+        tvEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(getApplicationContext(),android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListener,
+                DatePickerDialog dialog = new DatePickerDialog(DetailsView.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mEndDateSetListener,
                         year,month,day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
 
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                String data = year + "/" + month + "/" + day;
-                tvDate.setText(data);
+                String data = year + "/" + (month+1) + "/" + day;
+                tvEndDate.setText(data);
+            }
+        };
+    }
+
+    private void initStartDateListener() {
+        tvStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(DetailsView.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mStartDateSetListener,
+                        year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String data = year + "/" + (month+1) + "/" + day;
+                tvStartDate.setText(data);
             }
         };
     }
