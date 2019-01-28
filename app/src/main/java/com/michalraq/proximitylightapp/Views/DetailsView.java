@@ -16,7 +16,11 @@ import android.widget.TextView;
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.database.DatabaseHandler;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DetailsView extends AppCompatActivity {
     private static final String PREFERENCES = "myPreferences";
@@ -74,30 +78,6 @@ public class DetailsView extends AppCompatActivity {
 
     }
 
-    private void initEndDateListener() {
-        tvEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(DetailsView.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mEndDateSetListener,
-                        year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
-        mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                String data = year + "/" + (month+1) + "/" + day;
-                tvEndDate.setText(data);
-            }
-        };
-    }
 
     private void initStartDateListener() {
         tvStartDate.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +103,52 @@ public class DetailsView extends AppCompatActivity {
             }
         };
     }
+    private void initEndDateListener() {
+        tvEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(DetailsView.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mEndDateSetListener,
+                        year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
 
+        mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String data = year + "/" + (month+1) + "/" + day;
+                Log.d("DetailsView",data+ " wartosc: " +  checkGreatness(data));
+                //TODO OBSLUZYC YJATEK KIEDY ZOSTANEI WYBRANA MNIEJSZA DATA
+                tvEndDate.setText(data);
+            }
+        };
+    }
+
+    private Boolean checkGreatness(String endDate){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate ;
+        Date endDate2 ;
+        try {
+             startDate = formatter.parse(tvStartDate.getText().toString());
+             endDate2 = formatter.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (endDate2.before(startDate)) {
+
+            return true;
+        }else
+            return false;
+
+    }
 
     private void initButtonMinuteListener() {
         buttonMinutes.setOnClickListener(new View.OnClickListener() {
