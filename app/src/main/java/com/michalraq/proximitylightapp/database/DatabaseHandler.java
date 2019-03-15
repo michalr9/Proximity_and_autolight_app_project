@@ -71,7 +71,8 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
                     break;
                 case "widok2":
                     view2=true;
-                    databaseManager.checkTimeWork();
+                    databaseManager.checkTimeWork(fetch[1],fetch[2]);
+
                     break;
                 case "widok3":
                     view3=true;

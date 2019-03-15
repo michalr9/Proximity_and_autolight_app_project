@@ -43,12 +43,6 @@ public class DetailsView extends AppCompatActivity {
     private Button buttonDays, buttonMinutes, buttonHours;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        startDatabaseOperation();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         restoreData();
@@ -119,7 +113,7 @@ public class DetailsView extends AppCompatActivity {
                 dialog.show();
             }
         });
-
+//TODO zmiana
         mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -127,6 +121,8 @@ public class DetailsView extends AppCompatActivity {
                 Log.d("DetailsView",data+ " wartosc: " +  isBefore(data));
                 if(!isBefore(data)) {
                     tvEndDate.setText(data);
+                    String startdate = tvStartDate.getText().toString();
+                    startDatabaseOperation(startdate,data);
                 }else
                 {
                     showToast("Podróż w czasie nie obsługiwana ;)");
@@ -295,6 +291,14 @@ public class DetailsView extends AppCompatActivity {
           try
     {
         new DatabaseHandler(this, this).execute("widok2");
+    }catch(Exception e)
+    {
+        Log.e("DetailsView", "Błąd podczas uruchamiania wątku polaczenia z baza");
+    }
+}    private void startDatabaseOperation(String startDate,String endDate) {
+          try
+    {
+        new DatabaseHandler(this, this).execute("widok2",startDate,endDate);
     }catch(Exception e)
     {
         Log.e("DetailsView", "Błąd podczas uruchamiania wątku polaczenia z baza");

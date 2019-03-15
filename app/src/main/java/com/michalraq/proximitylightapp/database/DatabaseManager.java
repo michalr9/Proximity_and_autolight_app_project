@@ -110,6 +110,35 @@ public class DatabaseManager {
         }
     }
 
+    //TODO do przerobienia sql
+    public void checkTimeWork(String startDate,String endDate){
+        StateOfLight.summaryOfTimeLightOn = new HashMap<>();
+
+        String SQL1 = "select SUM( extract(minute from(end_date-start_date))) from TIMES\n" +
+                "where PLACE='biuro' start_date > "+startDate+" AND end_date < "+endDate;
+        String SQL2 = "select SUM( extract(minute from(end_date-start_date))) from TIMES\n" +
+                "where PLACE='salon' start_date > "+startDate+" AND end_date < "+endDate;
+        String SQL3 = "select SUM( extract(minute from(end_date-start_date))) from TIMES\n" +
+                "where PLACE='kuchnia' start_date > "+startDate+" AND end_date < "+endDate;
+        if (connection != null) {
+            try (Statement stm = connection.createStatement()) {
+                ResultSet rs = stm.executeQuery(SQL1);
+                rs.next();
+                StateOfLight.summaryOfTimeLightOn.put("biuro", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                rs = stm.executeQuery(SQL2);
+                rs.next();
+                StateOfLight.summaryOfTimeLightOn.put("salon", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                rs = stm.executeQuery(SQL3);
+                rs.next();
+                StateOfLight.summaryOfTimeLightOn.put("kuchnia", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+            } catch (SQLException e) {
+                System.err.println("Blad podczas sprawdzenia czy istnieje rekord");
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("DataBaseManager","checkTimeWork has failed");
+        }
+    }
 
     public Connection getConnection() {
         return connection;
