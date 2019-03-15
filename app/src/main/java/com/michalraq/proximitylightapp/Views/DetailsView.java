@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.database.DatabaseHandler;
@@ -123,14 +124,22 @@ public class DetailsView extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String data = year + "/" + (month+1) + "/" + day;
-                Log.d("DetailsView",data+ " wartosc: " +  checkGreatness(data));
-                //TODO OBSLUZYC YJATEK KIEDY ZOSTANEI WYBRANA MNIEJSZA DATA
-                tvEndDate.setText(data);
+                Log.d("DetailsView",data+ " wartosc: " +  isBefore(data));
+                if(!isBefore(data)) {
+                    tvEndDate.setText(data);
+                }else
+                {
+                    showToast("Podróż w czasie nie obsługiwana ;)");
+                }
             }
         };
     }
 
-    private Boolean checkGreatness(String endDate){
+    private void showToast(String text) {
+        Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
+    }
+
+    private Boolean isBefore(String endDate){
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date startDate ;
         Date endDate2 ;
