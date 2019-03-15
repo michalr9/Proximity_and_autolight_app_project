@@ -110,27 +110,43 @@ public class DatabaseManager {
         }
     }
 
-    //TODO do przerobienia sql
     public void checkTimeWork(String startDate,String endDate){
         StateOfLight.summaryOfTimeLightOn = new HashMap<>();
-
-        String SQL1 = "select SUM( extract(minute from(end_date-start_date))) from TIMES\n" +
-                "where PLACE='biuro' start_date > "+startDate+" AND end_date < "+endDate;
-        String SQL2 = "select SUM( extract(minute from(end_date-start_date))) from TIMES\n" +
-                "where PLACE='salon' start_date > "+startDate+" AND end_date < "+endDate;
-        String SQL3 = "select SUM( extract(minute from(end_date-start_date))) from TIMES\n" +
-                "where PLACE='kuchnia' start_date > "+startDate+" AND end_date < "+endDate;
+        String stDate = StringOperations.makeTimeIn(startDate);
+        String edDate = StringOperations.makeTimeOut(endDate);
+        String SQL1 = "select case when SUM( datediff(second,TIME_IN,TIME_OUT)) IS NULL then 0\n" +
+                "else SUM( datediff(second,TIME_IN,TIME_OUT))\n" +
+                "END\n" +
+                "from CMT_STATUS\n" +
+                "where CMT_PLACES_PLACE='biuro' AND (TIME_IN >= "+stDate+" AND TIME_OUT <= "+edDate+")";
+        String SQL2 = "select case when SUM( datediff(second,TIME_IN,TIME_OUT)) IS NULL then 0\n" +
+                "else SUM( datediff(second,TIME_IN,TIME_OUT))\n" +
+                "END\n" +
+                "from CMT_STATUS\n" +
+                "where CMT_PLACES_PLACE='salon' AND (TIME_IN >= "+stDate+" AND TIME_OUT <= "+edDate+")";
+        String SQL3 = "select case when SUM( datediff(second,TIME_IN,TIME_OUT)) IS NULL then 0\n" +
+                "else SUM( datediff(second,TIME_IN,TIME_OUT))\n" +
+                "END\n" +
+                "from CMT_STATUS\n" +
+                "where CMT_PLACES_PLACE='kuchnia' AND (TIME_IN >= "+stDate+" AND TIME_OUT <= "+edDate+")";
         if (connection != null) {
             try (Statement stm = connection.createStatement()) {
                 ResultSet rs = stm.executeQuery(SQL1);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("biuro", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                StateOfLight.summaryOfTimeLightOn.put("biuro", rs.getLong(1));
+                Log.d("DatabaseManager","Biuro "+rs.getLong(1));
+
                 rs = stm.executeQuery(SQL2);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("salon", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                StateOfLight.summaryOfTimeLightOn.put("salon", rs.getLong(1));
+                Log.d("DatabaseManager","Salon "+rs.getLong(1));
+
                 rs = stm.executeQuery(SQL3);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("kuchnia", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                StateOfLight.summaryOfTimeLightOn.put("kuchnia", rs.getLong(1));
+                Log.d("DatabaseManager","Kuchnia "+rs.getLong(1));
+
+
             } catch (SQLException e) {
                 System.err.println("Blad podczas sprawdzenia czy istnieje rekord");
                 e.printStackTrace();

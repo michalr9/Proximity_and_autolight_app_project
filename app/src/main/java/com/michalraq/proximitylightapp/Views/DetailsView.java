@@ -20,6 +20,7 @@ import com.michalraq.proximitylightapp.database.DatabaseHandler;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -113,7 +114,7 @@ public class DetailsView extends AppCompatActivity {
                 dialog.show();
             }
         });
-//TODO zmiana
+
         mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -136,11 +137,11 @@ public class DetailsView extends AppCompatActivity {
     }
 
     private Boolean isBefore(String endDate){
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         Date startDate ;
         Date endDate2 ;
         try {
-             startDate = formatter.parse(tvStartDate.getText().toString());
+            startDate = formatter.parse(tvStartDate.getText().toString());
              endDate2 = formatter.parse(endDate);
         } catch (ParseException e) {
             e.printStackTrace();

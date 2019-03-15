@@ -1,6 +1,5 @@
 package com.michalraq.proximitylightapp;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class StateOfLight {

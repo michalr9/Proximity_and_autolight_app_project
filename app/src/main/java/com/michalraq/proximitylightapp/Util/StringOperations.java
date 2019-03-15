@@ -12,4 +12,18 @@ public class StringOperations {
         return word;
     }
 
+    public static String makeTimeIn(String date) {
+        StringBuilder build = new StringBuilder("'");
+        build.append(date).append(" 00:00:00").append("'");
+        date=build.toString();
+        return date;
+    }
+    public static String makeTimeOut(String date) {
+        StringBuilder build = new StringBuilder("'");
+        build.append(date).append(" 23:59:59").append("'");
+        date=build.toString();
+        return date;
+    }
+
+
 }
