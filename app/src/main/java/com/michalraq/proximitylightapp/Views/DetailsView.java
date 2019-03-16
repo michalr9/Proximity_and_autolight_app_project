@@ -120,13 +120,13 @@ public class DetailsView extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String data = year + "/" + (month+1) + "/" + day;
                 Log.d("DetailsView",data+ " wartosc: " +  isBefore(data));
-                if(!isBefore(data)) {
+                if(!isBefore(data) ) {
                     tvEndDate.setText(data);
                     String startdate = tvStartDate.getText().toString();
                     startDatabaseOperation(startdate,data);
                 }else
                 {
-                    showToast("Podróż w czasie nie obsługiwana ;)");
+                    showToast("Podaj datę początkową będącą przed datą końcową !");
                 }
             }
         };
@@ -140,12 +140,18 @@ public class DetailsView extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         Date startDate ;
         Date endDate2 ;
-        try {
-            startDate = formatter.parse(tvStartDate.getText().toString());
-             endDate2 = formatter.parse(endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return false;
+        int length = tvStartDate.getText().length();
+        if(length!=0) {
+            try {
+                startDate = formatter.parse(tvStartDate.getText().toString());
+                endDate2 = formatter.parse(endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        else{
+            return true;
         }
 
         if (endDate2.before(startDate)) {
