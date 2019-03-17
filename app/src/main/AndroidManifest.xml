@@ -38,8 +38,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".Views.DetailsView"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Views.DetailsView"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Views.CheckoutData"></activity>
     </application>
 
 </manifest>

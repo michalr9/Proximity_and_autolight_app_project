@@ -9,6 +9,7 @@ import com.michalraq.proximitylightapp.Util.*;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class DatabaseManager {
 
@@ -156,7 +157,62 @@ public class DatabaseManager {
         }
     }
 
+
+    public Map<Integer,String> getCheckoutData(String place) {
+        Map<Integer, String> result = new HashMap<>();
+        place=StringOperations.addSingleQuotes(place);
+        String checkoutData;
+        int id;
+        String SQL = "select ID_STATUS, TIME_IN, TIME_OUT from CMT_STATUS\n" +
+                "where CMT_PLACES_PLACE = "+place+" AND TIME_OUT IS NOT NULL\n" +
+                "order by TIME_IN asc ;";
+        if (connection != null) {
+            try (Statement stm = connection.createStatement()) {
+                ResultSet rs = stm.executeQuery(SQL);
+                while (rs.next()) {
+                    StringBuilder builder = new StringBuilder(rs.getString("TIME_IN"));
+                    builder.append("-->").append(rs.getString("TIME_OUT"));
+                    checkoutData = builder.toString();
+                    id = rs.getInt("ID_STATUS");
+
+                    result.put(id, checkoutData);
+                }
+            } catch (SQLException e) {
+                Log.e("DataBaseManager", "Blad pobierania checkout data");
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("DataBaseManager", "Connection is NULL");
+        }
+        return result;
+
+    }
+
+    public Map<Integer,String> getPlaces() {
+        Map<Integer, String> result = new HashMap<>();
+
+        String SQL = "select UPPER(PLACE) from CMT_PLACES order by PLACE asc;";
+        if (connection != null) {
+            try (Statement stm = connection.createStatement()) {
+                ResultSet rs = stm.executeQuery(SQL);
+                int i=0;
+                while (rs.next()) {
+                    i++;
+                    String place =rs.getString(1);
+                    result.put(i, place);
+                }
+            } catch (SQLException e) {
+                Log.e("DataBaseManager", "Blad pobierania danych pomieszczen");
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("DataBaseManager", "Connection is NULL");
+        }
+        return result;
+    }
+
     public Connection getConnection() {
         return connection;
     }
+
 }

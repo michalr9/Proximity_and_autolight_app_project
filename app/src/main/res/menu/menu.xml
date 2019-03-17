@@ -15,4 +15,7 @@
 <item android:id="@+id/acction_settings"
     android:title="@string/action_settings_name"
     app:showAsAction="never"></item>
+    <item android:id="@+id/acction_checkoutData"
+    android:title="@string/action_checkout"
+    app:showAsAction="never"></item>
 </menu>

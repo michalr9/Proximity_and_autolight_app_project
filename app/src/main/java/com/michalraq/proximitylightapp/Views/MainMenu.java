@@ -73,6 +73,10 @@ public class MainMenu extends AppCompatActivity {
                 Intent details = new Intent(this, DetailsView.class);
                 startActivity(details);
                 return true;
+            case R.id.acction_checkoutData:
+                Intent checkoutData = new Intent(this,CheckoutData.class);
+                startActivity(checkoutData);
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);

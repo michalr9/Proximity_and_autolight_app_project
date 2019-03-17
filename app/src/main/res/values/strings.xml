@@ -36,4 +36,5 @@
     <string name="startDate">Data początkowa</string>
     <string name="endDetailsDate">Data końcowa</string>
     <string name="tvSeparator"><![CDATA[--->]]></string>
+    <string name="action_checkout">Szczegóły logowania czasu</string>
 </resources>

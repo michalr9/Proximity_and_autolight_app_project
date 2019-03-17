@@ -65,7 +65,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/D:/PROGRAMY/Android%20%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_error_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/D:/PROGRAMY/Android%20%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_location_city_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -75,7 +75,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_dialog_alert" />
+                                      <entry key="outputName" value="spinner_location" />
                                     </map>
                                   </option>
                                 </PersistentState>
