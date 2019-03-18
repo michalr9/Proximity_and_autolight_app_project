@@ -41,7 +41,8 @@
         <activity
             android:name=".Views.DetailsView"
             android:screenOrientation="portrait" />
-        <activity android:name=".Views.CheckoutData"></activity>
+        <activity android:name=".Views.CheckoutData"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

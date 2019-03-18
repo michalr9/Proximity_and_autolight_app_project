@@ -5,7 +5,8 @@
     android:id="@+id/layoutServer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.ServerManager">
+    tools:context=".Views.ServerManager"
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/textViewInfo"
@@ -16,6 +17,7 @@
         android:layout_marginEnd="8dp"
         android:text="@string/editTextInfoServers"
         android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +32,7 @@
         android:digits="@string/digitsForServer"
         android:ems="10"
         android:hint="@string/editTextServerHint"
+        android:inputType="text|number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewInfo"
         tools:targetApi="o" />
@@ -56,6 +59,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
         android:text="@string/tvServerIP"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/editTextServerIP"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextServerIP" />
@@ -68,6 +72,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="16dp"
         android:text="@string/tvPort"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/editTextPortAddress"
         app:layout_constraintEnd_toStartOf="@+id/editTextPortAddress"
         app:layout_constraintStart_toStartOf="parent" />
@@ -83,7 +88,8 @@
         android:text="@string/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPortAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPortAddress"
+        />
 
     <Button
         android:id="@+id/buttonStartService"

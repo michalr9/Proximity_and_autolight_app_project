@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.DetailsView">
+    tools:context=".Views.DetailsView"
+    android:background="@color/colorBackground">
 
 
     <TextView
@@ -51,7 +52,13 @@
         android:layout_marginEnd="8dp"
         android:text="@string/buttonDays"
         app:layout_constraintBottom_toBottomOf="@+id/buttonInHours"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/button_shape"
+        android:textColor="#FFF78C"
+        android:shadowColor="#97A88F"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="7"/>
 
     <Button
         android:id="@+id/buttonInMinutes"
@@ -61,7 +68,13 @@
         android:layout_marginStart="8dp"
         android:text="@string/buttonMinutes"
         app:layout_constraintBottom_toBottomOf="@+id/buttonInHours"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button_shape"
+        android:textColor="#FFF78C"
+        android:shadowColor="#97A88F"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="7"/>
 
     <Button
         android:id="@+id/buttonInHours"
@@ -74,7 +87,14 @@
         android:text="@string/buttonHours"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonInDays"
-        app:layout_constraintStart_toEndOf="@+id/buttonInMinutes" />
+        app:layout_constraintStart_toEndOf="@+id/buttonInMinutes"
+        android:background="@drawable/button_shape"
+        android:textColor="#FFF78C"
+        android:shadowColor="#97A88F"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="7"
+        />
 
     <TextView
         android:id="@+id/tvOfficeDetailsNumber"
@@ -145,7 +165,7 @@
         android:background="@color/colorTiger"
         android:text="@string/action_details"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tvOfficeDetails"
         app:layout_constraintEnd_toEndOf="parent"
