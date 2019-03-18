@@ -170,8 +170,8 @@ public class DatabaseManager {
             try (Statement stm = connection.createStatement()) {
                 ResultSet rs = stm.executeQuery(SQL);
                 while (rs.next()) {
-                    StringBuilder builder = new StringBuilder(rs.getString("TIME_IN"));
-                    builder.append("-->").append(rs.getString("TIME_OUT"));
+                    StringBuilder builder = new StringBuilder("-->" + rs.getString("TIME_IN"));
+                    builder.append('\n').append("<--").append(rs.getString("TIME_OUT"));
                     checkoutData = builder.toString();
                     id = rs.getInt("ID_STATUS");
 

@@ -2,30 +2,31 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/checkoutDataItemLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Views.CheckoutData">
+    android:layout_height="wrap_content">
 
-    <Spinner
-        android:id="@+id/spinnerPlaces"
-        style="@style/spinner_style"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/checkoutRecyclerView"
-        android:layout_width="344dp"
-        android:layout_height="446dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerPlaces" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvText"
+        app:srcCompat="@android:color/darker_gray" />
 </android.support.constraint.ConstraintLayout>

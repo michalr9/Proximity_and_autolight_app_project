@@ -2,17 +2,19 @@ package com.michalraq.proximitylightapp.Views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.michalraq.proximitylightapp.CheckoutDataAdapter;
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.database.DatabaseHandlerCheckout;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +23,11 @@ import java.util.concurrent.ExecutionException;
 public class CheckoutData extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static String TAG = "CheckoutData";
-    Spinner spinnerPlaces;
-    private Map<Integer,String> places,checkoutDataList;
+    private Spinner spinnerPlaces;
+    private Map<Integer,String> places;
+    private RecyclerView rvCheckoutData ;
+    private CheckoutDataAdapter checkoutDataAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +35,18 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_checkout_data);
 
         spinnerPlaces = findViewById(R.id.spinnerPlaces);
+        rvCheckoutData =  findViewById(R.id.checkoutRecyclerView);
+
+        rvCheckoutData.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        rvCheckoutData.setLayoutManager(layoutManager);
 
         loadSpinnerData();
+        spinnerPlaces.setOnItemSelectedListener(this);
+
+        checkoutDataAdapter = new CheckoutDataAdapter();
+        rvCheckoutData.setAdapter(checkoutDataAdapter);
+
 
     }
 
@@ -40,14 +55,13 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
         try {
                 places.putAll(new DatabaseHandlerCheckout(this).execute("places").get());
 
-
-            List<String> odbiorcyString = new ArrayList<>( places.values());
+            List<String> places = new ArrayList<>( this.places.values());
 
             ArrayAdapter dataAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_spinner_item, odbiorcyString);
+                    android.R.layout.simple_spinner_item, places);
             dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-
             spinnerPlaces.setAdapter(dataAdapter);
+
         }catch (InterruptedException e2){
             Log.e(TAG,"Blad podczas uzupelniania spinnera");
         }catch(ExecutionException e){
@@ -56,7 +70,7 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     * Wywolanie sqla z wybranym miejscem
+     * Wywolanie sqla z wybranym miejscem odswiezenie dapatera z danymi
      * @param parent
      * @param view
      * @param position
@@ -64,16 +78,16 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String place = parent.getItemAtPosition(position).toString();
+         String place = parent.getItemAtPosition(position).toString();
         try {
-           checkoutDataList.putAll( new DatabaseHandlerCheckout(this).execute("data",place).get());
-
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+            checkoutDataAdapter.setList( new DatabaseHandlerCheckout(this).execute("data", place).get());
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
+
+        checkoutDataAdapter.notifyDataSetChanged();
     }
 
     @Override
