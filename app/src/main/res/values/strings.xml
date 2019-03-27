@@ -40,4 +40,6 @@
     <string name="line">line</string>
     <string name="time_in">Czas wejścia</string>
     <string name="time_out">Czas wyjścia</string>
+    <string name="notification_error">Utracono połączenie z serwerem!</string>
+    <string name="notification_error_text">Wróć do aplikacji i ponownie uruchom usługę!</string>
 </resources>

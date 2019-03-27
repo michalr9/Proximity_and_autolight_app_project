@@ -65,7 +65,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/D:/PROGRAMY/Android%20%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_location_city_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/D:/PROGRAMY/Android%20%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_error_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -75,7 +75,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="spinner_location" />
+                                      <entry key="outputName" value="notification_icon_error" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -111,7 +111,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/PROGRAMY/Android%20%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_autorenew_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/PROGRAMY/Android%20%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_error_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -121,8 +121,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="898685" />
-                            <entry key="outputName" value="ic_autorenew" />
+                            <entry key="color" value="890d10" />
+                            <entry key="outputName" value="notification_icon_error" />
                             <entry key="sourceFile" value="C:\Users\Michał" />
                           </map>
                         </option>

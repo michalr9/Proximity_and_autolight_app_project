@@ -1,5 +1,6 @@
 package com.michalraq.proximitylightapp.Service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -7,10 +8,13 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.Views.ServerManager;
 
 import java.io.BufferedReader;
@@ -21,11 +25,15 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import static com.michalraq.proximitylightapp.App.NOTIFICATION_CHANNEL;
+
 public class Client extends Service {
 
     private static Socket socket;
     private static BufferedReader bufferedReader;
     private static PrintWriter printWriter;
+    private NotificationManagerCompat notificationManagerCompat;
+
     InetAddress serverAddr;
 
     @Nullable
@@ -37,6 +45,8 @@ public class Client extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        notificationManagerCompat = NotificationManagerCompat.from(this);
+
     }
 
     @Override
@@ -66,6 +76,7 @@ public class Client extends Service {
                 } catch (IOException e) {
                     showToastInIntentService("Wystąpił błąd podczas połączenia!");
                     sendBroadcast(true,"fail");
+                    showErrorNotification();
                     closeSocket();
                     stopSelf();
                 }
@@ -117,7 +128,15 @@ public class Client extends Service {
             }
         });
     }
-
+//TODO dodac obsluge po kliknieciu w notyfikacje przeniesienie do aktywacji uslugi
+    void showErrorNotification(){
+        Notification notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL)
+                .setSmallIcon(R.drawable.notification_icon_error)
+                .setContentTitle(this.getString(R.string.notification_error))
+                .setContentText(this.getString(R.string.notification_error_text))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build();
+        notificationManagerCompat.notify(1,notification);
+    }
 
     @Override
     public void onDestroy() {

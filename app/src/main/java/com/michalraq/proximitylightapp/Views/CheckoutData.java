@@ -1,6 +1,7 @@
 package com.michalraq.proximitylightapp.Views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,6 +52,8 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
 
         if(places.isEmpty() && checkoutDataAdapter.getItemCount() == 0){
             Toast.makeText(this,"Błąd połączenia z bazą! Sprawdź połączenie z internetem.",Toast.LENGTH_LONG).show();
+            Intent menu = new Intent(this,MainMenu.class);
+            startActivity(menu);
         }
 
     }

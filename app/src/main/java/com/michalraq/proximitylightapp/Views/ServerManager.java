@@ -1,11 +1,14 @@
 package com.michalraq.proximitylightapp.Views;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +23,8 @@ import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.Service.Client;
 import com.michalraq.proximitylightapp.Service.ServerContent;
 
+import static com.michalraq.proximitylightapp.App.NOTIFICATION_CHANNEL;
+
 
 public class ServerManager extends AppCompatActivity {
 
@@ -28,11 +33,13 @@ public class ServerManager extends AppCompatActivity {
     private static final String PORT_NUMBER = "portNumber";
     private static final String IS_SERVICE_STARTED = "isServiceStarted";
     private static final String IS_DATA_CHANGED = "isDataChanged";
+
+
     public Button buttonSave,buttonStart,buttonStop ;
     private EditText etIPServer;
     private  EditText etPortNumber;
     private SharedPreferences preferences;
-    public static boolean isServiceStarted,isDataChanged,wasFail;
+    public static boolean isServiceStarted,isDataChanged;
 
     private BroadcastReceiver bReceiver = new BroadcastReceiver(){
 //w momencie odebrania wiadomosci jezeli jest skupienie na aktywnosci prawidlowo ustawia status przyciskow, ale jezeli w tle to juz nie
@@ -46,6 +53,8 @@ public class ServerManager extends AppCompatActivity {
         }
 
     };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

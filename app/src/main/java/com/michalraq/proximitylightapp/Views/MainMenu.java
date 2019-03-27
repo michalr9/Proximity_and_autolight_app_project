@@ -1,12 +1,16 @@
 package com.michalraq.proximitylightapp.Views;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.provider.Settings;
 
 import android.support.v7.app.AlertDialog;
@@ -25,7 +29,6 @@ import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizar
 import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.database.DatabaseHandler;
-import com.michalraq.proximitylightapp.estimote.ProximityContentAdapter;
 import com.michalraq.proximitylightapp.estimote.ProximityContentManager;
 
 import java.util.List;
@@ -35,6 +38,7 @@ import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
 
 public class MainMenu extends AppCompatActivity {
+
     private static final String PREFERENCES = "myPreferences";
     private static final String OFFICE = "biuro";
     private static final String KITCHEN = "kuchnia";
@@ -116,8 +120,8 @@ public class MainMenu extends AppCompatActivity {
 
         checkRequirements();
         enableWiFi();
-
     }
+
 
     private void setButtonsStatus() {
         office = sharedPreferences.getBoolean(OFFICE,false);
@@ -223,6 +227,7 @@ public class MainMenu extends AppCompatActivity {
                             }
                         });
     }
+
 
     @Override
     protected void onDestroy(){
