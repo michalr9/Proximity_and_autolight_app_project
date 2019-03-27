@@ -32,10 +32,10 @@ public class ServerManager extends AppCompatActivity {
     private EditText etIPServer;
     private  EditText etPortNumber;
     private SharedPreferences preferences;
-    public static boolean isServiceStarted,isDataChanged;
+    public static boolean isServiceStarted,isDataChanged,wasFail;
 
     private BroadcastReceiver bReceiver = new BroadcastReceiver(){
-
+//w momencie odebrania wiadomosci jezeli jest skupienie na aktywnosci prawidlowo ustawia status przyciskow, ale jezeli w tle to juz nie
         @Override
         public void onReceive(Context context, Intent intent) {
           Boolean fail = intent.getBooleanExtra("fail",false);
@@ -44,6 +44,7 @@ public class ServerManager extends AppCompatActivity {
               buttonStop.setEnabled(false);
           }
         }
+
     };
 
     @Override
@@ -58,8 +59,6 @@ public class ServerManager extends AppCompatActivity {
          buttonStart = findViewById(R.id.buttonStartService);
          buttonStop = findViewById(R.id.buttonStopService);
 
-      //  restoreData();
-
          initButtonSaveListener();
          initButtonStartListener();
          initButtonStopListener();
@@ -72,7 +71,7 @@ public class ServerManager extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         saveData();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver); //uzywany do otrzymywania powiadomien z uruchomionej uslugi
     }
 
     @Override

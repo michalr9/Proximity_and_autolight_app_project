@@ -3,9 +3,13 @@ package com.michalraq.proximitylightapp.Views;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
+import android.provider.Settings;
+
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -37,7 +41,6 @@ public class MainMenu extends AppCompatActivity {
     private static final String SALOON = "salon";
 
     private ProximityContentManager proximityContentManager;
-    private ProximityContentAdapter proximityContentAdapter;
     public EstimoteCloudCredentials cloudCredentials = new EstimoteCloudCredentials("proximity-light-4nu", "d25c41d6bc5b7cb0fe1f394be8ccf46d");
 
     BluetoothAdapter mBtAdapter;
@@ -112,7 +115,7 @@ public class MainMenu extends AppCompatActivity {
 //        gridView.setAdapter(proximityContentAdapter);
 
         checkRequirements();
-
+        enableWiFi();
 
     }
 
@@ -145,7 +148,7 @@ public class MainMenu extends AppCompatActivity {
 
     @Override
     protected void onStart(){
-        enableWiFi();
+       // enableWiFi();
         super.onStart();
     }
 
@@ -155,49 +158,49 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
-    public void enableBT(){
-         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (mBtAdapter == null) {
-            Toast.makeText(this, "Twoje urządzenie nie umożliwia korzystania z BT", Toast.LENGTH_SHORT).show();
-            isBTActive=false;
-        }
-
-        if (! mBtAdapter.isEnabled()) {
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    mBtAdapter.enable();
-                }
-            }).start();
-
-            isBTActive=true;
-            Toast.makeText(this, "Aktywowano Bluetooth !", Toast.LENGTH_SHORT).show();
-        }
-
-        if(mBtAdapter.isEnabled()){
-            isBTActive = true;
-        }
-    }
-
     public void enableWiFi(){
+
         if(wifiManager == null){
             Toast.makeText(this, "Twoje urządzenie nie umożliwia korzystania z WiFi", Toast.LENGTH_SHORT).show();
-        }
+        }else {
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+
+            // set title
+            alertDialogBuilder.setTitle("Ustawienia WiFi");
+
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Czy mogę włączyć WiFi ?")
+                    .setCancelable(false)
+                    .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //enable wifi
+                            wifiManager.setWifiEnabled(true);
+                        }
+                    })
+                    .setNegativeButton("NIE", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //disable wifi
+                            wifiManager.setWifiEnabled(false);
+                        }
+                    });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
 
         if (!wifiManager.isWifiEnabled()) {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                        wifiManager.setWifiEnabled(enableWiFi);
-                }
-            }).start();
+
+                    alertDialog.show();
+
 
             Toast.makeText(this, "Aktywowano WiFi !", Toast.LENGTH_SHORT).show();
         }
-
+        }
     }
 
 
