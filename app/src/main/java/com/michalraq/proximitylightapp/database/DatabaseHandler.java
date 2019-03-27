@@ -28,7 +28,7 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
     private ProgressDialog dialog;
     private SharedPreferences preferences;
     private Boolean office, kitchen, saloon;
-    private Boolean view1,view2,view3;
+    private Boolean view1,view2;
     public DatabaseHandler(Context context,Activity activity){
         this.context=context;
         this.activity=activity;
@@ -36,7 +36,7 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
     }
     @Override
     protected void onPreExecute() {
-        view1=false;view2=false;view3=false;
+        view1=false;view2=false;
         preferences = context.getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
         dialog = new ProgressDialog(context);
         dialog.setMessage(context.getString(R.string.dialogMessageWait));
@@ -73,9 +73,6 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
                     view2=true;
                     databaseManager.checkTimeWork(fetch[1],fetch[2]);
 
-                    break;
-                case "widok3":
-                    view3=true;
                     break;
                 default:
                     return null;

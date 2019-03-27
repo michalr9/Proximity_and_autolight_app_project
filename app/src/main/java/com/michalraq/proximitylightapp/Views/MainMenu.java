@@ -146,11 +146,6 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart(){
-       // enableWiFi();
-        super.onStart();
-    }
 
     private void startProximityContentManager() {
         proximityContentManager = new ProximityContentManager(this, cloudCredentials);
@@ -195,11 +190,7 @@ public class MainMenu extends AppCompatActivity {
         if (!wifiManager.isWifiEnabled()) {
 
 
-                    alertDialog.show();
-
-
-            Toast.makeText(this, "Aktywowano WiFi !", Toast.LENGTH_SHORT).show();
-        }
+                    alertDialog.show(); }
         }
     }
 

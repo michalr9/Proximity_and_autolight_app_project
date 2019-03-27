@@ -1,5 +1,6 @@
 package com.michalraq.proximitylightapp.Views;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.michalraq.proximitylightapp.CheckoutDataAdapter;
 import com.michalraq.proximitylightapp.R;
@@ -47,6 +49,9 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
         checkoutDataAdapter = new CheckoutDataAdapter();
         rvCheckoutData.setAdapter(checkoutDataAdapter);
 
+        if(places.isEmpty() && checkoutDataAdapter.getItemCount() == 0){
+            Toast.makeText(this,"Błąd połączenia z bazą! Sprawdź połączenie z internetem.",Toast.LENGTH_LONG).show();
+        }
 
     }
 
