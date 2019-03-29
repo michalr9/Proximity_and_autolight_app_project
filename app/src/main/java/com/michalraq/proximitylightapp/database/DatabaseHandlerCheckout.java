@@ -1,15 +1,9 @@
 package com.michalraq.proximitylightapp.database;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-
-import com.michalraq.proximitylightapp.R;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class DatabaseHandlerCheckout extends AsyncTask<String, Void, Map<Integer,String> > {
     private DatabaseManager databaseManager;

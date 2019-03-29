@@ -1,18 +1,12 @@
 package com.michalraq.proximitylightapp.Views;
 
 import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.wifi.WifiManager;
-import android.os.Build;
-import android.provider.Settings;
-
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,7 +43,6 @@ public class MainMenu extends AppCompatActivity {
 
     BluetoothAdapter mBtAdapter;
     Boolean isBTActive;
-    final Boolean enableWiFi = true;
     WifiManager wifiManager;
 
     private Boolean office,kitchen,saloon;

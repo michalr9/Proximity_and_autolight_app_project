@@ -14,6 +14,10 @@ public class App extends Application {
         super.onCreate();
         createNotificationChannel();
     }
+
+    /**
+     * Funkcja tworząca wymagany channel notyfikacji w wypadku gdyby bylo ich wiecej
+     */
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel = new NotificationChannel(
