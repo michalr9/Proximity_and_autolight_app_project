@@ -1,9 +1,12 @@
 package com.michalraq.proximitylightapp.Service;
 
+import android.app.Activity;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -29,11 +32,16 @@ import static com.michalraq.proximitylightapp.App.NOTIFICATION_CHANNEL;
 
 public class Client extends Service {
 
+    private static final String PREFERENCES = "myPreferences";
+    private static final String IS_SERVICE_STARTED = "isServiceStarted";
+
+    private SharedPreferences preferences;
+
     private static Socket socket;
     private static BufferedReader bufferedReader;
     private static PrintWriter printWriter;
     private NotificationManagerCompat notificationManagerCompat;
-
+    PendingIntent pendingIntent;
     InetAddress serverAddr;
 
     @Nullable
@@ -45,8 +53,9 @@ public class Client extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        preferences = getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
         notificationManagerCompat = NotificationManagerCompat.from(this);
-
+        createNotificationActionIntent();
     }
 
     @Override
@@ -71,9 +80,11 @@ public class Client extends Service {
 
                 } catch (UnknownHostException e) {
                     showToastInIntentService("Podano zły adres hosta!");
+                    saveState(false);
                     closeSocket();
 
                 } catch (IOException e) {
+                    saveState(false);
                     showToastInIntentService("Wystąpił błąd podczas połączenia!");
                     sendBroadcast(true,"fail");
                     showErrorNotification();
@@ -128,20 +139,38 @@ public class Client extends Service {
             }
         });
     }
-//TODO dodac obsluge po kliknieciu w notyfikacje przeniesienie do aktywacji uslugi
+
     void showErrorNotification(){
         Notification notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.notification_icon_error)
                 .setContentTitle(this.getString(R.string.notification_error))
                 .setContentText(this.getString(R.string.notification_error_text))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build();
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true).build();
         notificationManagerCompat.notify(1,notification);
     }
+
+    /**
+     * Stworzenie intencji uruchamianej po kliknięciu w notyfikacje przez użytkownika
+     */
+    void createNotificationActionIntent(){
+        Intent serverIntent = new Intent(this, ServerManager.class);
+        serverIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+         pendingIntent = PendingIntent.getActivity(this, 0, serverIntent, 0);
+    }
+
+    private void saveState(Boolean isServiceStarted){
+        SharedPreferences.Editor preferencesEditor = preferences.edit();
+
+        preferencesEditor.putBoolean(IS_SERVICE_STARTED,isServiceStarted);
+        preferencesEditor.apply();
+    }
+
 
     @Override
     public void onDestroy() {
 
-        ServerManager.isServiceStarted = false;
         closeSocket();
         showToastInIntentService("Usługa zatrzymana.");
         super.onDestroy();

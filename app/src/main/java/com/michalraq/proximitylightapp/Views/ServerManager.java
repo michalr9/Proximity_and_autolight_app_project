@@ -23,8 +23,6 @@ import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.Service.Client;
 import com.michalraq.proximitylightapp.Service.ServerContent;
 
-import static com.michalraq.proximitylightapp.App.NOTIFICATION_CHANNEL;
-
 
 public class ServerManager extends AppCompatActivity {
 
