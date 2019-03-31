@@ -31,13 +31,14 @@ import java.net.UnknownHostException;
 import static android.app.Notification.VISIBILITY_PUBLIC;
 import static com.michalraq.proximitylightapp.App.NOTIFICATION_CHANNEL;
 
+/**
+ * Klasa świadcząca usługę klienta, odpowiedzialna za komunikację z serwerem.
+ */
 public class Client extends Service {
 
     private static final String PREFERENCES = "myPreferences";
     private static final String IS_SERVICE_STARTED = "isServiceStarted";
-
     private SharedPreferences preferences;
-
     private static Socket socket;
     private static BufferedReader bufferedReader;
     private static PrintWriter printWriter;
@@ -59,6 +60,14 @@ public class Client extends Service {
         createNotificationActionIntent();
     }
 
+    /**
+     * W momencie wywołania metody zostaje uruchomiona usługa i nastepuje połączenie z serwerem.
+     * Start_sticky  pozwala na ponowne uruchomienie usługi przez system w wypadku, gdyby zabrakło pamięci urządzeniu w trakcie jej wykonywania.
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Thread thread = new Thread(new Runnable(){
@@ -98,10 +107,12 @@ public class Client extends Service {
         thread.start();
 
         return START_STICKY;
-
     }
 
-
+    /**
+     * Metoda odpowiedzialna za wysyłanie wiadomości do serwera.
+     * @param message
+     */
     public static void sendMessage(final String message){
 
         if (socket.isConnected()) {
@@ -111,13 +122,17 @@ public class Client extends Service {
 
                         printWriter.println(message);
                         printWriter.flush();
-
                 }
             });
             thread.start();
         }
     }
 
+    /**
+     * Metoda odpowiedzialna za broadcast powiadomień z usługi do systemu, umożliwiając tym samym jej odbiór w innych aktywnościach.
+     * @param status
+     * @param name
+     */
     private void sendBroadcast (Boolean status,String name){
         switch (name) {
             case "fail":
@@ -129,6 +144,10 @@ public class Client extends Service {
 
     }
 
+    /**
+     * Metoda odpowiedzialna za pokazywanie toastów.
+     * @param text
+     */
     public void showToastInIntentService(final String text) {
         final Context MyContext = this;
 
@@ -141,6 +160,9 @@ public class Client extends Service {
         });
     }
 
+    /**
+     * Wyswietlenie notyfikacji push o zerwaniu połączenia z serwerem.
+     */
     void showErrorNotification(){
         Notification notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.notification_icon_error)
@@ -162,6 +184,10 @@ public class Client extends Service {
          pendingIntent = PendingIntent.getActivity(this, 0, serverIntent, 0);
     }
 
+    /**
+     * Metoda służąca do zachowywania stanu usługi w pamięci.
+     * @param isServiceStarted
+     */
     private void saveState(Boolean isServiceStarted){
         SharedPreferences.Editor preferencesEditor = preferences.edit();
 
@@ -178,6 +204,9 @@ public class Client extends Service {
         super.onDestroy();
     }
 
+    /**
+     * Metoda odpowiedzialna za zamknięcie połączenia z serwerem.
+     */
     private void closeSocket(){
         try {
             if (socket != null ) socket.close();

@@ -31,25 +31,29 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
 
+/**
+ * Główna klasa sterująca, główna aktywność.
+ */
 public class MainMenu extends AppCompatActivity {
 
     private static final String PREFERENCES = "myPreferences";
     private static final String OFFICE = "biuro";
     private static final String KITCHEN = "kuchnia";
     private static final String SALOON = "salon";
-
     private ProximityContentManager proximityContentManager;
-    public EstimoteCloudCredentials cloudCredentials = new EstimoteCloudCredentials("proximity-light-4nu", "d25c41d6bc5b7cb0fe1f394be8ccf46d");
-
-    BluetoothAdapter mBtAdapter;
-    Boolean isBTActive;
-    WifiManager wifiManager;
-
     private Boolean office,kitchen,saloon;
     private ToggleButton buttonOffice,buttonKitchen,buttonSaloon;
     private SharedPreferences sharedPreferences;
+    BluetoothAdapter mBtAdapter;
+    Boolean isBTActive;
+    WifiManager wifiManager;
+    public EstimoteCloudCredentials cloudCredentials = new EstimoteCloudCredentials("proximity-light-4nu", "d25c41d6bc5b7cb0fe1f394be8ccf46d");
 
-
+    /**
+     * Tworzenie górnego menu.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -58,6 +62,11 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
+    /**
+     * Obsługa wybrania opcji z górnego menu.
+     * @param item wybrany item z menu.
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -84,6 +93,10 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
+    /**
+     * Inicjalizacja danych w metodzie.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,17 +118,15 @@ public class MainMenu extends AppCompatActivity {
         buttonOffice = findViewById(R.id.button_status_office);
         buttonKitchen = findViewById(R.id.button_status_kitchen);
         buttonSaloon = findViewById(R.id.button_status_saloon);
-        setButtonsStatus();
-        /*Beacons*/
-//        proximityContentAdapter = new ProximityContentAdapter(this);
-//        GridView gridView = findViewById(R.id.gridView);
-//        gridView.setAdapter(proximityContentAdapter);
 
+        setButtonsStatus();
         checkRequirements();
         enableWiFi();
     }
 
-
+    /**
+     * Ustawienie statusu przycisków odpowiadających pomieszczeniom.
+     */
     private void setButtonsStatus() {
         office = sharedPreferences.getBoolean(OFFICE,false);
         kitchen = sharedPreferences.getBoolean(KITCHEN,false);
@@ -143,13 +154,17 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Metoda uruchamiająca obserwatora nadajników.
+     */
     private void startProximityContentManager() {
         proximityContentManager = new ProximityContentManager(this, cloudCredentials);
         proximityContentManager.start();
     }
 
-
+    /**
+     * Metoda odpowiedzialna za uruchomienie Wi-Fi.
+     */
     public void enableWiFi(){
 
         if(wifiManager == null){
@@ -159,10 +174,9 @@ public class MainMenu extends AppCompatActivity {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     this);
 
-            // set title
             alertDialogBuilder.setTitle("Ustawienia WiFi");
 
-            // set dialog message
+            // ustawienie wiadomości
             alertDialogBuilder
                     .setMessage("Czy mogę włączyć WiFi ?")
                     .setCancelable(false)
@@ -179,20 +193,19 @@ public class MainMenu extends AppCompatActivity {
                         }
                     });
 
-            // create alert dialog
+            // stworzenie okna dialoqowego
             AlertDialog alertDialog = alertDialogBuilder.create();
 
-            // show it
-
+            //wyswietlenie
         if (!wifiManager.isWifiEnabled()) {
-
-
                     alertDialog.show(); }
         }
     }
 
 
-
+    /**
+     * Metoda sprawdzająca czy urządzenie sprełnia wymagania do obsługi nadajników.
+     */
     public void checkRequirements(){
         RequirementsWizardFactory
                 .createEstimoteRequirementsWizard()
@@ -221,7 +234,9 @@ public class MainMenu extends AppCompatActivity {
                         });
     }
 
-
+    /**
+     * Metoda obsługująca wyłączenie aplikacji.
+     */
     @Override
     protected void onDestroy(){
         Log.d("MainMenu","Wywolano destroy");

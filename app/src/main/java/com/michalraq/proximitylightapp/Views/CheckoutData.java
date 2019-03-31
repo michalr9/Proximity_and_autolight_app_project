@@ -22,14 +22,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Klasa odpowiedzialna za pokaz danych logowania się użytkownika w pomieszczeniach.
+ */
 public class CheckoutData extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static String TAG = "CheckoutData";
     private Spinner spinnerPlaces;
     private Map<Integer,String> places;
-    private RecyclerView rvCheckoutData ;
     private CheckoutDataAdapter checkoutDataAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +38,10 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_checkout_data);
 
         spinnerPlaces = findViewById(R.id.spinnerPlaces);
-        rvCheckoutData =  findViewById(R.id.checkoutRecyclerView);
+        RecyclerView rvCheckoutData = findViewById(R.id.checkoutRecyclerView);
 
         rvCheckoutData.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvCheckoutData.setLayoutManager(layoutManager);
 
         loadSpinnerData();
@@ -57,6 +58,9 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    /**
+     * Metoda ładująca dane z bazy danych do Spinnera.
+     */
     private void loadSpinnerData() {
         places = new HashMap<>();
         try {
@@ -77,10 +81,10 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     * Wywolanie sqla z wybranym miejscem odswiezenie dapatera z danymi
+     * Wywolanie sqla z wybranym miejscem, odswiezenie adptera z danymi
      * @param parent
      * @param view
-     * @param position
+     * @param position pozycja na liście
      * @param id
      */
     @Override

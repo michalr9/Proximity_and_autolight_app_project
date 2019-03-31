@@ -4,10 +4,6 @@ import android.graphics.Color;
 
 import  com.michalraq.proximitylightapp.R;
 
-//
-// Running into any issues? Drop us an email to: contact@estimote.com
-//
-
 public class Utils {
 
    public static int getEstimoteColor(String colorName) {

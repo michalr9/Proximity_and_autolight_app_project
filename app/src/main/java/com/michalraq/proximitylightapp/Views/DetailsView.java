@@ -28,10 +28,10 @@ public class DetailsView extends AppCompatActivity {
     private static final String OFFICEDETAILSSTRING = "officeDetailsStr";
     private static final String KITCHENDETAILSSTRING = "kitchenDetailsStr";
     private static final String SALOONDETAILSSTRING = "saloonDetailsStr";
+    private final String TAG= "DetailsView";
     private DatePickerDialog.OnDateSetListener mStartDateSetListener;
     private DatePickerDialog.OnDateSetListener mEndDateSetListener;
     private SharedPreferences preferences;
-    private String saloonStr,kitchenStr,officeStr;
     private TextView tvOffice;
     private TextView tvSaloon;
     private TextView tvKitchen;
@@ -70,7 +70,9 @@ public class DetailsView extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Metoda inicjalizująca przycisk.
+     */
     private void initStartDateListener() {
         tvStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +90,13 @@ public class DetailsView extends AppCompatActivity {
         });
 
         mStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            /**
+             * Metoda definiująca zachowanie aplikacji w przypadku wybrania daty.
+             * @param datePicker
+             * @param year
+             * @param month
+             * @param day
+             */
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String data = year + "/" + (month+1) + "/" + day;
@@ -112,6 +121,13 @@ public class DetailsView extends AppCompatActivity {
         });
 
         mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            /**
+             * Metoda definiująca zachowanie aplikacji w przypadku wybrania daty.
+             * @param datePicker
+             * @param year
+             * @param month
+             * @param day
+             */
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String data = year + "/" + (month+1) + "/" + day;
@@ -132,6 +148,11 @@ public class DetailsView extends AppCompatActivity {
         Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Metoda sprawdzająca czy podana data jako początkowa jest wcześniejsza niż podana końcowa.
+     * @param endDate
+     * @return
+     */
     private Boolean isBefore(String endDate){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         Date startDate ;
@@ -155,7 +176,6 @@ public class DetailsView extends AppCompatActivity {
             return true;
         }else
             return false;
-
     }
 
     private void initButtonMinuteListener() {
@@ -296,15 +316,22 @@ public class DetailsView extends AppCompatActivity {
         new DatabaseHandler(this, this).execute("widok2");
     }catch(Exception e)
     {
-        Log.e("DetailsView", "Błąd podczas uruchamiania wątku polaczenia z baza");
+        Log.e(TAG, "Błąd podczas uruchamiania wątku polaczenia z baza");
     }
-}    private void startDatabaseOperation(String startDate,String endDate) {
+}
+
+    /**
+     * Metoda wyciągająca dane z bazy odnośnie czasu zużycia światła.
+     * @param startDate
+     * @param endDate
+     */
+    private void startDatabaseOperation(String startDate,String endDate) {
           try
     {
         new DatabaseHandler(this, this).execute("widok2",startDate,endDate);
     }catch(Exception e)
     {
-        Log.e("DetailsView", "Błąd podczas uruchamiania wątku polaczenia z baza");
+        Log.e(TAG, "Błąd podczas uruchamiania wątku polaczenia z baza");
     }
 }
 
@@ -314,10 +341,13 @@ public class DetailsView extends AppCompatActivity {
         saveData();
     }
 
+    /**
+     * Metoda zapisująca dane zmiennych do pamięci wewnętrznej.
+     */
     private void saveData(){
-        saloonStr = tvSaloon.getText().toString();
-        kitchenStr = tvKitchen.getText().toString();
-        officeStr = tvOffice.getText().toString();
+        String saloonStr = tvSaloon.getText().toString();
+        String kitchenStr = tvKitchen.getText().toString();
+        String officeStr = tvOffice.getText().toString();
 
         SharedPreferences.Editor preferencesEditor = preferences.edit();
         preferencesEditor.putString(OFFICEDETAILSSTRING, officeStr);
@@ -326,6 +356,9 @@ public class DetailsView extends AppCompatActivity {
         preferencesEditor.apply();
     }
 
+    /**
+     * Metoda przywracająca dane z pamięci wewnętrznej.
+     */
     private void restoreData(){
         tvSaloon.setText(preferences.getString(SALOONDETAILSSTRING,""));
         tvOffice.setText(preferences.getString(OFFICEDETAILSSTRING,""));
