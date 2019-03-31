@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.michalraq.proximitylightapp.CheckoutDataAdapter;
+import com.michalraq.proximitylightapp.data.CheckoutDataAdapter;
 import com.michalraq.proximitylightapp.R;
-import com.michalraq.proximitylightapp.database.DatabaseHandlerCheckout;
+import com.michalraq.proximitylightapp.data.DatabaseHandlerCheckout;
 
 import java.util.ArrayList;
 import java.util.HashMap;

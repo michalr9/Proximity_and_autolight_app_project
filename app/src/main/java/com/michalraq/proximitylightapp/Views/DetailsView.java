@@ -14,7 +14,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.michalraq.proximitylightapp.R;
-import com.michalraq.proximitylightapp.database.DatabaseHandler;
+import com.michalraq.proximitylightapp.data.DatabaseHandler;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

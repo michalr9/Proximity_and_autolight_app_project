@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.estimote;
+package com.michalraq.proximitylightapp.Util;
 
 import android.graphics.Color;
 

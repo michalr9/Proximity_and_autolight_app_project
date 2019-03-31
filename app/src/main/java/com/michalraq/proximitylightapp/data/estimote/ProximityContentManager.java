@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.estimote;
+package com.michalraq.proximitylightapp.data.estimote;
 
 import android.content.Context;
 import android.util.Log;
@@ -20,17 +20,28 @@ import java.util.Set;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
+/**
+ * Klasa odpowiadająca za sterowanie obserwatorem strefy nadajnika.
+ */
 public class ProximityContentManager {
 
     private Context context;
     private EstimoteCloudCredentials cloudCredentials;
     private ProximityObserver.Handler proximityObserverHandler;
 
+    /**
+     *
+     * @param context kontekst.
+     * @param cloudCredentials dane wygenerowane przez chmurę Estimote potrzebne do połączenia aplikacji z usługą.
+     */
     public ProximityContentManager(Context context, EstimoteCloudCredentials cloudCredentials) {
         this.context = context;
         this.cloudCredentials = cloudCredentials;
     }
 
+    /**
+     * Funkcja uruchamiająca obserwatora. Wraz z definicją obsługiwanych eventów związanych z wejściem i wyjściem ze strefy.
+     */
     public void start() {
 
         ProximityObserver proximityObserver = new ProximityObserverBuilder(context, cloudCredentials)
@@ -120,6 +131,9 @@ public class ProximityContentManager {
         proximityObserverHandler = proximityObserver.startObserving(places);
     }
 
+    /**
+     * Funckja zatrzymująca obserwatora.
+     */
     public void stop() {
         proximityObserverHandler.stop();
     }

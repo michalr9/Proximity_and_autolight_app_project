@@ -28,6 +28,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import static android.app.Notification.VISIBILITY_PUBLIC;
 import static com.michalraq.proximitylightapp.App.NOTIFICATION_CHANNEL;
 
 public class Client extends Service {
@@ -146,6 +147,7 @@ public class Client extends Service {
                 .setContentTitle(this.getString(R.string.notification_error))
                 .setContentText(this.getString(R.string.notification_error_text))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setVisibility(VISIBILITY_PUBLIC)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true).build();
         notificationManagerCompat.notify(1,notification);

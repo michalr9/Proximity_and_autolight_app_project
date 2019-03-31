@@ -22,8 +22,8 @@ import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
 import com.michalraq.proximitylightapp.R;
-import com.michalraq.proximitylightapp.database.DatabaseHandler;
-import com.michalraq.proximitylightapp.estimote.ProximityContentManager;
+import com.michalraq.proximitylightapp.data.DatabaseHandler;
+import com.michalraq.proximitylightapp.data.estimote.ProximityContentManager;
 
 import java.util.List;
 

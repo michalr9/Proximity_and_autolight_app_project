@@ -1,6 +1,8 @@
-package com.michalraq.proximitylightapp.estimote;
+package com.michalraq.proximitylightapp.data.estimote;
 
-
+/**
+ * Klasa przechowująca dane nadajnika.
+ */
 public class ProximityContent {
 
     private String title;

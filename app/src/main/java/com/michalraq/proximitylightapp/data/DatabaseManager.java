@@ -1,10 +1,9 @@
-package com.michalraq.proximitylightapp.database;
+package com.michalraq.proximitylightapp.data;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.michalraq.proximitylightapp.R;
-import com.michalraq.proximitylightapp.StateOfLight;
 import com.michalraq.proximitylightapp.Util.*;
 
 import java.sql.*;
@@ -12,10 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseManager {
-
+    private final String TAG = "DataBaseManager";
      private String url ;
      private Connection connection;
 
+    /**
+     *Konstruktor w którym następuje inicjalizacja zmiennych. Danymi do połączenia z bazą danych.
+     * @param context
+     */
     public DatabaseManager(Context context) {
         String hostName =   context.getResources().getString(R.string.server);
         String dbName = "Proximity";
@@ -36,33 +39,46 @@ public class DatabaseManager {
                     user,
                     password);
     }
-//TODO zmienic przechowywanie hasla i danych do bazy pobrac odpowiedni driver
+
+    /**
+     * Funkcja odpowiedzialna za połączenie z bazą danych.
+     * @return True jeżeli połączenie zakończy się sukcesem.
+     */
     public Boolean connectDatabase(){
         try {
             connection = DriverManager.getConnection(url);
-            Log.d("DataBaseManager","Connection with database established " + connection);
+            Log.d(TAG,"Connection with database established " + connection);
             return true;
         }
         catch (Exception e) {
-            System.err.println("Error occured during attempt to connect to database!");
+            Log.e(TAG,"Error occured during attempt to connect to database!");
             if(connection!=null)
                 disconnectDatabase();
             return false;
         }
     }
 
+    /**
+     * Rozłączenie z bazą danych.
+     * @return True jeżeli rozłączenie się powiedzie.
+     */
     public Boolean disconnectDatabase(){
         try {
             if(connection!=null)
                 connection.close();
-            Log.d("DataBaseManager","Connection with database closed");
+            Log.d(TAG,"Connection with database closed");
         } catch (SQLException e) {
-            System.err.println("Error occured during disconnect to database!");
+            Log.e(TAG,"Error occured during disconnect to database!");
             return false;
         }
         return true;
     }
 
+    /**
+     * Funkcja sprawdzająca czy w danym pomieszczeniu jest włączone światło.
+     * @param place Nazwa pomieszczenia.
+     * @return True jeżeli jest zapalone światło.
+     */
     public Boolean checkStatusOfLight(String place){
         place = StringOperations.addSingleQuotes(place);
         Boolean status=false;
@@ -74,11 +90,11 @@ public class DatabaseManager {
                 rs.next();
                 status = rs.getBoolean("POWER_ON");
             } catch (SQLException e) {
-                System.err.println("Blad podczas sprawdzenia czy istnieje rekord");
+                Log.e(TAG,"Error checkStatusOfLight during checking for records.");
                 e.printStackTrace();
             }
         } else {
-            Log.e("DataBaseManager","Connection is NULL");
+            Log.e("DataBaseManager","checkStatusOfLight has failed");
         }
         return status;
     }
@@ -103,14 +119,19 @@ public class DatabaseManager {
                 rs.next();
                 StateOfLight.summaryOfTimeLightOn.put("kuchnia", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
             } catch (SQLException e) {
-                System.err.println("Blad podczas sprawdzenia czy istnieje rekord");
+                Log.e(TAG,"Error checkTimeWork during checking for records.");
                 e.printStackTrace();
             }
         } else {
-            Log.e("DataBaseManager","checkTimeWork has failed");
+            Log.e(TAG,"checkTimeWork has failed");
         }
     }
 
+    /**
+     * Funkcja sprawdzająca czas pracy włączonego światła w każdym z pomieszczeń.
+     * @param startDate Data początkowa okresu rozliczeniowego.
+     * @param endDate Data końcowa okresu rozliczeniowego.
+     */
     public void checkTimeWork(String startDate,String endDate){
         StateOfLight.summaryOfTimeLightOn = new HashMap<>();
         String stDate = StringOperations.makeTimeIn(startDate);
@@ -135,29 +156,33 @@ public class DatabaseManager {
                 ResultSet rs = stm.executeQuery(SQL1);
                 rs.next();
                 StateOfLight.summaryOfTimeLightOn.put("biuro", rs.getLong(1));
-                Log.d("DatabaseManager","Biuro "+rs.getLong(1));
+                Log.d(TAG,"Biuro "+rs.getLong(1));
 
                 rs = stm.executeQuery(SQL2);
                 rs.next();
                 StateOfLight.summaryOfTimeLightOn.put("salon", rs.getLong(1));
-                Log.d("DatabaseManager","Salon "+rs.getLong(1));
+                Log.d(TAG,"Salon "+rs.getLong(1));
 
                 rs = stm.executeQuery(SQL3);
                 rs.next();
                 StateOfLight.summaryOfTimeLightOn.put("kuchnia", rs.getLong(1));
-                Log.d("DatabaseManager","Kuchnia "+rs.getLong(1));
+                Log.d(TAG,"Kuchnia "+rs.getLong(1));
 
 
             } catch (SQLException e) {
-                System.err.println("Blad podczas sprawdzenia czy istnieje rekord");
+                Log.e(TAG,"Error checkTimeWork during checking for records.");
                 e.printStackTrace();
             }
         } else {
-            Log.e("DataBaseManager","checkTimeWork has failed");
+            Log.e(TAG,"checkTimeWork has failed");
         }
     }
 
-
+    /**
+     * Funkcja pobierające dane związane ze szczegółowym czasem wejścia i opuszczenia pomieszczenia.
+     * @param place Nazwa pomieszczenia
+     * @return Dane dla każdego z pomieszczeń.
+     */
     public Map<Integer,String> getCheckoutData(String place) {
         Map<Integer, String> result = new HashMap<>();
         place=StringOperations.addSingleQuotes(place);
@@ -178,16 +203,20 @@ public class DatabaseManager {
                     result.put(id, checkoutData);
                 }
             } catch (SQLException e) {
-                Log.e("DataBaseManager", "Blad pobierania checkout data");
+                Log.e(TAG, "Error during fetching checkout data");
                 e.printStackTrace();
             }
         } else {
-            Log.e("DataBaseManager", "Connection is NULL");
+            Log.e(TAG, "Connection is NULL in getCheckoutData");
         }
         return result;
 
     }
 
+    /**
+     * Funkcja pobierająca nazwy pomieszczeń zapisane w bazie danych.
+     * @return
+     */
     public Map<Integer,String> getPlaces() {
         Map<Integer, String> result = new HashMap<>();
 
@@ -202,11 +231,11 @@ public class DatabaseManager {
                     result.put(i, place);
                 }
             } catch (SQLException e) {
-                Log.e("DataBaseManager", "Blad pobierania danych pomieszczen");
+                Log.e(TAG, "Error during getting places names.");
                 e.printStackTrace();
             }
         } else {
-            Log.e("DataBaseManager", "Connection is NULL");
+            Log.e(TAG, "Connection is NULL in getPlaces function.");
         }
         return result;
     }

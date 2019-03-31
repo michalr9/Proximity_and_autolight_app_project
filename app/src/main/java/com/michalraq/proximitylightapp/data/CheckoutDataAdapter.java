@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp;
+package com.michalraq.proximitylightapp.data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
+import com.michalraq.proximitylightapp.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,10 +21,10 @@ import java.util.Map;
  * Klasa adaptera pobierająca dane do wyświetlania historii wiadomości.
  */
 public class CheckoutDataAdapter extends RecyclerView.Adapter<CheckoutDataAdapter.ViewHolder>{
-
     private final String TAG = "CheckoutDataAdapter";
-    List<String> dataList;
-    Map<Integer,String> list;
+    private List<String> dataList;
+    private Map<Integer,String> list;
+
     public CheckoutDataAdapter(){
         dataList= new ArrayList<>();
         list = new HashMap<>();
@@ -38,9 +40,14 @@ public class CheckoutDataAdapter extends RecyclerView.Adapter<CheckoutDataAdapte
             super(itemView);
             text = itemView.findViewById(R.id.tvText);
         }
-
     }
 
+    /**
+     * Funkcja zwracająca widok utworzonego adaptera z danymi logowania wejść oraz wyjść z pomieszczenia.
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public CheckoutDataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,11 +71,19 @@ public class CheckoutDataAdapter extends RecyclerView.Adapter<CheckoutDataAdapte
         }
     }
 
+    /**
+     * Funkcja zwracająca liczbę elementów znajdujących się na liście adaptera.
+     * @return
+     */
     @Override
     public int getItemCount() {
         return dataList.size();
     }
 
+    /**
+     * Setter ustawiający dane listy.
+     * @param list lista z danymi
+     */
     public void setList(Map<Integer, String> list) {
         this.list = list;
         dataList.clear();

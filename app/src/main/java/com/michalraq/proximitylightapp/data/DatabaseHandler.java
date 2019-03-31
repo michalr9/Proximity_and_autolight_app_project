@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.database;
+package com.michalraq.proximitylightapp.data;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.widget.ToggleButton;
 
 import com.michalraq.proximitylightapp.R;
-import com.michalraq.proximitylightapp.StateOfLight;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,11 +27,21 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
     private SharedPreferences preferences;
     private Boolean office, kitchen, saloon;
     private Boolean view1,view2;
+
+    /**
+     * Konstruktor
+     * @param context kontekst aplikacji
+     * @param activity
+     */
     public DatabaseHandler(Context context,Activity activity){
         this.context=context;
         this.activity=activity;
         databaseManager = new DatabaseManager(context);
     }
+
+    /**
+     * Funkcja wywoływana przed uruchomieniem wątku, gdzie następuje inicjalizacja zmiennych oraz dialogu.
+     */
     @Override
     protected void onPreExecute() {
         view1=false;view2=false;
@@ -42,6 +51,11 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
         dialog.show();
         }
 
+    /**
+     * Główna funkcjonalność wątku. Wykonanie zapytania w bazie danych na podstawie otrzymanych parametrów.
+     * @param fetch parametry
+     * @return
+     */
     @Override
     protected Void doInBackground(String... fetch) {
         if(!databaseManager.connectDatabase()){
@@ -81,6 +95,10 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
         return null;
     }
 
+    /**
+     * Funkcja gdzie po zakończeniu odpytywania bazy danych wyniki sa zapisywane w pamięci wewnętrznej oraz zmiennych.
+     * @param aVoid
+     */
     @Override
     protected void onPostExecute(Void aVoid) {
         if(view1) {
@@ -112,7 +130,9 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
         }
 
 
-
+/*
+  Rozłączenie z bazą i zamknięcie okna dialogowego.
+ */
         if(databaseManager.getConnection()!=null)
         databaseManager.disconnectDatabase();
         dialog.dismiss();
