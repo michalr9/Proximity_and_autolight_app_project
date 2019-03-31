@@ -14,12 +14,12 @@ public class DatabaseManager {
     private final String TAG = "DataBaseManager";
      private String url ;
      private Connection connection;
-
+//TODO utworzyc plik properties z danymi
     /**
      *Konstruktor w którym następuje inicjalizacja zmiennych. Danymi do połączenia z bazą danych.
      * @param context
      */
-    public DatabaseManager(Context context) {
+     DatabaseManager(Context context) {
         String hostName =   context.getResources().getString(R.string.server);
         String dbName = "Proximity";
         String user = context.getResources().getString(R.string.user);

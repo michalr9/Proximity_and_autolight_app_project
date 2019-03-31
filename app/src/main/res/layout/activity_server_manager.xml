@@ -93,6 +93,7 @@
 
     <Button
         android:id="@+id/buttonStartService"
+        android:theme="@style/MyButtons"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -104,6 +105,7 @@
 
     <Button
         android:id="@+id/buttonStopService"
+        android:theme="@style/MyButtons"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"

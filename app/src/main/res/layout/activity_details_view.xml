@@ -46,39 +46,29 @@
 
     <Button
         android:id="@+id/buttonInDays"
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/MyButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/buttonDays"
         app:layout_constraintBottom_toBottomOf="@+id/buttonInHours"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/button_shape"
-        android:textColor="#FFF78C"
-        android:shadowColor="#97A88F"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="7"/>
+        />
 
     <Button
         android:id="@+id/buttonInMinutes"
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/MyButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/buttonMinutes"
         app:layout_constraintBottom_toBottomOf="@+id/buttonInHours"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/button_shape"
-        android:textColor="#FFF78C"
-        android:shadowColor="#97A88F"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="7"/>
+       />
 
     <Button
         android:id="@+id/buttonInHours"
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/MyButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -88,12 +78,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonInDays"
         app:layout_constraintStart_toEndOf="@+id/buttonInMinutes"
-        android:background="@drawable/button_shape"
-        android:textColor="#FFF78C"
-        android:shadowColor="#97A88F"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="7"
         />
 
     <TextView

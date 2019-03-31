@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
-        <!-- Customize your theme here. -->
     <style name="CustomToolbar" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:background">@color/colorTiger</item>
     </style>
@@ -18,6 +17,14 @@
         <item name="android:colorControlHighlight">#d2080e</item>
         <item name="android:colorButtonNormal">#e4fce4</item>
     </style>
+
+<style name="MyButtons" parent="Widget.AppCompat.Button.Colored">
+    <item name="android:textColorPrimary">@color/colorTiger</item>
+    <item name="android:colorButtonNormal">#fcf8f3</item>
+    <item name="android:colorAccent">#2aa626</item>
+    <item name="android:colorControlHighlight">#fff70a</item>
+</style>
+
     <style name="spinner_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
