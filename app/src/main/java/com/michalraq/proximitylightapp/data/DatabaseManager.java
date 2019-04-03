@@ -2,10 +2,9 @@ package com.michalraq.proximitylightapp.data;
 
 import android.content.Context;
 import android.util.Log;
-
-import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.Util.*;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,24 +19,36 @@ public class DatabaseManager {
      * @param context
      */
      DatabaseManager(Context context) {
-        String hostName =   context.getResources().getString(R.string.server);
-        String dbName = "Proximity";
-        String user = context.getResources().getString(R.string.user);
-        String password = context.getResources().getString(R.string.pass);
+         String hostName="",dbName="",user="",password="";
+         try {
+         hostName =  FileGetter.getProperty("host_name",context);
+         dbName = FileGetter.getProperty("database_name",context);
+         user = FileGetter.getProperty("user",context);
+         password = FileGetter.getProperty("password",context);
 
-        try {
+
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
-        url = String.format("jdbc:jtds:sqlserver://%s:1433/" +
-                            "%s" +
-                            ";user=%s" +
-                            ";password=%s;",
-                    hostName,
-                    dbName,
-                    user,
-                    password);
+            Log.e(TAG,"Missing class lib");
+        } catch (IOException e) {
+             e.printStackTrace();
+             Log.e(TAG,"Reading from file failed!!!");
+         }
+         if(!hostName.isEmpty() && !dbName.isEmpty() && !user.isEmpty() && !password.isEmpty()) {
+             url = String.format("jdbc:jtds:sqlserver://%s:1433/" +
+                             "%s" +
+                             ";user=%s" +
+                             ";password=%s;",
+                     hostName,
+                     dbName,
+                     user,
+                     password);
+         }
+         else
+         {
+             Log.e(TAG,"Empty values for database url link.");
+         }
     }
 
     /**
