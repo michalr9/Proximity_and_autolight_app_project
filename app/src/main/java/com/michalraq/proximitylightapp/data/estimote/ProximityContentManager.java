@@ -121,9 +121,6 @@ public class ProximityContentManager {
 
                         }
 
-//                        proximityContentAdapter.setNearbyContent(nearbyContent);
-//                        proximityContentAdapter.notifyDataSetChanged();
-
                         return null;
                     }
                 }).build();
