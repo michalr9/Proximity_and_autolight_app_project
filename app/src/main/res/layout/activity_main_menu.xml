@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".Views.MainMenu">
+    tools:context=".view.MainMenu">
 
     <include layout="@layout/app_bar"
-        android:id="@+id/app_bar"></include>
+        android:id="@+id/app_bar"/>
 
     <ToggleButton
         android:id="@+id/button_status_office"

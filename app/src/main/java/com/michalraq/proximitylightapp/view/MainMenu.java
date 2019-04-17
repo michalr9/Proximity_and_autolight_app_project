@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.Views;
+package com.michalraq.proximitylightapp.view;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.Service;
+package com.michalraq.proximitylightapp.service;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -18,7 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.michalraq.proximitylightapp.R;
-import com.michalraq.proximitylightapp.Views.ServerManager;
+import com.michalraq.proximitylightapp.view.ServerManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;

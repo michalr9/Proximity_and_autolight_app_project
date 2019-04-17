@@ -28,7 +28,7 @@
         </receiver>
 
         <activity
-            android:name=".Views.MainMenu"
+            android:name=".view.MainMenu"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,21 +37,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Views.ServerManager"
+            android:name=".view.ServerManager"
             android:label="@string/serverActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name=".Service.Client" />
+        <service android:name=".service.Client" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".Views.DetailsView"
+            android:name=".view.DetailsView"
             android:screenOrientation="portrait" />
-        <activity android:name=".Views.CheckoutData"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".view.CheckoutData"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

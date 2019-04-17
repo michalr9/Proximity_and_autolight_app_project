@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.Views;
+package com.michalraq.proximitylightapp.view;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class DetailsView extends AppCompatActivity {
     private static final String PREFERENCES = "myPreferences";
@@ -84,7 +85,7 @@ public class DetailsView extends AppCompatActivity {
                 DatePickerDialog dialog = new DatePickerDialog(DetailsView.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mStartDateSetListener,
                         year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
@@ -115,7 +116,7 @@ public class DetailsView extends AppCompatActivity {
                 DatePickerDialog dialog = new DatePickerDialog(DetailsView.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mEndDateSetListener,
                         year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
@@ -171,11 +172,7 @@ public class DetailsView extends AppCompatActivity {
             return true;
         }
 
-        if (endDate2.before(startDate)) {
-
-            return true;
-        }else
-            return false;
+        return endDate2.before(startDate);
     }
 
     private void initButtonMinuteListener() {

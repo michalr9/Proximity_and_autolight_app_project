@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.Views;
+package com.michalraq.proximitylightapp.view;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -17,8 +17,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.michalraq.proximitylightapp.R;
-import com.michalraq.proximitylightapp.Service.Client;
-import com.michalraq.proximitylightapp.Service.ServerContent;
+import com.michalraq.proximitylightapp.service.Client;
+import com.michalraq.proximitylightapp.service.ServerContent;
 
 /**
  * Klasa widok, odpowiedzialna za zarządzanie ustawieniami usługi i jej działania.

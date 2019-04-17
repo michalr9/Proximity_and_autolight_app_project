@@ -10,8 +10,8 @@ import com.estimote.proximity_sdk.api.ProximityObserverBuilder;
 import com.estimote.proximity_sdk.api.ProximityZone;
 import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
-import com.michalraq.proximitylightapp.Service.Client;
-import com.michalraq.proximitylightapp.Views.ServerManager;
+import com.michalraq.proximitylightapp.service.Client;
+import com.michalraq.proximitylightapp.view.ServerManager;
 
 import java.util.ArrayList;
 import java.util.List;

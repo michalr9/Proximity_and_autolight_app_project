@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.Views;
+package com.michalraq.proximitylightapp.view;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -92,9 +92,7 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
          String place = parent.getItemAtPosition(position).toString();
         try {
             checkoutDataAdapter.setList( new DatabaseHandlerCheckout(this).execute("data", place).get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
