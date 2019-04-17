@@ -66,7 +66,7 @@ public class Client extends Service {
      * @param intent
      * @param flags
      * @param startId
-     * @return
+     * @return int code
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -111,7 +111,7 @@ public class Client extends Service {
 
     /**
      * Metoda odpowiedzialna za wysyłanie wiadomości do serwera.
-     * @param message
+     * @param message wiadomość do wysyłki
      */
     public static void sendMessage(final String message){
 
@@ -130,8 +130,8 @@ public class Client extends Service {
 
     /**
      * Metoda odpowiedzialna za broadcast powiadomień z usługi do systemu, umożliwiając tym samym jej odbiór w innych aktywnościach.
-     * @param status
-     * @param name
+     * @param status status powodzenia
+     * @param name nazwa błędu
      */
     private void sendBroadcast (Boolean status,String name){
         switch (name) {
@@ -146,7 +146,7 @@ public class Client extends Service {
 
     /**
      * Metoda odpowiedzialna za pokazywanie toastów.
-     * @param text
+     * @param text  wiadomość
      */
     public void showToastInIntentService(final String text) {
         final Context MyContext = this;
@@ -171,6 +171,8 @@ public class Client extends Service {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(VISIBILITY_PUBLIC)
                 .setContentIntent(pendingIntent)
+                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND | Notification.FLAG_SHOW_LIGHTS)
+                .setLights(285 ,500,5000)
                 .setAutoCancel(true).build();
         notificationManagerCompat.notify(1,notification);
     }
@@ -186,7 +188,7 @@ public class Client extends Service {
 
     /**
      * Metoda służąca do zachowywania stanu usługi w pamięci.
-     * @param isServiceStarted
+     * @param isServiceStarted zmienna mówiąca o uruchomionym serwisie - true-tak false -nie
      */
     private void saveState(Boolean isServiceStarted){
         SharedPreferences.Editor preferencesEditor = preferences.edit();
