@@ -111,7 +111,7 @@ public class DatabaseManager {
     }
 
     public void checkTimeWork(){
-        StateOfLight.summaryOfTimeLightOn = new HashMap<>();
+        LightContent.summaryOfTimeLightOn = new HashMap<>();
         String SQL1 = "select CMT_PLACES.SUM_TIME_OF_LIGHT_ON from CMT_PLACES\n" +
                 "where PLACE = 'biuro'";
         String SQL2 = "select CMT_PLACES.SUM_TIME_OF_LIGHT_ON from CMT_PLACES\n" +
@@ -122,13 +122,13 @@ public class DatabaseManager {
             try (Statement stm = connection.createStatement()) {
                 ResultSet rs = stm.executeQuery(SQL1);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("biuro", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                LightContent.summaryOfTimeLightOn.put("biuro", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
                  rs = stm.executeQuery(SQL2);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("salon", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                LightContent.summaryOfTimeLightOn.put("salon", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
                  rs = stm.executeQuery(SQL3);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("kuchnia", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
+                LightContent.summaryOfTimeLightOn.put("kuchnia", rs.getLong("SUM_TIME_OF_LIGHT_ON"));
             } catch (SQLException e) {
                 Log.e(TAG,"Error checkTimeWork during checking for records.");
                 e.printStackTrace();
@@ -144,7 +144,7 @@ public class DatabaseManager {
      * @param endDate Data końcowa okresu rozliczeniowego.
      */
     public void checkTimeWork(String startDate,String endDate){
-        StateOfLight.summaryOfTimeLightOn = new HashMap<>();
+        LightContent.summaryOfTimeLightOn = new HashMap<>();
         String stDate = StringOperations.makeTimeIn(startDate);
         String edDate = StringOperations.makeTimeOut(endDate);
         String SQL1 = "select case when SUM( datediff(second,TIME_IN,TIME_OUT)) IS NULL then 0\n" +
@@ -166,17 +166,17 @@ public class DatabaseManager {
             try (Statement stm = connection.createStatement()) {
                 ResultSet rs = stm.executeQuery(SQL1);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("biuro", rs.getLong(1));
+                LightContent.summaryOfTimeLightOn.put("biuro", rs.getLong(1));
                 Log.d(TAG,"Biuro "+rs.getLong(1));
 
                 rs = stm.executeQuery(SQL2);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("salon", rs.getLong(1));
+                LightContent.summaryOfTimeLightOn.put("salon", rs.getLong(1));
                 Log.d(TAG,"Salon "+rs.getLong(1));
 
                 rs = stm.executeQuery(SQL3);
                 rs.next();
-                StateOfLight.summaryOfTimeLightOn.put("kuchnia", rs.getLong(1));
+                LightContent.summaryOfTimeLightOn.put("kuchnia", rs.getLong(1));
                 Log.d(TAG,"Kuchnia "+rs.getLong(1));
 
 

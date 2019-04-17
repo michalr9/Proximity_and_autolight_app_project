@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.service.Client;
-import com.michalraq.proximitylightapp.service.ServerContent;
+import com.michalraq.proximitylightapp.data.ServerContent;
 
 /**
  * Klasa widok, odpowiedzialna za zarządzanie ustawieniami usługi i jej działania.

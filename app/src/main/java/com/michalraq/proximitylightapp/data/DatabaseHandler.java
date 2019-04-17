@@ -117,9 +117,9 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
         }
         if(view2){
 
-            Long officeDet = StateOfLight.getValueInSec("biuro");
-            Long kitchenDet = StateOfLight.getValueInSec("kuchnia");
-            Long saloonDet = StateOfLight.getValueInSec("salon");
+            Long officeDet = LightContent.getValueInSec("biuro");
+            Long kitchenDet = LightContent.getValueInSec("kuchnia");
+            Long saloonDet = LightContent.getValueInSec("salon");
 
             SharedPreferences.Editor preferencesEditor = preferences.edit();
             preferencesEditor.putLong(OFFICEDETAILS, officeDet);

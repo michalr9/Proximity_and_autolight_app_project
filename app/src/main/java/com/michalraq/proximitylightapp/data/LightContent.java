@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Klasa odpowiadająca za przechowywanie statusu świateł w pomieszczeniach.
  */
-public class StateOfLight {
+public class LightContent {
     public static Map<String,Long> summaryOfTimeLightOn ;
 
     /**

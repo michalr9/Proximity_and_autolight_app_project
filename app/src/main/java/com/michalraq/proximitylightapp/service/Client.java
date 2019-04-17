@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.michalraq.proximitylightapp.R;
+import com.michalraq.proximitylightapp.data.ServerContent;
 import com.michalraq.proximitylightapp.view.ServerManager;
 
 import java.io.BufferedReader;

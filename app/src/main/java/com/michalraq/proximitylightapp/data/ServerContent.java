@@ -1,4 +1,4 @@
-package com.michalraq.proximitylightapp.service;
+package com.michalraq.proximitylightapp.data;
 
 /**
  * Klasa przechowująca dane połączeniowe z serwerem.
