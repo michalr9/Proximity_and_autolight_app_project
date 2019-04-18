@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.data.ServerContent;
-import com.michalraq.proximitylightapp.view.ServerManager;
+import com.michalraq.proximitylightapp.view.ServiceManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,7 +79,7 @@ public class Client extends Service {
                     serverAddr = InetAddress.getByName(ServerContent.SERVER_IP);
                     socket = new Socket(serverAddr, ServerContent.PORT_NUMBER);
 
-                    ServerManager.isServiceStarted = true;
+                    ServiceManager.isServiceStarted = true;
 
                     printWriter = new PrintWriter(socket.getOutputStream());
                     bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -182,7 +182,7 @@ public class Client extends Service {
      * Stworzenie intencji uruchamianej po kliknięciu w notyfikacje przez użytkownika
      */
     void createNotificationActionIntent(){
-        Intent serverIntent = new Intent(this, ServerManager.class);
+        Intent serverIntent = new Intent(this, ServiceManager.class);
         serverIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
          pendingIntent = PendingIntent.getActivity(this, 0, serverIntent, 0);
     }

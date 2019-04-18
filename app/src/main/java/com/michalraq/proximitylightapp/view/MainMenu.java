@@ -72,7 +72,7 @@ public class MainMenu extends AppCompatActivity {
 
         switch(item.getItemId()) {
             case R.id.acction_settings:
-                Intent editServer = new Intent(this, ServerManager.class);
+                Intent editServer = new Intent(this, ServiceManager.class);
                 startActivity(editServer);
             return true;
             case R.id.acction_refresh:

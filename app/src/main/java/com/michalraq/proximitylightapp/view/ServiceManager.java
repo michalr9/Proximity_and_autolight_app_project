@@ -23,7 +23,7 @@ import com.michalraq.proximitylightapp.data.ServerContent;
 /**
  * Klasa widok, odpowiedzialna za zarządzanie ustawieniami usługi i jej działania.
  */
-public class ServerManager extends AppCompatActivity {
+public class ServiceManager extends AppCompatActivity {
 
     private static final String PREFERENCES = "myPreferences";
     private static final String SERVER_IP = "ipServer";
@@ -94,7 +94,7 @@ public class ServerManager extends AppCompatActivity {
                 isDataChanged = false;
                 setServerContent();
                 manageButtonsStatus("save");
-                Toast.makeText(ServerManager.this, "Dane zapisano!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ServiceManager.this, "Dane zapisano!", Toast.LENGTH_SHORT).show();
             }
         });
     }  private void initButtonStartListener(){

@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.ServerManager"
+            android:name=".view.ServiceManager"
             android:label="@string/serverActivity"
             android:screenOrientation="portrait" />
 

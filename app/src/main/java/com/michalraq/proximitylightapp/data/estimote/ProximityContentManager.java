@@ -11,7 +11,7 @@ import com.estimote.proximity_sdk.api.ProximityZone;
 import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import com.michalraq.proximitylightapp.service.Client;
-import com.michalraq.proximitylightapp.view.ServerManager;
+import com.michalraq.proximitylightapp.view.ServiceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class ProximityContentManager {
 
                 Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
 
-                if(ServerManager.isServiceStarted)
+                if(ServiceManager.isServiceStarted)
                 Client.sendMessage(place);
 
                 return null;
@@ -90,7 +90,7 @@ public class ProximityContentManager {
 
                 Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
 
-                if(ServerManager.isServiceStarted)
+                if(ServiceManager.isServiceStarted)
                 Client.sendMessage(place);
 
 
