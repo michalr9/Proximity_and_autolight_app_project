@@ -23,11 +23,21 @@ import com.michalraq.proximitylightapp.view.ServiceManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.SSLSocket;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 
 import static android.app.Notification.VISIBILITY_PUBLIC;
 import static com.michalraq.proximitylightapp.App.NOTIFICATION_CHANNEL;
@@ -39,13 +49,18 @@ public class Client extends Service {
 
     private static final String PREFERENCES = "myPreferences";
     private static final String IS_SERVICE_STARTED = "isServiceStarted";
+    private static final String PATH = "android.resource//certificate//clientStore.jks";
     private SharedPreferences preferences;
-    private static Socket socket;
+    private static SSLSocket socket;
     private static BufferedReader bufferedReader;
     private static PrintWriter printWriter;
     private NotificationManagerCompat notificationManagerCompat;
     PendingIntent pendingIntent;
     InetAddress serverAddr;
+    SSLSocketFactory sslSocketFactory;
+    private char keystorepass[] = "password".toCharArray();
+    private char keypassword[] = "password".toCharArray();
+
 
     @Nullable
     @Override
@@ -77,7 +92,14 @@ public class Client extends Service {
 
                 try {
                     serverAddr = InetAddress.getByName(ServerContent.SERVER_IP);
-                    socket = new Socket(serverAddr, ServerContent.PORT_NUMBER);
+
+                    KeyStore ks = KeyStore.getInstance("BKS");
+                    InputStream keyin = getResources().openRawResource(R.raw.clientcert);
+                    ks.load(keyin,keystorepass);
+                    sslSocketFactory = new SSLSocketFactory(ks);
+                    sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                    socket = (SSLSocket) sslSocketFactory.createSocket(new Socket(serverAddr,ServerContent.PORT_NUMBER), serverAddr.toString(), ServerContent.PORT_NUMBER, false);
+                    socket.startHandshake();
 
                     ServiceManager.isServiceStarted = true;
 
@@ -101,6 +123,8 @@ public class Client extends Service {
                     showErrorNotification();
                     closeSocket();
                     stopSelf();
+                } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | KeyManagementException | UnrecoverableKeyException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -201,8 +225,13 @@ public class Client extends Service {
 
     @Override
     public void onDestroy() {
-
-        closeSocket();
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                closeSocket();
+            }
+        });
+        thread.start();
         showToastInIntentService("Usługa zatrzymana.");
         super.onDestroy();
     }
