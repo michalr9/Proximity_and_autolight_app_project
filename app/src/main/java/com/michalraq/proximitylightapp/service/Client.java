@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
@@ -49,17 +48,15 @@ public class Client extends Service {
 
     private static final String PREFERENCES = "myPreferences";
     private static final String IS_SERVICE_STARTED = "isServiceStarted";
-    private static final String PATH = "android.resource//certificate//clientStore.jks";
     private SharedPreferences preferences;
     private static SSLSocket socket;
     private static BufferedReader bufferedReader;
     private static PrintWriter printWriter;
     private NotificationManagerCompat notificationManagerCompat;
     PendingIntent pendingIntent;
-    InetAddress serverAddr;
+    String serverAddr;
     SSLSocketFactory sslSocketFactory;
     private char keystorepass[] = "password".toCharArray();
-    private char keypassword[] = "password".toCharArray();
 
 
     @Nullable
@@ -91,14 +88,14 @@ public class Client extends Service {
             public void run() {
 
                 try {
-                    serverAddr = InetAddress.getByName(ServerContent.SERVER_IP);
+                    serverAddr =ServerContent.SERVER_IP;
 
                     KeyStore ks = KeyStore.getInstance("BKS");
                     InputStream keyin = getResources().openRawResource(R.raw.clientcert);
                     ks.load(keyin,keystorepass);
                     sslSocketFactory = new SSLSocketFactory(ks);
-                    sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                    socket = (SSLSocket) sslSocketFactory.createSocket(new Socket(serverAddr,ServerContent.PORT_NUMBER), serverAddr.toString(), ServerContent.PORT_NUMBER, false);
+                    sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); //pozwala na uzycie dowolnego certyfikatu
+                    socket = (SSLSocket) sslSocketFactory.createSocket(new Socket(serverAddr,ServerContent.PORT_NUMBER), serverAddr, ServerContent.PORT_NUMBER, false);
                     socket.startHandshake();
 
                     ServiceManager.isServiceStarted = true;
