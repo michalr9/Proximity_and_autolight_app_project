@@ -65,10 +65,7 @@ public class ProximityContentManager {
                 if (place == null) {
                     place = "unknown";
                 }
-                //sygnal 1- wlaczanie swiatla
-                StringBuilder stringBuilder = new StringBuilder("1");
-                stringBuilder.append(place);
-                place = stringBuilder.toString();
+                place = "1" + place;
 
                 Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
 
@@ -84,9 +81,7 @@ public class ProximityContentManager {
                 if (place == null) {
                     place = "unknown";
                 }
-                StringBuilder stringBuilder = new StringBuilder("0");
-                stringBuilder.append(place);
-                place = stringBuilder.toString();
+                place = "0" + place;
 
                 Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
 
