@@ -42,4 +42,6 @@
     <string name="time_out">Czas wyjścia</string>
     <string name="notification_error">Utracono połączenie z serwerem!</string>
     <string name="notification_error_text">Wróć do aplikacji i ponownie uruchom usługę!</string>
+    <string name="descriptionOfBackButton">backButton</string>
+    <string name="btBackToMenu">Powrót do Menu</string>
 </resources>

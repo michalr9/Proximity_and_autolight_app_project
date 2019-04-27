@@ -250,4 +250,8 @@ public class ServiceManager extends AppCompatActivity {
         }
     }
 
+    public void goBack(View view) {
+        Intent mainMenu = new Intent(this, MainMenu.class);
+        startActivity(mainMenu);
+    }
 }

@@ -111,7 +111,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/PROGRAMY/Android%20%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_error_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/PROGRAMY/Android%20%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_chevron_left_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -121,8 +121,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="890d10" />
-                            <entry key="outputName" value="notification_icon_error" />
+                            <entry key="outputName" value="back_arrow" />
                             <entry key="sourceFile" value="C:\Users\Michał" />
                           </map>
                         </option>

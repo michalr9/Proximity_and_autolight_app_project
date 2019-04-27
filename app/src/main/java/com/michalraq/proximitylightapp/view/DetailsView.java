@@ -2,6 +2,7 @@ package com.michalraq.proximitylightapp.view;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -361,5 +362,10 @@ public class DetailsView extends AppCompatActivity {
         tvOffice.setText(preferences.getString(OFFICEDETAILSSTRING,""));
         tvKitchen.setText(preferences.getString(KITCHENDETAILSSTRING,""));
     }
+
+    public void goBack(View view) {
+            Intent mainMenu = new Intent(this, MainMenu.class);
+            startActivity(mainMenu);
+        }
 
 }

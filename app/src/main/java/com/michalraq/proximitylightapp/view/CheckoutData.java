@@ -103,4 +103,9 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    public void goBack(View view) {
+        Intent mainMenu = new Intent(this, MainMenu.class);
+        startActivity(mainMenu);
+    }
 }

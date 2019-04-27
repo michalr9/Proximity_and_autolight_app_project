@@ -10,9 +10,10 @@
     <Spinner
         android:id="@+id/spinnerPlaces"
         style="@style/spinner_style"
+        android:layout_width="0dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
@@ -24,5 +25,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerPlaces" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/descriptionOfBackButton"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerPlaces"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spinnerPlaces"
+        app:srcCompat="@drawable/back_arrow"
+        android:onClick="goBack"/>
 
 </android.support.constraint.ConstraintLayout>
