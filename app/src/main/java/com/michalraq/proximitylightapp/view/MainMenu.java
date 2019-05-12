@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -24,6 +25,7 @@ import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
 import com.michalraq.proximitylightapp.R;
 import com.michalraq.proximitylightapp.data.DatabaseHandler;
 import com.michalraq.proximitylightapp.data.estimote.ProximityContentManager;
+import com.michalraq.proximitylightapp.service.Client;
 
 import java.util.List;
 
@@ -93,6 +95,12 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setButtonsStatus();
+    }
+
     /**
      * Inicjalizacja danych w metodzie.
      * @param savedInstanceState
@@ -119,10 +127,35 @@ public class MainMenu extends AppCompatActivity {
         buttonKitchen = findViewById(R.id.button_status_kitchen);
         buttonSaloon = findViewById(R.id.button_status_saloon);
 
-        setButtonsStatus();
+        initButtonKitchenListener();
+        initButtonOfficeListener();
+        initButtonSaloonListener();
+
         checkRequirements();
         enableWiFi();
     }
+
+    private void initButtonOfficeListener(){
+        buttonOffice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remoteButtonControl("office",buttonOffice.isChecked());
+            }
+        });}
+    private void initButtonKitchenListener(){
+        buttonKitchen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remoteButtonControl("kitchen",buttonKitchen.isChecked());
+            }
+        });}
+    private void initButtonSaloonListener(){
+        buttonSaloon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remoteButtonControl("saloon",buttonSaloon.isChecked());
+            }
+        });}
 
     /**
      * Ustawienie statusu przycisków odpowiadających pomieszczeniom.
@@ -202,6 +235,31 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
+   private void remoteButtonControl(String buttonName,Boolean stat){
+ String message = "";
+ String status;
+ if(stat){
+     status="1";
+ }else
+     status="0";
+
+        switch(buttonName){
+            case "office":
+                message = status + "biuro";
+                break;
+                case "kitchen":
+                    message = status+"kuchnia";
+                break;
+                case "saloon":
+                    message = status+"salon";
+                break;
+        }
+
+
+       if(ServiceManager.isServiceStarted)
+           Client.sendMessage(message);
+
+   }
 
     /**
      * Metoda sprawdzająca czy urządzenie sprełnia wymagania do obsługi nadajników.
@@ -232,6 +290,22 @@ public class MainMenu extends AppCompatActivity {
                                 return null;
                             }
                         });
+    }
+
+    private void saveData(){
+
+        SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
+
+        preferencesEditor.putBoolean(OFFICE,buttonOffice.isChecked());
+        preferencesEditor.putBoolean(KITCHEN,buttonKitchen.isChecked());
+        preferencesEditor.putBoolean(SALOON,buttonSaloon.isChecked());
+        preferencesEditor.apply();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveData();
     }
 
     /**

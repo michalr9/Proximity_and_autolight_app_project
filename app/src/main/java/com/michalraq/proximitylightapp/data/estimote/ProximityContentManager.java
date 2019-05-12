@@ -57,7 +57,7 @@ public class ProximityContentManager {
 
         ProximityZone places = new ProximityZoneBuilder()
                 .forTag("place")
-                .inCustomRange(5.0)
+                .inCustomRange(4.0)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
             @Override
             public Unit invoke(ProximityZoneContext zoneContext) {
@@ -94,10 +94,120 @@ public class ProximityContentManager {
         }).build();
 
 
-
-        ProximityZone zone = new ProximityZoneBuilder()
-                .forTag("proximity-light-4nu")
+        ProximityZone kuchnia = new ProximityZoneBuilder()
+                .forTag("kuchnia")
                 .inCustomRange(4.0)
+                .onEnter(new Function1<ProximityZoneContext, Unit>() {
+                    @Override
+                    public Unit invoke(ProximityZoneContext zoneContext) {
+                        String place = zoneContext.getAttachments().get("place");
+                        if (place == null) {
+                            place = "unknown";
+                        }
+                        place = "1" + place;
+
+                        Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
+
+                        if(ServiceManager.isServiceStarted)
+                            Client.sendMessage(place);
+
+                        return null;
+                    }
+                }) .onExit(new Function1<ProximityZoneContext, Unit>() {
+                    @Override
+                    public Unit invoke(ProximityZoneContext zoneContext) {
+                        String place = zoneContext.getAttachments().get("place");
+                        if (place == null) {
+                            place = "unknown";
+                        }
+                        place = "0" + place;
+
+                        Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
+
+                        if(ServiceManager.isServiceStarted)
+                            Client.sendMessage(place);
+
+
+                        return null;
+                    }
+                }).build();
+        ProximityZone salon = new ProximityZoneBuilder()
+                .forTag("salon")
+                .inCustomRange(4.0)
+                .onEnter(new Function1<ProximityZoneContext, Unit>() {
+                    @Override
+                    public Unit invoke(ProximityZoneContext zoneContext) {
+                        String place = zoneContext.getAttachments().get("place");
+                        if (place == null) {
+                            place = "unknown";
+                        }
+                        place = "1" + place;
+
+                        Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
+
+                        if(ServiceManager.isServiceStarted)
+                            Client.sendMessage(place);
+
+                        return null;
+                    }
+                }) .onExit(new Function1<ProximityZoneContext, Unit>() {
+                    @Override
+                    public Unit invoke(ProximityZoneContext zoneContext) {
+                        String place = zoneContext.getAttachments().get("place");
+                        if (place == null) {
+                            place = "unknown";
+                        }
+                        place = "0" + place;
+
+                        Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
+
+                        if(ServiceManager.isServiceStarted)
+                            Client.sendMessage(place);
+
+
+                        return null;
+                    }
+                }).build();
+        ProximityZone biuro = new ProximityZoneBuilder()
+                .forTag("biuro")
+                .inCustomRange(2.5)
+                .onEnter(new Function1<ProximityZoneContext, Unit>() {
+                    @Override
+                    public Unit invoke(ProximityZoneContext zoneContext) {
+                        String place = zoneContext.getAttachments().get("place");
+                        if (place == null) {
+                            place = "unknown";
+                        }
+                        place = "1" + place;
+
+                        Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
+
+                        if(ServiceManager.isServiceStarted)
+                            Client.sendMessage(place);
+
+                        return null;
+                    }
+                }) .onExit(new Function1<ProximityZoneContext, Unit>() {
+                    @Override
+                    public Unit invoke(ProximityZoneContext zoneContext) {
+                        String place = zoneContext.getAttachments().get("place");
+                        if (place == null) {
+                            place = "unknown";
+                        }
+                        place = "0" + place;
+
+                        Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
+
+                        if(ServiceManager.isServiceStarted)
+                            Client.sendMessage(place);
+
+
+                        return null;
+                    }
+                }).build();
+        ProximityZone zone = new ProximityZoneBuilder()
+                .forTag("")
+                .inCustomRange(3.0)
                 .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
                     @Override
                     public Unit invoke(Set<? extends ProximityZoneContext> zoneContext) {
@@ -105,14 +215,17 @@ public class ProximityContentManager {
                         List<ProximityContent> nearbyContent = new ArrayList<>(zoneContext.size());
 
                         for (ProximityZoneContext proximityContext : zoneContext) {
-                            String title = proximityContext.getAttachments().get("proximity-light-4nu/title");
-                            if (title == null) {
-                                title = "unknown";
-                            }
+//                            String title = proximityContext.getAttachments().get("proximity-light-4nu/title");
+//                            if (title == null) {
+//                                title = "unknown";
+//                            }
                             String place = proximityContext.getAttachments().get("place");
-                            nearbyContent.add(new ProximityContent(title, place));
-                            Log.d("app", "Welcome to " + title +" "+ place );
-                 //           Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_SHORT).show();
+                            if (place == null) {
+                                place = "unknown";
+                            }
+                           // nearbyContent.add(new ProximityContent(title, place));
+                          //  Log.d("app", "Welcome to " + title +" "+ place );
+                           Toast.makeText(context, "Jesteś w " + place, Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -120,7 +233,7 @@ public class ProximityContentManager {
                     }
                 }).build();
 
-        proximityObserverHandler = proximityObserver.startObserving(places);
+        proximityObserverHandler = proximityObserver.startObserving(kuchnia,salon,biuro);
     }
 
     /**
