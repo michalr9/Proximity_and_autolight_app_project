@@ -55,78 +55,19 @@ public class ProximityContentManager {
                 .withBalancedPowerMode()
                 .build();
 
-        ProximityZone places = new ProximityZoneBuilder()
-                .forTag("place")
-                .inCustomRange(4.0)
-                .onEnter(new Function1<ProximityZoneContext, Unit>() {
-            @Override
-            public Unit invoke(ProximityZoneContext zoneContext) {
-                String place = zoneContext.getAttachments().get("place");
-                if (place == null) {
-                    place = "unknown";
-                }
-                place = "1" + place;
-
-                Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
-
-                if(ServiceManager.isServiceStarted)
-                Client.sendMessage(place);
-
-                return null;
-            }
-        }) .onExit(new Function1<ProximityZoneContext, Unit>() {
-            @Override
-            public Unit invoke(ProximityZoneContext zoneContext) {
-                String place = zoneContext.getAttachments().get("place");
-                if (place == null) {
-                    place = "unknown";
-                }
-                place = "0" + place;
-
-                Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
-
-                if(ServiceManager.isServiceStarted)
-                Client.sendMessage(place);
-
-
-                return null;
-            }
-        }).build();
-
-
         ProximityZone kuchnia = new ProximityZoneBuilder()
                 .forTag("kuchnia")
                 .inCustomRange(4.0)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
-                        String place = zoneContext.getAttachments().get("place");
-                        if (place == null) {
-                            place = "unknown";
-                        }
-                        place = "1" + place;
-
-                        Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
-
-                        if(ServiceManager.isServiceStarted)
-                            Client.sendMessage(place);
-
+                        turnLight(zoneContext,1);
                         return null;
                     }
                 }) .onExit(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
-                        String place = zoneContext.getAttachments().get("place");
-                        if (place == null) {
-                            place = "unknown";
-                        }
-                        place = "0" + place;
-
-                        Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
-
-                        if(ServiceManager.isServiceStarted)
-                            Client.sendMessage(place);
-
+                        turnLight(zoneContext,0);
 
                         return null;
                     }
@@ -137,33 +78,13 @@ public class ProximityContentManager {
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
-                        String place = zoneContext.getAttachments().get("place");
-                        if (place == null) {
-                            place = "unknown";
-                        }
-                        place = "1" + place;
-
-                        Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
-
-                        if(ServiceManager.isServiceStarted)
-                            Client.sendMessage(place);
-
+                        turnLight(zoneContext,1);
                         return null;
                     }
                 }) .onExit(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
-                        String place = zoneContext.getAttachments().get("place");
-                        if (place == null) {
-                            place = "unknown";
-                        }
-                        place = "0" + place;
-
-                        Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
-
-                        if(ServiceManager.isServiceStarted)
-                            Client.sendMessage(place);
-
+                        turnLight(zoneContext,0);
 
                         return null;
                     }
@@ -174,68 +95,42 @@ public class ProximityContentManager {
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
-                        String place = zoneContext.getAttachments().get("place");
-                        if (place == null) {
-                            place = "unknown";
-                        }
-                        place = "1" + place;
-
-                        Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
-
-                        if(ServiceManager.isServiceStarted)
-                            Client.sendMessage(place);
-
+                        turnLight(zoneContext,1);
                         return null;
                     }
                 }) .onExit(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
-                        String place = zoneContext.getAttachments().get("place");
-                        if (place == null) {
-                            place = "unknown";
-                        }
-                        place = "0" + place;
-
-                        Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
-
-                        if(ServiceManager.isServiceStarted)
-                            Client.sendMessage(place);
-
-
+                   turnLight(zoneContext,0);
                         return null;
                     }
                 }).build();
-        ProximityZone zone = new ProximityZoneBuilder()
-                .forTag("")
-                .inCustomRange(3.0)
-                .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
-                    @Override
-                    public Unit invoke(Set<? extends ProximityZoneContext> zoneContext) {
-
-                        List<ProximityContent> nearbyContent = new ArrayList<>(zoneContext.size());
-
-                        for (ProximityZoneContext proximityContext : zoneContext) {
-//                            String title = proximityContext.getAttachments().get("proximity-light-4nu/title");
-//                            if (title == null) {
-//                                title = "unknown";
-//                            }
-                            String place = proximityContext.getAttachments().get("place");
-                            if (place == null) {
-                                place = "unknown";
-                            }
-                           // nearbyContent.add(new ProximityContent(title, place));
-                          //  Log.d("app", "Welcome to " + title +" "+ place );
-                           Toast.makeText(context, "Jesteś w " + place, Toast.LENGTH_SHORT).show();
-
-                        }
-
-                        return null;
-                    }
-                }).build();
-
         proximityObserverHandler = proximityObserver.startObserving(kuchnia,salon,biuro);
     }
 
+    /**
+     * Funkcja, która przesyła wiadomosć do serwera, aby włączyć lub wyłączyć światło w zależności od sygnału podanego w parametrze.
+     * @param zoneContext
+     * @param signal przyjmujący wartość 0 lub 1
+     */
+    private void turnLight(ProximityZoneContext zoneContext, int signal){
+        String place = zoneContext.getAttachments().get("place");
+        if (place == null) {
+            place = "unknown";
+        }
+        place = signal + place;
+
+        if(signal==1) {
+            Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
+        }else
+        {
+            Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
+        }
+
+        if(ServiceManager.isServiceStarted)
+            Client.sendMessage(place);
+
+    }
     /**
      * Funckja zatrzymująca obserwatora.
      */
