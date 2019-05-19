@@ -43,7 +43,6 @@ public class ProximityContentManager {
      * Funkcja uruchamiająca obserwatora. Wraz z definicją obsługiwanych eventów związanych z wejściem i wyjściem ze strefy.
      */
     public void start() {
-
         ProximityObserver proximityObserver = new ProximityObserverBuilder(context, cloudCredentials)
                 .onError(new Function1<Throwable, Unit>() {
                     @Override
@@ -57,7 +56,7 @@ public class ProximityContentManager {
 
         ProximityZone kuchnia = new ProximityZoneBuilder()
                 .forTag("kuchnia")
-                .inCustomRange(4.0)
+                .inCustomRange(2.5)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
@@ -74,7 +73,7 @@ public class ProximityContentManager {
                 }).build();
         ProximityZone salon = new ProximityZoneBuilder()
                 .forTag("salon")
-                .inCustomRange(4.0)
+                .inCustomRange(2.7)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
