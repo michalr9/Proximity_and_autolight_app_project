@@ -13,10 +13,6 @@ import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import com.michalraq.proximitylightapp.service.Client;
 import com.michalraq.proximitylightapp.view.ServiceManager;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 

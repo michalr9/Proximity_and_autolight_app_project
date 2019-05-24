@@ -43,7 +43,6 @@ public class MainMenu extends AppCompatActivity {
     private static final String KITCHEN = "kuchnia";
     private static final String SALOON = "salon";
     private ProximityContentManager proximityContentManager;
-    private Boolean office,kitchen,saloon;
     private ToggleButton buttonOffice,buttonKitchen,buttonSaloon;
     private SharedPreferences sharedPreferences;
     BluetoothAdapter mBtAdapter;
@@ -161,29 +160,26 @@ public class MainMenu extends AppCompatActivity {
      * Ustawienie statusu przycisków odpowiadających pomieszczeniom.
      */
     private void setButtonsStatus() {
-        office = sharedPreferences.getBoolean(OFFICE,false);
-        kitchen = sharedPreferences.getBoolean(KITCHEN,false);
-        saloon = sharedPreferences.getBoolean(SALOON,false);
+        Boolean office = sharedPreferences.getBoolean(OFFICE, false);
+        Boolean kitchen = sharedPreferences.getBoolean(KITCHEN, false);
+        Boolean saloon = sharedPreferences.getBoolean(SALOON, false);
 
         if(office){
             buttonOffice.setChecked(true);
         }else{
             buttonOffice.setChecked(false);
-
         }
         if(kitchen){
             buttonKitchen.setChecked(true);
 
         }else{
             buttonKitchen.setChecked(false);
-
         }
         if(saloon){
             buttonSaloon.setChecked(true);
 
         }else{
             buttonSaloon.setChecked(false);
-
         }
     }
 
@@ -255,10 +251,8 @@ public class MainMenu extends AppCompatActivity {
                 break;
         }
 
-
        if(ServiceManager.isServiceStarted)
            Client.sendMessage(message);
-
    }
 
     /**

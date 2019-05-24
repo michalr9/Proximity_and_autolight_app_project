@@ -69,7 +69,6 @@ public class DetailsView extends AppCompatActivity {
         initButtonDaysListener();
         initStartDateListener();
         initEndDateListener();
-
     }
 
     /**
@@ -367,5 +366,4 @@ public class DetailsView extends AppCompatActivity {
             Intent mainMenu = new Intent(this, MainMenu.class);
             startActivity(mainMenu);
         }
-
 }

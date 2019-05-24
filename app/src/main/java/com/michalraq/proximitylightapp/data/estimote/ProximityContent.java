@@ -1,7 +1,8 @@
 package com.michalraq.proximitylightapp.data.estimote;
 
 /**
- * Klasa przechowująca dane nadajnika.
+ * Klasa przechowująca dane nadajnika. Używana w momencie wyświetlania listy z nadajnikami znajdującymi się w pobliżu.
+ * Nieużywana w przypadku pracy demonstratora.
  */
 public class ProximityContent {
 

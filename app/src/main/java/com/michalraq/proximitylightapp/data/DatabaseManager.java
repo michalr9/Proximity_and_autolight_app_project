@@ -15,7 +15,7 @@ public class DatabaseManager {
      private Connection connection;
     /**
      *Konstruktor w którym następuje inicjalizacja zmiennych. Danymi do połączenia z bazą danych.
-     * @param context
+     * @param context kontekst aplikacji
      */
      DatabaseManager(Context context) {
          String hostName="",dbName="",user="",password="";
@@ -25,8 +25,7 @@ public class DatabaseManager {
          user = FileGetter.getProperty("user",context);
          password = FileGetter.getProperty("password",context);
 
-
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
+         Class.forName("net.sourceforge.jtds.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             Log.e(TAG,"Missing class lib");
@@ -54,7 +53,7 @@ public class DatabaseManager {
      * Funkcja odpowiedzialna za połączenie z bazą danych.
      * @return True jeżeli połączenie zakończy się sukcesem.
      */
-    public Boolean connectDatabase(){
+    Boolean connectDatabase(){
         try {
             connection = DriverManager.getConnection(url);
             Log.d(TAG,"Connection with database established " + connection);
@@ -72,7 +71,7 @@ public class DatabaseManager {
      * Rozłączenie z bazą danych.
      * @return True jeżeli rozłączenie się powiedzie.
      */
-    public Boolean disconnectDatabase(){
+     Boolean disconnectDatabase(){
         try {
             if(connection!=null)
                 connection.close();
@@ -89,7 +88,7 @@ public class DatabaseManager {
      * @param place Nazwa pomieszczenia.
      * @return True jeżeli jest zapalone światło.
      */
-    public Boolean checkStatusOfLight(String place){
+     Boolean checkStatusOfLight(String place){
         place = StringOperations.addSingleQuotes(place);
         Boolean status=false;
         String SQL = "select CMT_PLACES.POWER_ON from CMT_PLACES\n" +
@@ -142,7 +141,7 @@ public class DatabaseManager {
      * @param startDate Data początkowa okresu rozliczeniowego.
      * @param endDate Data końcowa okresu rozliczeniowego.
      */
-    public void checkTimeWork(String startDate,String endDate){
+     void checkTimeWork(String startDate,String endDate){
         LightContent.summaryOfTimeLightOn = new HashMap<>();
         String stDate = StringOperations.makeTimeIn(startDate);
         String edDate = StringOperations.makeTimeOut(endDate);
@@ -193,7 +192,7 @@ public class DatabaseManager {
      * @param place Nazwa pomieszczenia
      * @return Dane dla każdego z pomieszczeń.
      */
-    public Map<Integer,String> getCheckoutData(String place) {
+     Map<Integer,String> getCheckoutData(String place) {
         Map<Integer, String> result = new HashMap<>();
         place=StringOperations.addSingleQuotes(place);
         String checkoutData;
@@ -227,7 +226,7 @@ public class DatabaseManager {
      * Funkcja pobierająca nazwy pomieszczeń zapisane w bazie danych.
      * @return
      */
-    public Map<Integer,String> getPlaces() {
+     Map<Integer,String> getPlaces() {
         Map<Integer, String> result = new HashMap<>();
 
         String SQL = "select UPPER(PLACE) from CMT_PLACES order by PLACE asc;";

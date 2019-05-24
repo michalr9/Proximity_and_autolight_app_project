@@ -33,7 +33,7 @@ public class DatabaseHandlerCheckout extends AsyncTask<String, Void, Map<Integer
      */
     @Override
     protected Map<Integer,String>  doInBackground(String... strings) {
-        Map empty;
+        Map<Integer,String> empty;
         if(!databaseManager.connectDatabase()){  empty = new HashMap();
         }else {switch (strings[0]) {
                 case "data":
@@ -43,7 +43,6 @@ public class DatabaseHandlerCheckout extends AsyncTask<String, Void, Map<Integer
                 default:
                     return null;
             }
-
         }
         return empty;
     }

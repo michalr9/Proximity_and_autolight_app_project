@@ -94,7 +94,7 @@ public class Client extends Service {
                     InputStream keyin = getResources().openRawResource(R.raw.clientcert);
                     ks.load(keyin,keystorepass);
                     sslSocketFactory = new SSLSocketFactory(ks);
-                    sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); //pozwala na uzycie dowolnego certyfikatu
+                    sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); //pozwala na uzycie  wygenerowanego certyfikatu
                     socket = (SSLSocket) sslSocketFactory.createSocket(new Socket(serverAddr,ServerContent.PORT_NUMBER), serverAddr, ServerContent.PORT_NUMBER, false);
                     socket.startHandshake();
 
@@ -163,7 +163,6 @@ public class Client extends Service {
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
                 break;
         }
-
     }
 
     /**

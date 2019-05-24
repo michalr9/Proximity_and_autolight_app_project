@@ -51,8 +51,9 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
         rvCheckoutData.setAdapter(checkoutDataAdapter);
 
         if(places.isEmpty() && checkoutDataAdapter.getItemCount() == 0){
-            Toast.makeText(this,"Błąd połączenia z bazą! Sprawdź połączenie z internetem.",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.dialogMessageConnectWithDatabaseFailure,Toast.LENGTH_LONG).show();
             Intent menu = new Intent(this,MainMenu.class);
+            Log.e(TAG,"Blad połączenia z bazą.");
             startActivity(menu);
         }
 
@@ -73,9 +74,7 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
             dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spinnerPlaces.setAdapter(dataAdapter);
 
-        }catch (InterruptedException e2){
-            Log.e(TAG,"Blad podczas uzupelniania spinnera");
-        }catch(ExecutionException e){
+        }catch (InterruptedException | ExecutionException e2){
             Log.e(TAG,"Blad podczas uzupelniania spinnera");
         }
     }
@@ -95,14 +94,11 @@ public class CheckoutData extends AppCompatActivity implements AdapterView.OnIte
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
         checkoutDataAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) { }
 
     public void goBack(View view) {
         Intent mainMenu = new Intent(this, MainMenu.class);

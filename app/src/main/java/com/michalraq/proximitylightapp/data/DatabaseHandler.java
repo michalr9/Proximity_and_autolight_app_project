@@ -128,8 +128,6 @@ public class DatabaseHandler extends AsyncTask<String,Void,Void> {
             preferencesEditor.apply();
 
         }
-
-
 /*
   Rozłączenie z bazą i zamknięcie okna dialogowego.
  */

@@ -28,6 +28,7 @@ public class App extends Application {
             notificationChannel.setLightColor(Color.YELLOW);
             notificationChannel.enableLights(true);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
         }
     }

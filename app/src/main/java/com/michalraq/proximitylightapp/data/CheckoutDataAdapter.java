@@ -21,7 +21,6 @@ import java.util.Map;
  * Klasa adaptera pobierająca dane do wyświetlania historii wiadomości.
  */
 public class CheckoutDataAdapter extends RecyclerView.Adapter<CheckoutDataAdapter.ViewHolder>{
-    private final String TAG = "CheckoutDataAdapter";
     private List<String> dataList;
     private Map<Integer,String> list;
 
@@ -82,10 +81,10 @@ public class CheckoutDataAdapter extends RecyclerView.Adapter<CheckoutDataAdapte
 
     /**
      * Setter ustawiający dane listy.
-     * @param list lista z danymi
+     * @param l lista z danymi
      */
-    public void setList(Map<Integer, String> list) {
-        this.list = list;
+    public void setList(Map<Integer, String> l) {
+        list = l;
         dataList.clear();
         dataList.addAll(list.values());
         Collections.sort(dataList);
