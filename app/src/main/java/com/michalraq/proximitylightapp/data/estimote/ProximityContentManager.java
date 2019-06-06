@@ -10,8 +10,13 @@ import com.estimote.proximity_sdk.api.ProximityObserverBuilder;
 import com.estimote.proximity_sdk.api.ProximityZone;
 import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
+import com.michalraq.proximitylightapp.data.Activity;
 import com.michalraq.proximitylightapp.service.Client;
 import com.michalraq.proximitylightapp.view.ServiceManager;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -57,6 +62,10 @@ public class ProximityContentManager {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
                         turnLight(zoneContext,1);
+                        //------------------------------------------------------------------
+                        Activity.activityBiuro=false;
+                        Activity.activityKuchnia=true;
+                        Activity.activitySalon=false;
                         return null;
                     }
                 }) .onExit(new Function1<ProximityZoneContext, Unit>() {
@@ -74,6 +83,10 @@ public class ProximityContentManager {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
                         turnLight(zoneContext,1);
+                        //------------------------------------------------------------------
+                        Activity.activityBiuro=false;
+                        Activity.activityKuchnia=false;
+                        Activity.activitySalon=true;
                         return null;
                     }
                 }) .onExit(new Function1<ProximityZoneContext, Unit>() {
@@ -91,6 +104,10 @@ public class ProximityContentManager {
                     @Override
                     public Unit invoke(ProximityZoneContext zoneContext) {
                         turnLight(zoneContext,1);
+//------------------------------------------------------------------
+                        Activity.activityBiuro=true;
+                        Activity.activityKuchnia=false;
+                        Activity.activitySalon=false;
                         return null;
                     }
                 }) .onExit(new Function1<ProximityZoneContext, Unit>() {
@@ -100,7 +117,10 @@ public class ProximityContentManager {
                         return null;
                     }
                 }).build();
+
         proximityObserverHandler = proximityObserver.startObserving(kuchnia,salon,biuro);
+
+
     }
 
     /**
@@ -110,21 +130,29 @@ public class ProximityContentManager {
      */
     private void turnLight(ProximityZoneContext zoneContext, int signal){
         String place = zoneContext.getAttachments().get("place");
+
         if (place == null) {
             place = "unknown";
         }
         place = signal + place;
 
         if(signal==1) {
-            Toast.makeText(context, "Włączam światło w " + place, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Wchodzisz do " + place, Toast.LENGTH_SHORT).show();
         }else
         {
-            Toast.makeText(context, "Wyłączam światło w " + place, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Wychodzisz z " + place, Toast.LENGTH_SHORT).show();
         }
 
-        if(ServiceManager.isServiceStarted)
-            Client.sendMessage(place);
+        try {
 
+        if(ServiceManager.isServiceStarted) {
+            Client.sendMessage(place);
+            TimeUnit.SECONDS.sleep(2);
+            Toast.makeText(context, "Rozpoznaję aktywność: " + Activity.RUN, Toast.LENGTH_LONG).show();
+        }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Funckja zatrzymująca obserwatora.

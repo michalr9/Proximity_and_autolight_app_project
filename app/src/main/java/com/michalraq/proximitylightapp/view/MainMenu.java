@@ -6,7 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +33,7 @@ import com.michalraq.proximitylightapp.data.DatabaseHandler;
 import com.michalraq.proximitylightapp.data.estimote.ProximityContentManager;
 import com.michalraq.proximitylightapp.service.Client;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import kotlin.Unit;
@@ -36,7 +43,7 @@ import kotlin.jvm.functions.Function1;
 /**
  * Główna klasa sterująca, główna aktywność.
  */
-public class MainMenu extends AppCompatActivity {
+public class MainMenu extends AppCompatActivity implements SensorEventListener {
 
     private static final String PREFERENCES = "myPreferences";
     private static final String OFFICE = "biuro";
@@ -45,10 +52,13 @@ public class MainMenu extends AppCompatActivity {
     private ProximityContentManager proximityContentManager;
     private ToggleButton buttonOffice,buttonKitchen,buttonSaloon;
     private SharedPreferences sharedPreferences;
+    private SensorManager sensorManager;
+    Sensor accelerometer;
     BluetoothAdapter mBtAdapter;
     Boolean isBTActive;
     WifiManager wifiManager;
     public EstimoteCloudCredentials cloudCredentials = new EstimoteCloudCredentials("proximity-light-4nu", "d25c41d6bc5b7cb0fe1f394be8ccf46d");
+    private static DecimalFormat df = new DecimalFormat("0.0000");
 
     /**
      * Tworzenie górnego menu.
@@ -132,6 +142,75 @@ public class MainMenu extends AppCompatActivity {
 
         checkRequirements();
         enableWiFi();
+        registerAccelerometer();
+    }
+
+    private void registerAccelerometer() {
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        assert sensorManager != null;
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onSensorChanged(final SensorEvent event) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                if(com.michalraq.proximitylightapp.data.Activity.activityBiuro){
+                    if ((event.values[0] <= 10.75 && event.values[0] >= 8.75) && ((event.values[1] <= 0.84 && event.values[1] >= -0.76))) {
+                        showActivity(com.michalraq.proximitylightapp.data.Activity.WORK);
+                    } else {
+                        showActivity(com.michalraq.proximitylightapp.data.Activity.RUN);
+                    }
+                }else if(com.michalraq.proximitylightapp.data.Activity.activityKuchnia){
+                    if ((event.values[0] <= 10 && event.values[0] >= 7.75) && ((event.values[1] <= 1.84 && event.values[1] >= -1.76))) {
+                        showActivity(com.michalraq.proximitylightapp.data.Activity.EAT);
+                    } else if((event.values[0] <= 2 && event.values[0] >= -2) && ((event.values[1] <= -7.5 && event.values[1] >= -10.76))) {
+                        showActivity(com.michalraq.proximitylightapp.data.Activity.COOK);
+                    }else
+                     {
+                         showActivity(com.michalraq.proximitylightapp.data.Activity.RUN);
+                    }
+                }else if (com.michalraq.proximitylightapp.data.Activity.activitySalon){
+
+                    if ((event.values[0] <= 10.75 && event.values[0] >= 7.5) && ((event.values[1] <= 0 && event.values[1] >= -3.76))) {
+                        showActivity(com.michalraq.proximitylightapp.data.Activity.WATCHING_TV);
+                    }else
+                    {
+                        showActivity(com.michalraq.proximitylightapp.data.Activity.RUN);
+                    }
+                }
+            }
+        });
+        thread.start();
+    }
+
+    static String oldText="";
+    public void showActivity(final String text){
+
+        if (oldText.equals("")) {
+            oldText = text;
+        } else if(!oldText.equals(text)) {
+            oldText=text;
+
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(MainMenu.this,"Rozpoznaję aktywność: "+ text,Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }else{
+            Log.d("MainMenu", "- - -");
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     private void initButtonOfficeListener(){
@@ -312,5 +391,6 @@ public class MainMenu extends AppCompatActivity {
         if (proximityContentManager != null)
             proximityContentManager.stop();
     }
+
 
 }
